@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zalba>
+    <podnosilac_zalbe>
+        <ime></ime>
+        <prezime></prezime>
+        <naziv></naziv>
+        <adresa></adresa>
+        <sediste></sediste>
+    </podnosilac_zalbe>
+    <naziv_organa></naziv_organa>
+    <resenje>
+        <broj_resenja></broj_resenja>
+        <datum_resenja></datum_resenja>
+    </resenje>
+    <datum_podnosenja_zahteva></datum_podnosenja_zahteva>
+    <opis_zalbe></opis_zalbe>
+    <detalji_predaje>
+        <mesto></mesto>
+        <dan></dan>
+        <mesec></mesec>
+        <godina></godina>
+    </detalji_predaje>
+    <informacije_o_podnosiocu_zalbe>
+        <ime></ime>
+        <prezime></prezime>
+        <adresa></adresa>
+        <drugi_kontakt></drugi_kontakt>
+        <potpis></potpis>
+    </informacije_o_podnosiocu_zalbe>
+</zalba>
