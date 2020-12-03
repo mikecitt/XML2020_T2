@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<zalba>
+<zalba xmlns="http://localhost:8080/zalbanaodluku">
     <podnosilac_zalbe>
         <ime></ime>
         <prezime></prezime>
@@ -17,15 +17,12 @@
     <opis_zalbe></opis_zalbe>
     <detalji_predaje>
         <mesto></mesto>
-        <dan></dan>
-        <mesec></mesec>
-        <godina></godina>
+        <datum></datum>
     </detalji_predaje>
     <informacije_o_podnosiocu_zalbe>
         <ime></ime>
         <prezime></prezime>
         <adresa></adresa>
         <drugi_kontakt></drugi_kontakt>
-        <potpis></potpis>
     </informacije_o_podnosiocu_zalbe>
 </zalba>
