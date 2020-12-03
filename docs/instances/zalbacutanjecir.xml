@@ -1,22 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<zalba>
+<zalba xmlns="http://localhost:8080/zalba">
     <naziv_organa></naziv_organa>
-    <razlog_zalbe izbor=""></razlog_zalbe>
+    <razlog_zalbe>1</razlog_zalbe>
     <datum_zahteva></datum_zahteva>
     <podaci_zahteva></podaci_zahteva>
     <detalji_predaje>
         <mesto></mesto>
-        <dan></dan>
-        <mesec></mesec>
-        <godina></godina>
+        <datum></datum>
     </detalji_predaje>
     <informacije_o_podnosiocu_zalbe>
         <ime></ime>
         <prezime></prezime>
-        <potpis></potpis>
         <adresa></adresa>
         <drugi_kontakt></drugi_kontakt>
-        <Potpis></Potpis>
     </informacije_o_podnosiocu_zalbe>
 </zalba>
