@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<obavestenje>
+<obavestenje xmlns="http://localhost:8080/obavestenje">
     <zaglavlje>
         <organ>
             <naziv_organa></naziv_organa>
@@ -39,6 +39,4 @@
         </uvid>
         <trosak></trosak>
     </telo>
-    <dostava izbor=""></dostava>
-    <potpis></potpis>
 </obavestenje>
