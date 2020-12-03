@@ -17,7 +17,7 @@
                                 </xs:complexType>
                             </xs:element>
                             <xs:element name="broj_predmeta" type="xs:string"/>
-                            <xs:element name="datum" type="xs:date"/>
+                            <xs:element name="datum" type="obv:Tdatum" nillable="false"/>
                             <xs:element name="podnosioc_zahteva">
                                 <xs:complexType>
                                     <xs:sequence>
@@ -37,7 +37,7 @@
                             <xs:element name="trazena_informacija">
                                 <xs:complexType>
                                     <xs:sequence>
-                                        <xs:element name="datum_informacija" type="xs:date"/>
+                                        <xs:element name="datum_informacija" type="obv:Tdatum"/>
                                         <xs:element name="opis_informacije" type="xs:string"/>
                                     </xs:sequence>
                                 </xs:complexType>
@@ -48,7 +48,7 @@
                                         <xs:element name="vreme">
                                             <xs:complexType>
                                                 <xs:sequence>
-                                                  <xs:element name="datum" type="xs:date"/>
+                                                  <xs:element name="datum" type="obv:Tdatum"/>
                                                   <xs:element name="cas" type="obv:cas"/>
                                                   <xs:element name="trajanje">
                                                   <xs:complexType>
@@ -75,7 +75,7 @@
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>
-                            <xs:element name="trosak" type="xs:int"/>
+                            <xs:element name="trosak" type="obv:Ttrosak" nillable="true"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
@@ -84,7 +84,27 @@
     </xs:element>
     <xs:simpleType name="cas">
         <xs:restriction base="xs:string">
-            <xs:pattern value="([01][0-9]|2[0-3]):[0-5][0-9]"/>
+            <xs:pattern value="(([01][0-9]|2[0-3]):[0-5][0-9])?"/>
         </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Tdatum">
+        <xs:union memberTypes="xs:date">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:whiteSpace value="collapse"/>
+                    <xs:length value="0"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:union>
+    </xs:simpleType>
+    <xs:simpleType name="Ttrosak">
+        <xs:union memberTypes="xs:int">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:whiteSpace value="collapse"/>
+                    <xs:length value="0"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:union>
     </xs:simpleType>
 </xs:schema>
