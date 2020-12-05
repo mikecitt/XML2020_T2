@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://localhost:8080/zahtevcir" xmlns:zht="http://localhost:8080/zahtevcir">
+
+    <xs:element name="zahtev">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="organ">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="naziv" type="xs:string"/>
+                            <xs:element name="sediste" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="zahtevi">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="svrha_zahteva">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:int">
+                                        <xs:minInclusive value="1"/>
+                                        <xs:maxInclusive value="4"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="nacin_dostave" type="xs:string"/>
+                            <xs:element name="opis_informacije" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="detalji_predaje">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="mesto" type="xs:string"/>
+                            <xs:element name="datum" type="zht:dateNullable"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="informacije_o_traziocu">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="ime" type="xs:string"/>
+                            <xs:element name="prezime" type="xs:string"/>
+                            <xs:element name="adresa" type="xs:string"/>
+                            <xs:element name="drugi_kontakt" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:simpleType name="dateNullable">
+        <xs:union memberTypes="xs:date">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:length value="0"/>
+                    <xs:whiteSpace value="collapse"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:union>
+    </xs:simpleType>
+</xs:schema>

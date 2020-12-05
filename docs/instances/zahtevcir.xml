@@ -6,30 +6,18 @@
         <sediste></sediste>
     </organ>
     <zahtevi>
-        <tacka br="1" izabrano=""></tacka>
-        <tacka br="2" izabrano=""></tacka>
-        <tacka br="3" izabrano=""></tacka>
-        <tacka br="4" izabrano="">
-            <tacka br="4-1" izabrano=""></tacka>
-            <tacka br="4-2" izabrano=""></tacka>
-            <tacka br="4-3" izabrano=""></tacka>
-            <tacka br="4-4" izabrano="">
-                <drugi_nacin></drugi_nacin>
-            </tacka>
-        </tacka>
+        <svrha_zahteva></svrha_zahteva>
+        <nacin_dostave></nacin_dostave>
         <opis_informacije></opis_informacije>
     </zahtevi>
     <detalji_predaje>
         <mesto></mesto>
-        <dan></dan>
-        <mesec></mesec>
-        <godina></godina>
+        <datum></datum>
     </detalji_predaje>
     <informacije_o_traziocu>
         <ime></ime>
         <prezime></prezime>
         <adresa></adresa>
         <drugi_kontakt></drugi_kontakt>
-        <potpis></potpis>
     </informacije_o_traziocu>
 </zahtev>
