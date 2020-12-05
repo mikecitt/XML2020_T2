@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<zahtev>
+<zahtev xmlns="http://localhost:8080/zahtevcir">
     <organ>
         <naziv></naziv>
         <sediste></sediste>
     </organ>
     <zahtevi>
-        <svrha_zahteva></svrha_zahteva>
+        <svrha_zahteva>1</svrha_zahteva>
         <nacin_dostave></nacin_dostave>
         <opis_informacije></opis_informacije>
     </zahtevi>
