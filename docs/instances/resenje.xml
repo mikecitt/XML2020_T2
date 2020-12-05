@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<resenje>
+    <zaglavlje>
+        <uzrok_resenja></uzrok_resenja>
+        <informacije_predmeta>
+            <broj></broj>
+            <datum_predmeta></datum_predmeta>
+        </informacije_predmeta>
+        <datum_resenja></datum_resenja>
+    </zaglavlje>
+    <razlog_zalbe>
+        <zalioc></zalioc>
+        <protiv></protiv>
+        <razlog></razlog>
+        <na_zahtev></na_zahtev>
+    </razlog_zalbe>
+    <telo_resenja>
+        <odgovor_na_zalbu>
+            <stavke_odgovora></stavke_odgovora>
+            <stavke_odgovora></stavke_odgovora>
+        </odgovor_na_zalbu>
+        <obrazlozenje>
+            <uvod_obrazlozenja></uvod_obrazlozenja>
+            <postupajuci_po_zalbi></postupajuci_po_zalbi>
+            <uvid></uvid>
+            <dodatan_uvid></dodatan_uvid>
+            <odgovor_poverenika></odgovor_poverenika>
+        </obrazlozenje>
+        <taksa_na_tuzbu></taksa_na_tuzbu>
+    </telo_resenja>
+    <poverenik></poverenik>
+</resenje>
