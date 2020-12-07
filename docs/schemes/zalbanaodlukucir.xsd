@@ -3,7 +3,7 @@
     targetNamespace="http://localhost:8080/zalbanaodluku"
     xmlns:zlbod="http://localhost:8080/zalbanaodluku">
 
-    <xs:element name="zalba">
+    <xs:element name="zalbanaodluku">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="podnosilac_zalbe">

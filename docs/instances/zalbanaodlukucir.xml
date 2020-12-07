@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<zalba xmlns="http://localhost:8080/zalbanaodluku">
+<zalbanaodluku xmlns="http://localhost:8080/zalbanaodluku">
     <podnosilac_zalbe>
         <ime></ime>
         <prezime></prezime>
@@ -25,4 +25,4 @@
         <adresa></adresa>
         <drugi_kontakt></drugi_kontakt>
     </informacije_o_podnosiocu_zalbe>
-</zalba>
+</zalbanaodluku>
