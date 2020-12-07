@@ -52,9 +52,6 @@ public class ZahtevUnmarshalling {
         System.out.print("\t\t- Adresa: " + zahtev.getInformacijeOTraziocu().getAdresa() + "\n");
         System.out.print("\t\t- Drugi kontakt: " + zahtev.getInformacijeOTraziocu().getDrugiKontakt() + "\n");
 
-
-
-
     }
 
 

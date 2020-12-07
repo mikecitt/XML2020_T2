@@ -23,7 +23,7 @@ public class ZahtevMarsahlling {
             Zahtev zahtev = (Zahtev) unmarshaller.unmarshal(new File("..\\docs\\instances\\zahtevcir.xml"));
 
             // Izmena nad objektnim modelom dodavanjem novog odseka
-            zahtev.getOrgan().setNaziv("Novonastali organ");
+            zahtev.getOrgan().setNaziv("Novonastali organ12");
 
             // Marshaller je objekat zaduÅ¾en za konverziju iz objektnog u XML model
             Marshaller marshaller = context.createMarshaller();
@@ -32,7 +32,7 @@ public class ZahtevMarsahlling {
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 
             // Umesto System.out-a, moÅ¾e se koristiti FileOutputStream
-            marshaller.marshal(zahtev, System.out);
+            marshaller.marshal(zahtev, new File("..\\docs\\instances\\zahtevcir.xml"));
 
 
         } catch (JAXBException e) {
