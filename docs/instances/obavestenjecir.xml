@@ -1,42 +1,40 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <obavestenje xmlns="http://localhost:8080/obavestenje">
     <zaglavlje>
         <organ>
-            <naziv_organa></naziv_organa>
-            <sediste_organa></sediste_organa>
+            <naziv_organa>Katastar</naziv_organa>
+            <sediste_organa>Novi Sad</sediste_organa>
         </organ>
-        <broj_predmeta></broj_predmeta>
-        <datum></datum>
+        <broj_predmeta>052-16-2155</broj_predmeta>
+        <datum>2020-10-10</datum>
         <podnosioc_zahteva>
-            <ime></ime>
-            <prezime></prezime>
+            <ime>Mirko</ime>
+            <prezime>Petrović</prezime>
             <naziv></naziv>
-            <adresa></adresa>
+            <adresa>Bulevar Oslobođenja 15 Novi Sad</adresa>
         </podnosioc_zahteva>
     </zaglavlje>
     <telo>
         <trazena_informacija>
-            <datum_informacija></datum_informacija>
-            <opis_informacije></opis_informacije>
+            <datum_informacija>2020-10-01</datum_informacija>
+            <opis_informacije>veličinom stana na adresi Bulevar Oslobođenja 15 Novi Sad stan br. 5</opis_informacije>
         </trazena_informacija>
-        
         <uvid>
             <vreme>
-                <datum></datum>
-                <cas></cas>
+                <datum>2020-11-01</datum>
+                <cas>13:00</cas>
                 <trajanje>
-                    <pocetak></pocetak>
-                    <kraj></kraj>
+                    <pocetak>13:00</pocetak>
+                    <kraj>15:00</kraj>
                 </trajanje>
             </vreme>
             <adresa>
-                <mesto></mesto>
-                <ulica></ulica>
-                <broj></broj>
-                <br_kancelarije></br_kancelarije>
+                <mesto>Novom Sadu</mesto>
+                <ulica>Palih boraca</ulica>
+                <broj>15</broj>
+                <br_kancelarije>5</br_kancelarije>
             </adresa>
         </uvid>
-        <trosak></trosak>
+        <trosak>1399.0</trosak>
     </telo>
 </obavestenje>
