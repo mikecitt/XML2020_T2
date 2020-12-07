@@ -30,45 +30,45 @@ public class ObradaObavestenje {
     }
 
     public void ispisiInformacije() {
-        System.out.println("Tražena informacija");
-        System.out.println("\tDatum informacije: " + obavestenje.getTelo().getTrazenaInformacija().getDatumInformacija());
-        System.out.println("\tOpis informacije: \n\t\t\t" + obavestenje.getTelo().getTrazenaInformacija().getOpisInformacije());
+        System.out.println("- Tražena informacija");
+        System.out.println("\t- Datum informacije: " + obavestenje.getTelo().getTrazenaInformacija().getDatumInformacija());
+        System.out.println("\t- Opis informacije: \n\t\t\t" + obavestenje.getTelo().getTrazenaInformacija().getOpisInformacije());
     }
 
     public void ispisiObavestenje() {
-        System.out.println("Zaglavlje");
+        System.out.println("- Zaglavlje");
 
-        System.out.println("\tOrgan");
-        System.out.println("\t\tNaziv: " + obavestenje.getZaglavlje().getOrgan().getNazivOrgana());
-        System.out.println("\t\tSedište: " + obavestenje.getZaglavlje().getOrgan().getSedisteOrgana());
-        System.out.println("\tBroj predmeta: " + obavestenje.getZaglavlje().getBrojPredmeta());
-        System.out.println("\tDatum predmeta: " + obavestenje.getZaglavlje().getDatum());
-        System.out.println("\tPodnosioc zahteva");
-        System.out.println("\t\tIme: " + obavestenje.getZaglavlje().getPodnosiocZahteva().getIme());
-        System.out.println("\t\tPrezime: " + obavestenje.getZaglavlje().getPodnosiocZahteva().getPrezime());
-        System.out.println("\t\tNaziv: " + obavestenje.getZaglavlje().getPodnosiocZahteva().getNaziv());
-        System.out.println("\t\tAdresa: " + obavestenje.getZaglavlje().getPodnosiocZahteva().getAdresa());
+        System.out.println("\t- Organ");
+        System.out.println("\t\t- Naziv: " + obavestenje.getZaglavlje().getOrgan().getNazivOrgana());
+        System.out.println("\t\t- Sedište: " + obavestenje.getZaglavlje().getOrgan().getSedisteOrgana());
+        System.out.println("\t- Broj predmeta: " + obavestenje.getZaglavlje().getBrojPredmeta());
+        System.out.println("\t- Datum predmeta: " + obavestenje.getZaglavlje().getDatum());
+        System.out.println("\t- Podnosioc zahteva");
+        System.out.println("\t\t- Ime: " + obavestenje.getZaglavlje().getPodnosiocZahteva().getIme());
+        System.out.println("\t\t- Prezime: " + obavestenje.getZaglavlje().getPodnosiocZahteva().getPrezime());
+        System.out.println("\t\t- Naziv: " + obavestenje.getZaglavlje().getPodnosiocZahteva().getNaziv());
+        System.out.println("\t\t- Adresa: " + obavestenje.getZaglavlje().getPodnosiocZahteva().getAdresa());
 
-        System.out.println("Telo");
+        System.out.println("- Telo");
 
-        System.out.println("\tTražena informacija");
-        System.out.println("\t\tDatum informacije: " + obavestenje.getTelo().getTrazenaInformacija().getDatumInformacija());
-        System.out.println("\t\tOpis informacije: \n\t\t\t" + obavestenje.getTelo().getTrazenaInformacija().getOpisInformacije());
+        System.out.println("\t- Tražena informacija");
+        System.out.println("\t\t- Datum informacije: " + obavestenje.getTelo().getTrazenaInformacija().getDatumInformacija());
+        System.out.println("\t\t- Opis informacije: \n\t\t\t" + obavestenje.getTelo().getTrazenaInformacija().getOpisInformacije());
 
-        System.out.println("\tUvid");
-        System.out.println("\t\tDatum i vreme za uvid");
-        System.out.println("\t\t\tDatum za uvid: " + obavestenje.getTelo().getUvid().getVreme().getDatum());
-        System.out.println("\t\t\tČas: " + obavestenje.getTelo().getUvid().getVreme().getCas());
-        System.out.println("\t\t\tTrajanje od " + obavestenje.getTelo().getUvid().getVreme().getTrajanje().getPocetak() +
+        System.out.println("\t- Uvid");
+        System.out.println("\t\t- Datum i vreme za uvid");
+        System.out.println("\t\t\t- Datum za uvid: " + obavestenje.getTelo().getUvid().getVreme().getDatum());
+        System.out.println("\t\t\t- Čas: " + obavestenje.getTelo().getUvid().getVreme().getCas());
+        System.out.println("\t\t\t- Trajanje od " + obavestenje.getTelo().getUvid().getVreme().getTrajanje().getPocetak() +
                 " do " + obavestenje.getTelo().getUvid().getVreme().getTrajanje().getKraj());
 
-        System.out.println("\t\tAdresa za uvid");
-        System.out.println("\t\t\tMesto: " + obavestenje.getTelo().getUvid().getAdresa().getMesto());
-        System.out.println("\t\t\tUlica: " + obavestenje.getTelo().getUvid().getAdresa().getUlica());
-        System.out.println("\t\t\tBroj: " + obavestenje.getTelo().getUvid().getAdresa().getBroj());
-        System.out.println("\t\t\tBroj kancelarije: " + obavestenje.getTelo().getUvid().getAdresa().getBrKancelarije());
+        System.out.println("\t\t- Adresa za uvid");
+        System.out.println("\t\t\t- Mesto: " + obavestenje.getTelo().getUvid().getAdresa().getMesto());
+        System.out.println("\t\t\t- Ulica: " + obavestenje.getTelo().getUvid().getAdresa().getUlica());
+        System.out.println("\t\t\t- Broj: " + obavestenje.getTelo().getUvid().getAdresa().getBroj());
+        System.out.println("\t\t\t- Broj kancelarije: " + obavestenje.getTelo().getUvid().getAdresa().getBrKancelarije());
 
-        System.out.println("\tUkupan trošak: " + obavestenje.getTelo().getTrosak() + " din.");
+        System.out.println("\t- Ukupan trošak: " + obavestenje.getTelo().getTrosak() + " din.");
     }
 
     public void ispisiMeni() {
@@ -104,6 +104,7 @@ public class ObradaObavestenje {
                     ispisiInformacije();
                     break;
                 case "3":
+                    System.out.print("Unesite novi ukupan trošak: ");
                     try {
                         Double noviTrosak = null;
                         noviTrosak = scanner.nextDouble();
