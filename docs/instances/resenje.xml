@@ -1,25 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<resenje>
+<resenje xmlns="http://localhost:8080/resenje">
     <zaglavlje>
-        <uzrok_resenja></uzrok_resenja>
+        <rezultat_resenja></rezultat_resenja>
         <informacije_predmeta>
-            <broj></broj>
+            <broj_predmeta></broj_predmeta>
             <datum_predmeta></datum_predmeta>
         </informacije_predmeta>
         <datum_resenja></datum_resenja>
     </zaglavlje>
     <razlog_zalbe>
-        <zalioc></zalioc>
-        <protiv></protiv>
+        <podnositelj_zalbe>
+            <ime></ime>
+            <prezime></prezime>
+        </podnositelj_zalbe>
         <razlog></razlog>
-        <na_zahtev></na_zahtev>
     </razlog_zalbe>
     <telo_resenja>
-        <odgovor_na_zalbu>
-            <stavke_odgovora></stavke_odgovora>
-            <stavke_odgovora></stavke_odgovora>
-        </odgovor_na_zalbu>
+        <odgovor_na_zalbu></odgovor_na_zalbu>
         <obrazlozenje>
             <uvod_obrazlozenja></uvod_obrazlozenja>
             <postupajuci_po_zalbi></postupajuci_po_zalbi>
@@ -27,7 +25,14 @@
             <dodatan_uvid></dodatan_uvid>
             <odgovor_poverenika></odgovor_poverenika>
         </obrazlozenje>
-        <taksa_na_tuzbu></taksa_na_tuzbu>
+        <upravni_spor>
+            <mesto></mesto>
+            <rok_prijema></rok_prijema>
+            <taksa></taksa>
+        </upravni_spor>
     </telo_resenja>
-    <poverenik></poverenik>
+    <poverenik>
+        <ime></ime>
+        <prezime></prezime>
+    </poverenik>
 </resenje>
