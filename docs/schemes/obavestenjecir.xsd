@@ -98,7 +98,12 @@
         </xs:union>
     </xs:simpleType>
     <xs:simpleType name="Ttrosak">
-        <xs:union memberTypes="xs:int">
+        <xs:union>
+            <xs:simpleType>
+                <xs:restriction base="xs:double">
+                    <xs:minInclusive value="0"/>
+                </xs:restriction>
+            </xs:simpleType>
             <xs:simpleType>
                 <xs:restriction base="xs:string">
                     <xs:whiteSpace value="collapse"/>

@@ -77,7 +77,7 @@
         </xs:union>
     </xs:simpleType>
     <xs:simpleType name="Ttrosak">
-        <xs:union memberTypes="xs:int">
+        <xs:union memberTypes="xs:double">
             <xs:simpleType>
                 <xs:restriction base="xs:string">
                     <xs:whiteSpace value="collapse"/>
@@ -104,8 +104,8 @@
     </xs:simpleType>
     <xs:complexType name="Tosoba">
         <xs:sequence>
-            <xs:element name="ime"/>
-            <xs:element name="prezime"/>
+            <xs:element name="ime" type="xs:string"/>
+            <xs:element name="prezime" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
     <xs:simpleType name="TdatumBroj">
