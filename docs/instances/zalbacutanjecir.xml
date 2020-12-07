@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<zalba xmlns="http://localhost:8080/zalba">
+<zalbacutanje xmlns="http://localhost:8080/zalba">
     <naziv_organa></naziv_organa>
     <razlog_zalbe>1</razlog_zalbe>
     <datum_zahteva></datum_zahteva>
@@ -15,4 +15,4 @@
         <adresa></adresa>
         <drugi_kontakt></drugi_kontakt>
     </informacije_o_podnosiocu_zalbe>
-</zalba>
+</zalbacutanje>

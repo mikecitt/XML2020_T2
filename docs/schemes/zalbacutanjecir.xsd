@@ -2,7 +2,7 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
     targetNamespace="http://localhost:8080/zalba" xmlns:zal="http://localhost:8080/zalba">
 
-    <xs:element name="zalba">
+    <xs:element name="zalbacutanje">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="naziv_organa" type="xs:string"/>
