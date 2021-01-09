@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://localhost:8080/resenje" xmlns:res="http://localhost:8080/resenje">
+
+    <xs:element name="resenje">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="zaglavlje">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="rezultat_resenja" type="xs:string"/>
+                            <xs:element name="informacije_predmeta">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="broj_predmeta">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                  <xs:pattern value="(\d{3}-\d{2}-\d{4})?"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="datum_predmeta" type="res:TdatumBroj"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="datum_resenja" type="res:Tdatum"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="razlog_zalbe">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="podnositelj_zalbe" type="res:Tosoba"/>
+                            <xs:element name="razlog" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="telo_resenja">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="odgovor_na_zalbu" type="xs:string"/>
+                            <xs:element name="obrazlozenje">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="uvod_obrazlozenja" type="xs:string"/>
+                                        <xs:element name="postupajuci_po_zalbi" type="xs:string"/>
+                                        <xs:element name="uvid" type="xs:string"/>
+                                        <xs:element name="dodatan_uvid" type="xs:string"/>
+                                        <xs:element name="odgovor_poverenika" type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="upravni_spor">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="mesto" type="xs:string"/>
+                                        <xs:element name="rok_prijema" type="res:Trok"> </xs:element>
+                                        <xs:element name="taksa" type="res:Ttrosak"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="poverenik" type="res:Tosoba"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:simpleType name="Tdatum">
+        <xs:union memberTypes="xs:date">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:whiteSpace value="collapse"/>
+                    <xs:length value="0"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:union>
+    </xs:simpleType>
+    <xs:simpleType name="Ttrosak">
+        <xs:union memberTypes="xs:double">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:whiteSpace value="collapse"/>
+                    <xs:length value="0"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:union>
+    </xs:simpleType>
+    <xs:simpleType name="Trok">
+        <xs:union>
+            <xs:simpleType>
+                <xs:restriction base="xs:int">
+                    <xs:minInclusive value="5"/>
+                    <xs:maxInclusive value="60"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:whiteSpace value="collapse"/>
+                    <xs:length value="0"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:union>
+    </xs:simpleType>
+    <xs:complexType name="Tosoba">
+        <xs:sequence>
+            <xs:element name="ime" type="xs:string"/>
+            <xs:element name="prezime" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="TdatumBroj">
+        <xs:union memberTypes="xs:gYearMonth">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:whiteSpace value="collapse"/>
+                    <xs:length value="0"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:union>
+    </xs:simpleType>
+</xs:schema>

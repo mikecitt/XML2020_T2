@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jxb:bindings
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+    version="2.1">
+
+   <jxb:bindings>
+       <jxb:globalBindings>
+            <jxb:javaType name="java.util.Date" xmlType="obv:Tdatum"/>
+            <jxb:javaType name="java.lang.Double" xmlType="obv:Ttrosak"/>
+       </jxb:globalBindings>
+   </jxb:bindings>
+
+</jxb:bindings>
