@@ -6,7 +6,7 @@
     <xs:element name="obavestenja">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="obavestenje">
+                <xs:element name="obavestenje" minOccurs="0" maxOccurs="unbounded">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="zaglavlje">

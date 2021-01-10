@@ -6,7 +6,7 @@
     <xs:element name="zalbecutanje">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="zalbacutanje">
+                <xs:element name="zalbacutanje" minOccurs="0" maxOccurs="unbounded">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="naziv_organa" type="xs:string"/>

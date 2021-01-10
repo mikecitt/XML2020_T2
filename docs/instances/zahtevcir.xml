@@ -5,11 +5,11 @@
             <naziv>Novonastali organ12</naziv>
             <sediste>Novi sad</sediste>
         </organ>
-        <zahtevi>
+        <listaZahteva>
             <svrha_zahteva>1</svrha_zahteva>
             <nacin_dostave></nacin_dostave>
             <opis_informacije>Detaljan opis</opis_informacije>
-        </zahtevi>
+        </listaZahteva>
         <detalji_predaje>
             <mesto>Novi sad</mesto>
             <datum>2019-10-10</datum>

@@ -6,8 +6,8 @@
 
    <jxb:bindings>
        <jxb:globalBindings>
-            <jxb:javaType name="java.util.Date" xmlType="obv:Tdatum"/>
-            <jxb:javaType name="java.lang.Double" xmlType="obv:Ttrosak"/>
+            <jxb:javaType name="java.util.Date" xmlType="tip:Tdatum"/>
+            <jxb:javaType name="java.lang.Double" xmlType="tip:Ttrosak"/>
        </jxb:globalBindings>
    </jxb:bindings>
 

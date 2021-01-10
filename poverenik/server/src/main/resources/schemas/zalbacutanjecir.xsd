@@ -1,51 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-    targetNamespace="http://localhost:8080/zalba" xmlns:zal="http://localhost:8080/zalba">
-
-    <xs:element name="zalbacutanje">
+    targetNamespace="http://localhost:8080/zalba" xmlns:zal="http://localhost:8080/zalba"
+    xmlns:tip="http://localhost:8080/tipovi">
+    <xs:import id="tipovi" namespace="http://localhost:8080/tipovi" schemaLocation="tipovi.xsd"/>
+    <xs:element name="zalbecutanje">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="naziv_organa" type="xs:string"/>
-                <xs:element name="razlog_zalbe">
-                    <xs:simpleType>
-                        <xs:restriction base="xs:int">
-                            <xs:minInclusive value="1"/>
-                            <xs:maxInclusive value="3"/>
-                            <xs:pattern value="[1-3]"/>
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xs:element>
-                <xs:element name="datum_zahteva" type="zal:dateNullable"/>
-                <xs:element name="podaci_zahteva" type="xs:string"/>
-                <xs:element name="detalji_predaje">
+                <xs:element name="zalbacutanje" minOccurs="0" maxOccurs="unbounded">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="mesto" type="xs:string"/>
-                            <xs:element name="datum" type="zal:dateNullable"/>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="informacije_o_podnosiocu_zalbe">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="ime" type="xs:string"/>
-                            <xs:element name="prezime" type="xs:string"/>
-                            <xs:element name="adresa" type="xs:string"/>
-                            <xs:element name="drugi_kontakt" type="xs:string"/>
+                            <xs:element name="naziv_organa" type="xs:string"/>
+                            <xs:element name="razlog_zalbe">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:int">
+                                        <xs:minInclusive value="1"/>
+                                        <xs:maxInclusive value="3"/>
+                                        <xs:pattern value="[1-3]"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="datum_zahteva" type="tip:Tdatum"/>
+                            <xs:element name="podaci_zahteva" type="xs:string"/>
+                            <xs:element name="detalji_predaje">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="mesto" type="xs:string"/>
+                                        <xs:element name="datum" type="tip:Tdatum"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="informacije_o_podnosiocu_zalbe">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="ime" type="xs:string"/>
+                                        <xs:element name="prezime" type="xs:string"/>
+                                        <xs:element name="adresa" type="xs:string"/>
+                                        <xs:element name="drugi_kontakt" type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:simpleType name="dateNullable">
-        <xs:union memberTypes="xs:date">
-            <xs:simpleType>
-                <xs:restriction base="xs:string">
-                    <xs:length value="0"/>
-                    <xs:whiteSpace value="collapse"/>
-                </xs:restriction>
-            </xs:simpleType>
-        </xs:union>
-    </xs:simpleType>
 </xs:schema>

@@ -5,7 +5,7 @@
     <xs:element name="zahtevi">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="zahtev">
+                <xs:element name="zahtev" minOccurs="0" maxOccurs="unbounded">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="organ">
@@ -16,7 +16,7 @@
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>
-                            <xs:element name="zahtevi">
+                            <xs:element name="listaZahteva">
                                 <xs:complexType>
                                     <xs:sequence>
                                         <xs:element name="svrha_zahteva">

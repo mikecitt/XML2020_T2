@@ -6,7 +6,7 @@
     <xs:element name="zalbenaodluku">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="zalbanaodluku">
+                <xs:element name="zalbanaodluku" minOccurs="0" maxOccurs="unbounded">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="podnosilac_zalbe">
