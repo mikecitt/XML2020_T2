@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<zalbanaodluku xmlns="http://localhost:8080/zalbanaodluku">
-    <podnosilac_zalbe>
-        <ime>Nikola</ime>
-        <prezime>Nikolic</prezime>
-        <naziv></naziv>
-        <adresa>Stevana Sremca 23 Novi Sad</adresa>
-        <sediste></sediste>
-    </podnosilac_zalbe>
-    <naziv_organa>123</naziv_organa>
-    <resenje>
-        <broj_resenja>032-17-2510</broj_resenja>
-        <datum_resenja>20.11.2019.</datum_resenja>
-    </resenje>
-    <datum_podnosenja_zahteva>10.11.2019.</datum_podnosenja_zahteva>
-    <opis_zalbe>se teretim da sam ugrozio komsijski posed na parceli 126/a</opis_zalbe>
-    <detalji_predaje>
-        <mesto>Novom Sadu</mesto>
-        <datum>25.11.2020.</datum>
-    </detalji_predaje>
-    <informacije_o_podnosiocu_zalbe>
-        <ime>Nikola</ime>
-        <prezime>Nikolic</prezime>
-        <adresa>Stevana Sremca 23 Novi Sad</adresa>
-        <drugi_kontakt>066/6666-666</drugi_kontakt>
-    </informacije_o_podnosiocu_zalbe>
-</zalbanaodluku>
+<zalbenaodluku xmlns="http://localhost:8080/zalbanaodluku">
+    <zalbanaodluku>
+        <podnosilac_zalbe>
+            <ime>Nikola</ime>
+            <prezime>Nikolic</prezime>
+            <naziv></naziv>
+            <adresa>Stevana Sremca 23 Novi Sad</adresa>
+            <sediste></sediste>
+        </podnosilac_zalbe>
+        <naziv_organa>123</naziv_organa>
+        <resenje>
+            <broj_resenja>032-17-2510</broj_resenja>
+            <datum_resenja>2019-11-20</datum_resenja>
+        </resenje>
+        <datum_podnosenja_zahteva>2019-11-10</datum_podnosenja_zahteva>
+        <opis_zalbe>se teretim da sam ugrozio komsijski posed na parceli 126/a</opis_zalbe>
+        <detalji_predaje>
+            <mesto>Novom Sadu</mesto>
+            <datum>2020-11-25</datum>
+        </detalji_predaje>
+        <informacije_o_podnosiocu_zalbe>
+            <ime>Nikola</ime>
+            <prezime>Nikolic</prezime>
+            <adresa>Stevana Sremca 23 Novi Sad</adresa>
+            <drugi_kontakt>066/6666-666</drugi_kontakt>
+        </informacije_o_podnosiocu_zalbe>
+    </zalbanaodluku>
+</zalbenaodluku>

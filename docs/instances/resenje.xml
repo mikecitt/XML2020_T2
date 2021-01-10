@@ -1,99 +1,101 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<resenje xmlns="http://localhost:8080/resenje">
-    <zaglavlje>
-        <rezultat_resenja>odbija se kao neosnovana</rezultat_resenja>
-        <informacije_predmeta>
-            <broj_predmeta>071-01-1061</broj_predmeta>
-            <datum_predmeta>2020-03</datum_predmeta>
-        </informacije_predmeta>
-        <datum_resenja>2020-06-29</datum_resenja>
-    </zaglavlje>
-    <razlog_zalbe>
-        <podnositelj_zalbe>
-            <ime>Aleksandar</ime>
-            <prezime>Petrović</prezime>
-        </podnositelj_zalbe>
-        <razlog>protiv obaveštenja Ministarstva za rad, zapošljavanje, boračka i
-            socijalna pitanja Republike Srbije u Beogradu broj: 07-00-00019/2020-01 od 01.04.2020. godine,
-            zbog nedobijanja traženih informacija po njegovom zahtevu za pristup informacijama od javnog
-            značaja podnetom 12.03.2020. godine, na osnovu člana 35. stav 1. tačka 5. Zakona o slobodnom
-            pristupu informacijama od javnog značaja („Službeni glasnik RS” br. 120/04, 54/07, 104/09 i
-            36/10), a u vezi sa članom 4. tačka 22. Zakona o zaštiti podataka o ličnosti („Službeni glasnik
-            RS” br. 87/18), kao i člana 23. i člana 24. stav 1. Zakona o slobodnom pristupu informacijama od
-            javnog značaja i člana 170. stav 1. tačka 1. Zakona o opštem upravnom postupku („Službeni glasnik
-            RS”, br. 18/16 i 95/18)</razlog>
-    </razlog_zalbe>
-    <telo_resenja>
-        <odgovor_na_zalbu>Odbija se, kao neosnovana, žalba Aleksandra Petrovića, izjavljena protiv obaveštenja Ministarstva za rad,
-            zapošljavanje, boračka i socijalna pitanja Republike Srbije u Beogradu broj: 07-00-00019/2020-01
-            od 01.04.2020. godine, zbog nedobijanja traženih informacija po njegovom zahtevu za pristup
-            informacijama od javnog značaja podnetom 12.03.2020. godine.</odgovor_na_zalbu>
-        <obrazlozenje>
-            <uvod_obrazlozenja>Aleksandar Petrović, kao tražilac informacija, izjavio je dana 14.04.2020. godine žalbu Povereniku protiv
-                obaveštenja Ministarstva za rad, zapošljavanje, boračka i socijalna pitanja Republike Srbije u
-                Beogradu broj: 07-00-00019/2020-01 od 01.04.2020. godine, zbog nedobijanja traženih informacija
-                po njegovom zahtevu za pristup informacijama od javnog značaja podnetom 12.03.2020. godine. U
-                žalbi je naveo da mu predmetnim obaveštenjem organ vlasti nije dostavio tražene informacije,
-                pa predlaže da Poverenik uvaži njegovu žalbu i naloži da mu se dostave tražene informacije. U
-                prilogu je dostavio kopije zahteva i ožalbenog obaveštenja.</uvod_obrazlozenja>
-            <postupajuci_po_zalbi>Postupajući po žalbi Poverenik je dana 22.04.2020. godine istu uputio na izjašnjenje
-                Ministarstvu za rad, zapošljavanje, boračka i socijalna pitanja Republike Srbije u Beogradu, kao
-                organu vlasti u smislu člana 3. Zakona o slobodnom pristupu informacijama od javnog značaja.
-                U odgovoru na žalbu od 18.05.2020. godine, organ vlasti je ostao pri navodima iz ožalbenog
-                obaveštenja, ističući da je žaliocu dostavio informacije kojima je raspolagao u trenutku
-                podnošenja zahteva za pristup informacijama od javnog značaja.
-            </postupajuci_po_zalbi>
-            <uvid>Uvidom u spise predmeta utvrđeno je da je Aleksandar Petrović, podneo Ministarstvu za rad, zapošljavanje,
-                boračka i socijalna pitanja Republike Srbije u Beogradu, zahtev od 12.03.2020. godine za pristup
-                informacijama od javnog značaja, kojim je u vezi sa stradanjem radnika, koji je marta 2020. godine
-                poginuo prilikom izvođenja radova na prostoru Beogradskog zoo vrta, tražio dostavljanje
-                određenih informacija, i to: ime i prezime odnosno inicijale poginulog radnika, naziv pravnog
-                subjekta za koga je navedeni radnik radio, da li je radnik bio prijavljen, da li je izvršen
-                inspekcijski nadzor, kao i kopije dokumenata o izvršenom inspekcijskom nadzoru.
-                Dalje je, uvidom u spise predmeta utvrđeno da je odgovorom broj: 07-00-00019/2020-01 od
-                01.04.2020. godine, organ vlasti obavestio žalioca da je do smrtne povrede na radu zaposlenog BB
-                koja se dogodila, dana 05.03.2020. godine oko 20,30 časova, u krugu Zoološkog vrta u Beogradu, Mali
-                Kalemegdan br. 8, došlo nakon obrušavanja oplate potpornog zida, dužine oko 5 metara i visine
-                3 metra, kao i da je MUP, Policijska uprava Stari Grad, dana 05.03.2020. godine oko 21,30 časova
-                prijavilo inspekciji rada navedenu smrtnu povredu na radu, a da je inspektor rada Odeljenja
-                inspekcije rada u Gradu Beogradu izašao na lice mesta, dana 06.03.2020. godine u 7,30 časova, da je
-                nadzor povodom navedene smrtne povrede na radu u toku i da će nakon utvrđivanja svih relevantnih
-                činjenica vezanih za dešavanje smrtne povrede na radu, inspektor rada preduzeti mere iz domena
-                svoje nadležnosti, te da, kako je postupak inspekcijskog nadzora u toku, to se dostavljaju navedene
-                informacije sa kojima organ raspolaže u tom trenutku.
-                Članom 16. stav 1. Zakona o slobodnom pristupu informacijama od javnog značaja propisano
-                je da je organ vlasti dužan da bez odlaganja, a najkasnije u roku od 15 dana od dana prijema zahteva,
-                tražioca obavesti o posedovanju informacije, stavi mu na uvid dokument koji sadrži traženu
-                informaciju, odnosno izda mu ili uputi kopiju tog dokumenta.
-            </uvid>
-            <dodatan_uvid>Imajući u vidu da je organ vlasti, pre izjavljene žalbe, postupio po zahtevu žalioca, tako
-                što ga je odgovorom broj: 07-00-00019/2020-01 od 01.04.2020. godine, obavestio o inicijalima
-                poginulog radnika, kao i da je inspektor rada Odeljenja inspekcije rada u Gradu Beogradu, dana
-                06.03.2020. godine u 7,30 časova, izašao na lice mesta, nakon prijave Policijske uprave Stari
-                Grad, te da je inspekcijski nadzor povodom navedene smrtne povrede na radu u toku odnosno da mu
-                dostavlja informacije kojima u vremenu postupanja po predmetnom zahtevu, raspolaže, što je
-                ponovio i u odgovoru na žalbu, Poverenik nalazi da je organ vlasti postupio po podnetom zahtevu
-                žalioca u skladu sa citiranom odredbom člana 16. stav 1. Zakona o slobodnom pristupu
-                informacijama od javnog značaja, te da je žalba neosnovana. 
-                Poverenik za informacije od javnog značaja i zaštitu podataka o ličnosti
-                Informator o radu 31.08.2020.godine
-                50
-                Ovim se ne dira u pravo žalioca da informacije koje organ vlasti nije posedovao u vremenu
-                postupanja po zahtevu koji je predmet ove upravne stvari, žalilac od organa vlasti zatraži novim
-                zahtevom za pristup informacijama od javnog značaja, imajući u vidu određeni protek vremena.</dodatan_uvid>
-            <odgovor_poverenika>Stoga je Poverenik u postupku po žalbi, na osnovu člana 24. stav 1. Zakona o slobodnom
-                pristupu informacijama od javnog značaja i člana 170. stav 1. tačka 1. Zakona o opštem upravnom
-                postupku, a u vezi sa članom 23. Zakona o slobodnom pristupu informacijama od javnog značaja,
-                odlučio kao u dispozitivu ovog rešenja. </odgovor_poverenika>
-        </obrazlozenje>
-        <upravni_spor>
-            <mesto>Beogradu</mesto>
-            <rok_prijema>30</rok_prijema>
-            <taksa>390.00</taksa>
-        </upravni_spor>
-    </telo_resenja>
-    <poverenik>
-        <ime>Milan</ime>
-        <prezime>Marinović</prezime>
-    </poverenik>
-</resenje>
+<resenja xmlns="http://localhost:8080/resenje" xmlns:tip="http://localhost:8080/tipovi">
+    <resenje>
+        <zaglavlje>
+            <rezultat_resenja>odbija se kao neosnovana</rezultat_resenja>
+            <informacije_predmeta>
+                <broj_predmeta>071-01-1061</broj_predmeta>
+                <datum_predmeta>2020-03</datum_predmeta>
+            </informacije_predmeta>
+            <datum_resenja>2020-06-29</datum_resenja>
+        </zaglavlje>
+        <razlog_zalbe>
+            <podnositelj_zalbe>
+                <tip:ime>Aleksandar</tip:ime>
+                <tip:prezime>Petrović</tip:prezime>
+            </podnositelj_zalbe>
+            <razlog>protiv obaveštenja Ministarstva za rad, zapošljavanje, boračka i
+                socijalna pitanja Republike Srbije u Beogradu broj: 07-00-00019/2020-01 od 01.04.2020. godine,
+                zbog nedobijanja traženih informacija po njegovom zahtevu za pristup informacijama od javnog
+                značaja podnetom 12.03.2020. godine, na osnovu člana 35. stav 1. tačka 5. Zakona o slobodnom
+                pristupu informacijama od javnog značaja („Službeni glasnik RS” br. 120/04, 54/07, 104/09 i
+                36/10), a u vezi sa članom 4. tačka 22. Zakona o zaštiti podataka o ličnosti („Službeni glasnik
+                RS” br. 87/18), kao i člana 23. i člana 24. stav 1. Zakona o slobodnom pristupu informacijama od
+                javnog značaja i člana 170. stav 1. tačka 1. Zakona o opštem upravnom postupku („Službeni glasnik
+                RS”, br. 18/16 i 95/18)</razlog>
+        </razlog_zalbe>
+        <telo_resenja>
+            <odgovor_na_zalbu>Odbija se, kao neosnovana, žalba Aleksandra Petrovića, izjavljena protiv obaveštenja Ministarstva za rad,
+                zapošljavanje, boračka i socijalna pitanja Republike Srbije u Beogradu broj: 07-00-00019/2020-01
+                od 01.04.2020. godine, zbog nedobijanja traženih informacija po njegovom zahtevu za pristup
+                informacijama od javnog značaja podnetom 12.03.2020. godine.</odgovor_na_zalbu>
+            <obrazlozenje>
+                <uvod_obrazlozenja>Aleksandar Petrović, kao tražilac informacija, izjavio je dana 14.04.2020. godine žalbu Povereniku protiv
+                    obaveštenja Ministarstva za rad, zapošljavanje, boračka i socijalna pitanja Republike Srbije u
+                    Beogradu broj: 07-00-00019/2020-01 od 01.04.2020. godine, zbog nedobijanja traženih informacija
+                    po njegovom zahtevu za pristup informacijama od javnog značaja podnetom 12.03.2020. godine. U
+                    žalbi je naveo da mu predmetnim obaveštenjem organ vlasti nije dostavio tražene informacije,
+                    pa predlaže da Poverenik uvaži njegovu žalbu i naloži da mu se dostave tražene informacije. U
+                    prilogu je dostavio kopije zahteva i ožalbenog obaveštenja.</uvod_obrazlozenja>
+                <postupajuci_po_zalbi>Postupajući po žalbi Poverenik je dana 22.04.2020. godine istu uputio na izjašnjenje
+                    Ministarstvu za rad, zapošljavanje, boračka i socijalna pitanja Republike Srbije u Beogradu, kao
+                    organu vlasti u smislu člana 3. Zakona o slobodnom pristupu informacijama od javnog značaja.
+                    U odgovoru na žalbu od 18.05.2020. godine, organ vlasti je ostao pri navodima iz ožalbenog
+                    obaveštenja, ističući da je žaliocu dostavio informacije kojima je raspolagao u trenutku
+                    podnošenja zahteva za pristup informacijama od javnog značaja.
+                </postupajuci_po_zalbi>
+                <uvid>Uvidom u spise predmeta utvrđeno je da je Aleksandar Petrović, podneo Ministarstvu za rad, zapošljavanje,
+                    boračka i socijalna pitanja Republike Srbije u Beogradu, zahtev od 12.03.2020. godine za pristup
+                    informacijama od javnog značaja, kojim je u vezi sa stradanjem radnika, koji je marta 2020. godine
+                    poginuo prilikom izvođenja radova na prostoru Beogradskog zoo vrta, tražio dostavljanje
+                    određenih informacija, i to: ime i prezime odnosno inicijale poginulog radnika, naziv pravnog
+                    subjekta za koga je navedeni radnik radio, da li je radnik bio prijavljen, da li je izvršen
+                    inspekcijski nadzor, kao i kopije dokumenata o izvršenom inspekcijskom nadzoru.
+                    Dalje je, uvidom u spise predmeta utvrđeno da je odgovorom broj: 07-00-00019/2020-01 od
+                    01.04.2020. godine, organ vlasti obavestio žalioca da je do smrtne povrede na radu zaposlenog BB
+                    koja se dogodila, dana 05.03.2020. godine oko 20,30 časova, u krugu Zoološkog vrta u Beogradu, Mali
+                    Kalemegdan br. 8, došlo nakon obrušavanja oplate potpornog zida, dužine oko 5 metara i visine
+                    3 metra, kao i da je MUP, Policijska uprava Stari Grad, dana 05.03.2020. godine oko 21,30 časova
+                    prijavilo inspekciji rada navedenu smrtnu povredu na radu, a da je inspektor rada Odeljenja
+                    inspekcije rada u Gradu Beogradu izašao na lice mesta, dana 06.03.2020. godine u 7,30 časova, da je
+                    nadzor povodom navedene smrtne povrede na radu u toku i da će nakon utvrđivanja svih relevantnih
+                    činjenica vezanih za dešavanje smrtne povrede na radu, inspektor rada preduzeti mere iz domena
+                    svoje nadležnosti, te da, kako je postupak inspekcijskog nadzora u toku, to se dostavljaju navedene
+                    informacije sa kojima organ raspolaže u tom trenutku.
+                    Članom 16. stav 1. Zakona o slobodnom pristupu informacijama od javnog značaja propisano
+                    je da je organ vlasti dužan da bez odlaganja, a najkasnije u roku od 15 dana od dana prijema zahteva,
+                    tražioca obavesti o posedovanju informacije, stavi mu na uvid dokument koji sadrži traženu
+                    informaciju, odnosno izda mu ili uputi kopiju tog dokumenta.
+                </uvid>
+                <dodatan_uvid>Imajući u vidu da je organ vlasti, pre izjavljene žalbe, postupio po zahtevu žalioca, tako
+                    što ga je odgovorom broj: 07-00-00019/2020-01 od 01.04.2020. godine, obavestio o inicijalima
+                    poginulog radnika, kao i da je inspektor rada Odeljenja inspekcije rada u Gradu Beogradu, dana
+                    06.03.2020. godine u 7,30 časova, izašao na lice mesta, nakon prijave Policijske uprave Stari
+                    Grad, te da je inspekcijski nadzor povodom navedene smrtne povrede na radu u toku odnosno da mu
+                    dostavlja informacije kojima u vremenu postupanja po predmetnom zahtevu, raspolaže, što je
+                    ponovio i u odgovoru na žalbu, Poverenik nalazi da je organ vlasti postupio po podnetom zahtevu
+                    žalioca u skladu sa citiranom odredbom člana 16. stav 1. Zakona o slobodnom pristupu
+                    informacijama od javnog značaja, te da je žalba neosnovana. 
+                    Poverenik za informacije od javnog značaja i zaštitu podataka o ličnosti
+                    Informator o radu 31.08.2020.godine
+                    50
+                    Ovim se ne dira u pravo žalioca da informacije koje organ vlasti nije posedovao u vremenu
+                    postupanja po zahtevu koji je predmet ove upravne stvari, žalilac od organa vlasti zatraži novim
+                    zahtevom za pristup informacijama od javnog značaja, imajući u vidu određeni protek vremena.</dodatan_uvid>
+                <odgovor_poverenika>Stoga je Poverenik u postupku po žalbi, na osnovu člana 24. stav 1. Zakona o slobodnom
+                    pristupu informacijama od javnog značaja i člana 170. stav 1. tačka 1. Zakona o opštem upravnom
+                    postupku, a u vezi sa članom 23. Zakona o slobodnom pristupu informacijama od javnog značaja,
+                    odlučio kao u dispozitivu ovog rešenja. </odgovor_poverenika>
+            </obrazlozenje>
+            <upravni_spor>
+                <mesto>Beogradu</mesto>
+                <rok_prijema>30</rok_prijema>
+                <taksa>390.00</taksa>
+            </upravni_spor>
+        </telo_resenja>
+        <poverenik>
+            <tip:ime>Milan</tip:ime>
+            <tip:prezime>Marinović</tip:prezime>
+        </poverenik>
+    </resenje>
+</resenja>

@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<zalbacutanje xmlns="http://localhost:8080/zalba">
-    <naziv_organa>Policijska stanica Srbobran</naziv_organa>
-    <razlog_zalbe>1</razlog_zalbe>
-    <datum_zahteva>20.01.2020.</datum_zahteva>
-    <podaci_zahteva>uznemiravanjem javnog reda i mira pocinjenom na keju</podaci_zahteva>
-    <detalji_predaje>
-        <mesto>Novi Sad</mesto>
-        <datum>21.02.2020.</datum>
-    </detalji_predaje>
-    <informacije_o_podnosiocu_zalbe>
-        <ime>Milan</ime>
-        <prezime>Pavlov</prezime>
-        <adresa>Zabaljska 12</adresa>
-        <drugi_kontakt>069-6969-69</drugi_kontakt>
-    </informacije_o_podnosiocu_zalbe>
-</zalbacutanje>
+<zalbecutanje xmlns="http://localhost:8080/zalba">
+    <zalbacutanje>
+        <naziv_organa>Policijska stanica Srbobran</naziv_organa>
+        <razlog_zalbe>1</razlog_zalbe>
+        <datum_zahteva>2020-01-20</datum_zahteva>
+        <podaci_zahteva>uznemiravanjem javnog reda i mira pocinjenom na keju</podaci_zahteva>
+        <detalji_predaje>
+            <mesto>Novi Sad</mesto>
+            <datum>2020-02-21</datum>
+        </detalji_predaje>
+        <informacije_o_podnosiocu_zalbe>
+            <ime>Milan</ime>
+            <prezime>Pavlov</prezime>
+            <adresa>Zabaljska 12</adresa>
+            <drugi_kontakt>069-6969-69</drugi_kontakt>
+        </informacije_o_podnosiocu_zalbe>
+    </zalbacutanje>
+</zalbecutanje>

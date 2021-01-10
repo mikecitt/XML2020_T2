@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<zahtev xmlns="http://localhost:8080/zahtevcir">
-    <organ>
-        <naziv>Novonastali organ12</naziv>
-        <sediste>Novi sad</sediste>
-    </organ>
-    <zahtevi>
-        <svrha_zahteva>1</svrha_zahteva>
-        <nacin_dostave></nacin_dostave>
-        <opis_informacije>Detaljan opis</opis_informacije>
-    </zahtevi>
-    <detalji_predaje>
-        <mesto>Novi sad</mesto>
-        <datum></datum>
-    </detalji_predaje>
-    <informacije_o_traziocu>
-        <ime>Jovan</ime>
-        <prezime>Jovic</prezime>
-        <adresa>Ulica i broj</adresa>
-        <drugi_kontakt>mobilni</drugi_kontakt>
-    </informacije_o_traziocu>
-</zahtev>
+<zahtevi xmlns="http://localhost:8080/zahtevcir">
+    <zahtev>
+        <organ>
+            <naziv>Novonastali organ12</naziv>
+            <sediste>Novi sad</sediste>
+        </organ>
+        <zahtevi>
+            <svrha_zahteva>1</svrha_zahteva>
+            <nacin_dostave></nacin_dostave>
+            <opis_informacije>Detaljan opis</opis_informacije>
+        </zahtevi>
+        <detalji_predaje>
+            <mesto>Novi sad</mesto>
+            <datum>2019-10-10</datum>
+        </detalji_predaje>
+        <informacije_o_traziocu>
+            <ime>Jovan</ime>
+            <prezime>Jovic</prezime>
+            <adresa>Ulica i broj</adresa>
+            <drugi_kontakt>mobilni</drugi_kontakt>
+        </informacije_o_traziocu>
+    </zahtev>
+</zahtevi>
