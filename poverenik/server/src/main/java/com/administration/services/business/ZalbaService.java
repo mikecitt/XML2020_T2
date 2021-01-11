@@ -44,7 +44,7 @@ public class ZalbaService {
         try {
 
             System.out.println("[INFO] Retrieving the collection: " + collectionId);
-            col = getOrCreateCollection(collectionId);
+            col = existConfiguration.getOrCreateCollection(collectionId);
 
             System.out.println("[INFO] Inserting the document: " + zalbaCutanjeId);
             res = (XMLResource) col.createResource(zalbaCutanjeId, XMLResource.RESOURCE_TYPE);
@@ -87,7 +87,7 @@ public class ZalbaService {
         try {
 
             System.out.println("[INFO] Retrieving the collection: " + collectionId);
-            col = getOrCreateCollection(collectionId, 0);
+            col = existConfiguration.getOrCreateCollection(collectionId, 0);
 
             System.out.println("[INFO] Inserting the document: " + zalbaCutanjeId);
             res = (XMLResource) col.createResource(zalbaCutanjeId, XMLResource.RESOURCE_TYPE);
@@ -142,7 +142,7 @@ public class ZalbaService {
         try {
 
             System.out.println("[INFO] Retrieving the collection: " + collectionId);
-            col = getOrCreateCollection(collectionId);
+            col = existConfiguration.getOrCreateCollection(collectionId);
 
             System.out.println("[INFO] Inserting the document: " + zalbaCutanjeId);
             res = (XMLResource) col.createResource(zalbaOdlukuId, XMLResource.RESOURCE_TYPE);
@@ -185,7 +185,7 @@ public class ZalbaService {
         try {
 
             System.out.println("[INFO] Retrieving the collection: " + collectionId);
-            col = getOrCreateCollection(collectionId, 0);
+            col = existConfiguration.getOrCreateCollection(collectionId, 0);
 
             System.out.println("[INFO] Inserting the document: " + zalbaCutanjeId);
             res = (XMLResource) col.createResource(zalbaOdlukuId, XMLResource.RESOURCE_TYPE);
@@ -229,57 +229,6 @@ public class ZalbaService {
                     xe.printStackTrace();
                 }
             }
-        }
-    }
-
-    private Collection getOrCreateCollection(String collectionUri) throws XMLDBException {
-        return getOrCreateCollection(collectionUri, 0);
-    }
-
-    private Collection getOrCreateCollection(String collectionUri, int pathSegmentOffset) throws XMLDBException {
-
-        Collection col = DatabaseManager.getCollection(existConfiguration.uri + collectionUri, existConfiguration.user, existConfiguration.password);
-
-        // create the collection if it does not exist
-        if (col == null) {
-
-            if (collectionUri.startsWith("/")) {
-                collectionUri = collectionUri.substring(1);
-            }
-
-            String pathSegments[] = collectionUri.split("/");
-
-            if (pathSegments.length > 0) {
-                StringBuilder path = new StringBuilder();
-
-                for (int i = 0; i <= pathSegmentOffset; i++) {
-                    path.append("/" + pathSegments[i]);
-                }
-
-                Collection startCol = DatabaseManager.getCollection(existConfiguration.uri + path, existConfiguration.user, existConfiguration.password);
-
-                if (startCol == null) {
-
-                    // child collection does not exist
-
-                    String parentPath = path.substring(0, path.lastIndexOf("/"));
-                    Collection parentCol = DatabaseManager.getCollection(existConfiguration.uri + parentPath, existConfiguration.user, existConfiguration.password);
-
-                    CollectionManagementService mgt = (CollectionManagementService) parentCol.getService("CollectionManagementService", "1.0");
-
-                    System.out.println("[INFO] Creating the collection: " + pathSegments[pathSegmentOffset]);
-                    col = mgt.createCollection(pathSegments[pathSegmentOffset]);
-
-                    col.close();
-                    parentCol.close();
-
-                } else {
-                    startCol.close();
-                }
-            }
-            return getOrCreateCollection(collectionUri, ++pathSegmentOffset);
-        } else {
-            return col;
         }
     }
 }
