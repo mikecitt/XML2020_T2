@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
     targetNamespace="http://localhost:8080/zalba" xmlns:zal="http://localhost:8080/zalba"
-    xmlns:tip="http://localhost:8080/tipovi">
+    xmlns:tip="http://localhost:8080/tipovi" xmlns="http://www.w3.org/ns/rdfa#">
     <xs:import id="tipovi" namespace="http://localhost:8080/tipovi" schemaLocation="tipovi.xsd"/>
     <xs:element name="zalbecutanje">
         <xs:complexType>
@@ -13,7 +13,15 @@
     <xs:element name="zalbacutanje">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="naziv_organa" type="xs:string"/>
+                <xs:element name="naziv_organa">
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="xs:string">
+                                <xs:attributeGroup ref="zal:rdfAttributes"/>
+                            </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>
                 <xs:element name="razlog_zalbe">
                     <xs:simpleType>
                         <xs:restriction base="xs:int">
@@ -28,8 +36,24 @@
                 <xs:element name="detalji_predaje">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="mesto" type="xs:string"/>
-                            <xs:element name="datum" type="tip:Tdatum"/>
+                            <xs:element name="mesto">
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="xs:string">
+                                            <xs:attributeGroup ref="zal:rdfAttributes"/>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="datum">
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="tip:Tdatum">
+                                            <xs:attributeGroup ref="zal:rdfAttributes"/>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
@@ -44,6 +68,17 @@
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
+            <xs:attributeGroup ref="zal:rdfAttributesRes"/>
         </xs:complexType>
     </xs:element>
+    <xs:attributeGroup name="rdfAttributesRes">
+        <xs:attribute name="about"/>
+        <xs:attribute name="rel"/>
+        <xs:attribute name="href"/>
+        <xs:attribute name="vocab"/>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="rdfAttributes">
+        <xs:attribute name="property"/>
+        <xs:attribute name="datatype"/>
+    </xs:attributeGroup>
 </xs:schema>
