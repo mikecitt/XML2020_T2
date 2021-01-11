@@ -9,10 +9,8 @@ import org.exist.xmldb.EXistResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.XMLDBException;
-import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
 
 import javax.xml.bind.JAXBContext;
@@ -36,7 +34,7 @@ public class ZalbaService {
     @Value("zalbanaodluku.xml")
     private String zalbaOdlukuId;
 
-    public Zalbecutanje getAllZalbeCutanje() throws Exception{
+    public Zalbecutanje getAllZalbeCutanje() throws Exception {
         Collection col = null;
         XMLResource res = null;
         Zalbecutanje zalbecutanje = null;
@@ -59,15 +57,15 @@ public class ZalbaService {
                 zalbecutanje = new Zalbecutanje();
             }
         } finally {
-            if(res != null) {
+            if (res != null) {
                 try {
-                    ((EXistResource)res).freeResources();
+                    ((EXistResource) res).freeResources();
                 } catch (XMLDBException xe) {
                     xe.printStackTrace();
                 }
             }
 
-            if(col != null) {
+            if (col != null) {
                 try {
                     col.close();
                 } catch (XMLDBException xe) {
@@ -116,15 +114,15 @@ public class ZalbaService {
             System.out.println("[INFO] Done.");
 
         } finally {
-            if(res != null) {
+            if (res != null) {
                 try {
-                    ((EXistResource)res).freeResources();
+                    ((EXistResource) res).freeResources();
                 } catch (XMLDBException xe) {
                     xe.printStackTrace();
                 }
             }
 
-            if(col != null) {
+            if (col != null) {
                 try {
                     col.close();
                 } catch (XMLDBException xe) {
@@ -134,7 +132,7 @@ public class ZalbaService {
         }
     }
 
-    public Zalbenaodluku getAllZalbeOdluka() throws Exception{
+    public Zalbenaodluku getAllZalbeOdluka() throws Exception {
         Collection col = null;
         XMLResource res = null;
         Zalbenaodluku zalbenaodluku = null;
@@ -157,15 +155,15 @@ public class ZalbaService {
                 zalbenaodluku = new Zalbenaodluku();
             }
         } finally {
-            if(res != null) {
+            if (res != null) {
                 try {
-                    ((EXistResource)res).freeResources();
+                    ((EXistResource) res).freeResources();
                 } catch (XMLDBException xe) {
                     xe.printStackTrace();
                 }
             }
 
-            if(col != null) {
+            if (col != null) {
                 try {
                     col.close();
                 } catch (XMLDBException xe) {
@@ -214,15 +212,15 @@ public class ZalbaService {
             System.out.println("[INFO] Done.");
 
         } finally {
-            if(res != null) {
+            if (res != null) {
                 try {
-                    ((EXistResource)res).freeResources();
+                    ((EXistResource) res).freeResources();
                 } catch (XMLDBException xe) {
                     xe.printStackTrace();
                 }
             }
 
-            if(col != null) {
+            if (col != null) {
                 try {
                     col.close();
                 } catch (XMLDBException xe) {

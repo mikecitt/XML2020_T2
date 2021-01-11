@@ -7,8 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @CrossOrigin
 @RequestMapping("/zalbe")
@@ -18,8 +16,7 @@ public class ZalbaController {
     private ZalbaService zalbaService;
 
     @GetMapping("/cutanje")
-    public ResponseEntity<Zalbecutanje> getAllZalbeCutanje()
-    {
+    public ResponseEntity<Zalbecutanje> getAllZalbeCutanje() {
         Zalbecutanje zalbecutanje = null;
         try {
             zalbecutanje = zalbaService.getAllZalbeCutanje();
@@ -31,8 +28,7 @@ public class ZalbaController {
     }
 
     @PostMapping("/cutanje")
-    public ResponseEntity<?> addNewZalbaCutanje(@RequestBody Zalbacutanje zalbacutanje)
-    {
+    public ResponseEntity<?> addNewZalbaCutanje(@RequestBody Zalbacutanje zalbacutanje) {
         try {
             zalbaService.addNewZalbaCutanje(zalbacutanje);
         } catch (Exception e) {
@@ -43,8 +39,7 @@ public class ZalbaController {
     }
 
     @GetMapping("/odluka")
-    public ResponseEntity<?> getAllZalbeOdluku()
-    {
+    public ResponseEntity<?> getAllZalbeOdluku() {
         Zalbenaodluku zalbenaodluku = null;
         try {
             zalbenaodluku = zalbaService.getAllZalbeOdluka();
@@ -56,8 +51,7 @@ public class ZalbaController {
     }
 
     @PostMapping("/odluka")
-    public ResponseEntity<?> addNewZalbaOdluku(@RequestBody Zalbanaodluku zalbanaodluku)
-    {
+    public ResponseEntity<?> addNewZalbaOdluku(@RequestBody Zalbanaodluku zalbanaodluku) {
         try {
             zalbaService.addNewZalbaOdluka(zalbanaodluku);
         } catch (Exception e) {
