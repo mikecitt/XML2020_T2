@@ -118,8 +118,8 @@ public class ZalbaService {
             } catch (XMLDBException ex) {
                 zalbecutanje = new Zalbecutanje();
             }
-            zalbacutanje.setAbout("http://localhost:8080/zalbacutanje/zal_" +
-                    UUID.randomUUID().toString().replace("-", ""));
+            zalbacutanje.setAbout(
+                    "http://localhost:8080/zalbacutanje/zal_" + UUID.randomUUID().toString().replace("-", ""));
             zalbecutanje.getZalbacutanje().add(zalbacutanje);
 
             Marshaller marshaller = context.createMarshaller();
@@ -199,7 +199,7 @@ public class ZalbaService {
     public void addNewZalbaOdluka(Zalbanaodluku zalbanaodluku) throws Exception {
         Collection col = null;
         XMLResource res = null;
-        OutputStream os = new ByteArrayOutputStream();
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
 
         try {
 
@@ -220,6 +220,8 @@ public class ZalbaService {
                 zalbenaodluku = new Zalbenaodluku();
 
             }
+            zalbanaodluku.setAbout(
+                    "http://localhost:8080/zalbanaodluku/zlbod_" + UUID.randomUUID().toString().replace("-", ""));
             zalbenaodluku.getZalbanaodluku().add(zalbanaodluku);
 
             Marshaller marshaller = context.createMarshaller();
@@ -230,8 +232,8 @@ public class ZalbaService {
 
             res.setContent(os);
             System.out.println("[INFO] Storing the document: " + res.getId());
-
             col.storeResource(res);
+            updateRDF(new String(os.toByteArray(), StandardCharsets.UTF_8));
             System.out.println("[INFO] Done.");
 
         } finally {
@@ -264,9 +266,7 @@ public class ZalbaService {
         MetadataExtractor metadataExtractor = new MetadataExtractor();
 
         System.out.println("[INFO] Extracting metadata from RDFa attributes...");
-        metadataExtractor.extractMetadata(
-                input,
-                output);
+        metadataExtractor.extractMetadata(input, output);
 
         String rdf = new String(output.toByteArray(), StandardCharsets.UTF_8);
         // Loading a default model with extracted metadata
@@ -280,10 +280,10 @@ public class ZalbaService {
         System.out.println("[INFO] Extracted metadata as RDF/XML...");
         model.write(System.out, SparqlUtil.RDF_XML);
 
-
         // Writing the named graph
         System.out.println("[INFO] Populating named graph \"" + SPARQL_NAMED_GRAPH_URI + "\" with extracted metadata.");
-        String sparqlUpdate = SparqlUtil.insertData(jenaConfiguration.dataEndpoint + SPARQL_NAMED_GRAPH_URI, new String(out.toByteArray()));
+        String sparqlUpdate = SparqlUtil.insertData(jenaConfiguration.dataEndpoint + SPARQL_NAMED_GRAPH_URI,
+                new String(out.toByteArray()));
         System.out.println(sparqlUpdate);
 
         // UpdateRequest represents a unit of execution
@@ -303,13 +303,12 @@ public class ZalbaService {
         // Create a QueryExecution that will access a SPARQL service over HTTP
         QueryExecution query = QueryExecutionFactory.sparqlService(jenaConfiguration.queryEndpoint, sparqlQuery);
 
-
         // Query the collection, dump output response as XML
         ResultSet results = query.execSelect();
 
         ResultSetFormatter.out(System.out, results);
 
-        query.close() ;
+        query.close();
 
         System.out.println("[INFO] End.");
     }
