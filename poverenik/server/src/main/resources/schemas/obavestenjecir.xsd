@@ -6,87 +6,88 @@
     <xs:element name="obavestenja">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="obavestenje" minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="obv:obavestenje" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="obavestenje">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="zaglavlje">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="zaglavlje">
+                            <xs:element name="organ">
                                 <xs:complexType>
                                     <xs:sequence>
-                                        <xs:element name="organ">
-                                            <xs:complexType>
-                                                <xs:sequence>
-                                                  <xs:element name="naziv_organa" type="xs:string"/>
-                                                  <xs:element name="sediste_organa" type="xs:string"
-                                                  />
-                                                </xs:sequence>
-                                            </xs:complexType>
-                                        </xs:element>
-                                        <xs:element name="broj_predmeta" type="xs:string"/>
-                                        <xs:element name="datum" type="tip:Tdatum" nillable="false"/>
-                                        <xs:element name="podnosioc_zahteva">
-                                            <xs:complexType>
-                                                <xs:sequence>
-                                                  <xs:element name="ime" type="xs:string"/>
-                                                  <xs:element name="prezime" type="xs:string"/>
-                                                  <xs:element name="naziv" type="xs:string"/>
-                                                  <xs:element name="adresa" type="xs:string"/>
-                                                </xs:sequence>
-                                            </xs:complexType>
-                                        </xs:element>
-                                    </xs:sequence>
-                                </xs:complexType>
-                            </xs:element>
-                            <xs:element name="telo">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element name="trazena_informacija">
-                                            <xs:complexType>
-                                                <xs:sequence>
-                                                  <xs:element name="datum_informacija"
-                                                  type="tip:Tdatum"/>
-                                                  <xs:element name="opis_informacije"
-                                                  type="xs:string"/>
-                                                </xs:sequence>
-                                            </xs:complexType>
-                                        </xs:element>
-                                        <xs:element name="uvid">
-                                            <xs:complexType>
-                                                <xs:sequence>
-                                                  <xs:element name="vreme">
-                                                  <xs:complexType>
-                                                  <xs:sequence>
-                                                      <xs:element name="datum" type="tip:Tdatum"/>
-                                                      <xs:element name="cas" type="tip:cas"/>
-                                                  <xs:element name="trajanje">
-                                                  <xs:complexType>
-                                                  <xs:sequence>
-                                                      <xs:element name="pocetak" type="tip:cas"/>
-                                                      <xs:element name="kraj" type="tip:cas"/>
-                                                  </xs:sequence>
-                                                  </xs:complexType>
-                                                  </xs:element>
-                                                  </xs:sequence>
-                                                  </xs:complexType>
-                                                  </xs:element>
-                                                  <xs:element name="adresa">
-                                                  <xs:complexType>
-                                                  <xs:sequence>
-                                                  <xs:element name="mesto" type="xs:string"/>
-                                                  <xs:element name="ulica" type="xs:string"/>
-                                                  <xs:element name="broj" type="xs:string"/>
-                                                  <xs:element name="br_kancelarije" type="xs:string"
-                                                  />
-                                                  </xs:sequence>
-                                                  </xs:complexType>
-                                                  </xs:element>
-                                                </xs:sequence>
-                                            </xs:complexType>
-                                        </xs:element>
-                                        <xs:element name="trosak" type="tip:Ttrosak" nillable="true"
+                                        <xs:element name="naziv_organa" type="xs:string"/>
+                                        <xs:element name="sediste_organa" type="xs:string"
                                         />
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>
+                            <xs:element name="broj_predmeta" type="xs:string"/>
+                            <xs:element name="datum" type="tip:Tdatum" nillable="false"/>
+                            <xs:element name="podnosioc_zahteva">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="ime" type="xs:string"/>
+                                        <xs:element name="prezime" type="xs:string"/>
+                                        <xs:element name="naziv" type="xs:string"/>
+                                        <xs:element name="adresa" type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="telo">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="trazena_informacija">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="datum_informacija"
+                                                    type="tip:Tdatum"/>
+                                        <xs:element name="opis_informacije"
+                                                    type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="uvid">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="vreme">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="datum" type="tip:Tdatum"/>
+                                                    <xs:element name="cas" type="tip:cas"/>
+                                                    <xs:element name="trajanje">
+                                                        <xs:complexType>
+                                                            <xs:sequence>
+                                                                <xs:element name="pocetak" type="tip:cas"/>
+                                                                <xs:element name="kraj" type="tip:cas"/>
+                                                            </xs:sequence>
+                                                        </xs:complexType>
+                                                    </xs:element>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="adresa">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="mesto" type="xs:string"/>
+                                                    <xs:element name="ulica" type="xs:string"/>
+                                                    <xs:element name="broj" type="xs:string"/>
+                                                    <xs:element name="br_kancelarije" type="xs:string"
+                                                    />
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="trosak" type="tip:Ttrosak" nillable="true"
+                            />
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
