@@ -39,7 +39,6 @@ public class ExistConfiguration {
         System.out.println("[INFO] Loading driver class: " + driver);
         Class<?> cl = Class.forName(driver);
 
-
         // encapsulation of the database driver functionality
         Database database = (Database) cl.newInstance();
         database.setProperty("create-database", "true");
@@ -81,7 +80,8 @@ public class ExistConfiguration {
                     String parentPath = path.substring(0, path.lastIndexOf("/"));
                     Collection parentCol = DatabaseManager.getCollection(uri + parentPath, user, password);
 
-                    CollectionManagementService mgt = (CollectionManagementService) parentCol.getService("CollectionManagementService", "1.0");
+                    CollectionManagementService mgt = (CollectionManagementService) parentCol
+                            .getService("CollectionManagementService", "1.0");
 
                     System.out.println("[INFO] Creating the collection: " + pathSegments[pathSegmentOffset]);
                     col = mgt.createCollection(pathSegments[pathSegmentOffset]);

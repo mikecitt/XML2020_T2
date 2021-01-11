@@ -52,7 +52,7 @@ public class ZalbaService {
     @Value("zalbanaodluku.xml")
     private String zalbaOdlukuId;
 
-    public Zalbecutanje getAllZalbeCutanje() throws Exception{
+    public Zalbecutanje getAllZalbeCutanje() throws Exception {
         Collection col = null;
         XMLResource res = null;
         Zalbecutanje zalbecutanje = null;
@@ -75,15 +75,15 @@ public class ZalbaService {
                 zalbecutanje = new Zalbecutanje();
             }
         } finally {
-            if(res != null) {
+            if (res != null) {
                 try {
-                    ((EXistResource)res).freeResources();
+                    ((EXistResource) res).freeResources();
                 } catch (XMLDBException xe) {
                     xe.printStackTrace();
                 }
             }
 
-            if(col != null) {
+            if (col != null) {
                 try {
                     col.close();
                 } catch (XMLDBException xe) {
@@ -135,15 +135,15 @@ public class ZalbaService {
             System.out.println("[INFO] Done.");
 
         } finally {
-            if(res != null) {
+            if (res != null) {
                 try {
-                    ((EXistResource)res).freeResources();
+                    ((EXistResource) res).freeResources();
                 } catch (XMLDBException xe) {
                     xe.printStackTrace();
                 }
             }
 
-            if(col != null) {
+            if (col != null) {
                 try {
                     col.close();
                 } catch (XMLDBException xe) {
@@ -153,7 +153,7 @@ public class ZalbaService {
         }
     }
 
-    public Zalbenaodluku getAllZalbeOdluka() throws Exception{
+    public Zalbenaodluku getAllZalbeOdluka() throws Exception {
         Collection col = null;
         XMLResource res = null;
         Zalbenaodluku zalbenaodluku = null;
@@ -176,15 +176,15 @@ public class ZalbaService {
                 zalbenaodluku = new Zalbenaodluku();
             }
         } finally {
-            if(res != null) {
+            if (res != null) {
                 try {
-                    ((EXistResource)res).freeResources();
+                    ((EXistResource) res).freeResources();
                 } catch (XMLDBException xe) {
                     xe.printStackTrace();
                 }
             }
 
-            if(col != null) {
+            if (col != null) {
                 try {
                     col.close();
                 } catch (XMLDBException xe) {
@@ -235,15 +235,15 @@ public class ZalbaService {
             System.out.println("[INFO] Done.");
 
         } finally {
-            if(res != null) {
+            if (res != null) {
                 try {
-                    ((EXistResource)res).freeResources();
+                    ((EXistResource) res).freeResources();
                 } catch (XMLDBException xe) {
                     xe.printStackTrace();
                 }
             }
 
-            if(col != null) {
+            if (col != null) {
                 try {
                     col.close();
                 } catch (XMLDBException xe) {
