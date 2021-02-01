@@ -1,0 +1,49 @@
+<div class="aux">
+    <form [formGroup]="form">
+        <fieldset>
+            <Legend>Registracija</Legend>
+            <div class="mb-3">
+                <label for="firstname" class="form-label">Ime</label>
+                <input type="text" class="form-control" id="firstname" formControlName="firstname">                
+            </div>
+            <div class="mb-3">
+                <label for="lastname" class="form-label">Prezime</label>
+                <input type="text" class="form-control" id="lastname" formControlName="lastname">
+            </div>
+            <div class="mb-3">
+                <label for="emailaddress" class="form-label">Email adresa</label>
+                <input type="email" class="form-control" ngModel email id="emailaddress" placeholder="name@example.com" formControlName="email">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Lozinka</label>
+                <input type="password" class="form-control" id="password" name="password" formControlName="password">
+            </div>
+            <div class="mb-3">
+                <label for="repeatpassword" class="form-label">Ponovite lozinku</label>
+                <input type="password" class="form-control" id="repeatpassword" formControlName="repeatpassword">
+            </div>
+        </fieldset>
+        <br>
+        <div class="mb-3" *ngIf="emptyField"
+            class="alert alert-danger">
+            <div>Sva polja su neophodna</div>
+        </div>
+        <div class="mb-3" *ngIf="passwordmissmatch"
+            class="alert alert-danger">
+            <div>Lozinke se ne podudaraju</div>
+        </div>
+        <div class="mb-3" *ngIf="invalidemail"
+            class="alert alert-danger">
+            <div>Format email adrese je nevalidan</div>
+        </div>
+        <div class="mb-3 alert alert-danger" *ngIf="wrongUsernameOrPass" id="errormsg">
+            <div >Email adresa je vec u upotrebi.</div>
+        </div>
+        <div class="form-buttons">
+            <button class="btn btn-primary" (click) = "register()" id="reg-btn">Registruj se</button>
+        </div>
+    </form>
+    <br>
+    <a routerLink="" routerLinkActive="active">Vec posedujete nalog? Prijavite se.</a>
+</div>
+  

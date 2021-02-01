@@ -1,0 +1,27 @@
+<div class="aux">
+    <form [formGroup]="form" class="loginForm">
+        <fieldset>
+            <legend>Login</legend>
+            <div class="form-field">
+                <label>Email:</label>
+                <input id="username" class="form-control" name="username" formControlName="username">
+            </div>
+            <div class="form-field">
+                <label>Password:</label>
+                <input id="password" name="password" formControlName="password" type="password" class="form-control">
+            </div>
+        </fieldset>
+        <br>
+        <div *ngIf="invalidData" class="alert alert-danger">
+            <div>Sva polja su obavezna</div>
+        </div>
+        <div *ngIf="wrongUsernameOrPass" class="alert alert-danger">
+            <div id="error">Pogresan email ili lozinka</div>
+        </div>
+        <div class="form-buttons">
+            <button id="login-btn" class="btn btn-primary" (click)="login()">Login</button>
+        </div>
+    </form>
+    <br>
+    <a routerLink="/register" routerLinkActive="active">Nemate nalog? Registrujte se.</a>
+</div>
