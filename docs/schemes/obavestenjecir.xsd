@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-    targetNamespace="http://localhost:8080/obavestenje"
+    targetNamespace="http://localhost:8080/obavestenje" xmlns="http://www.w3.org/ns/rdfa#"
     xmlns:obv="http://localhost:8080/obavestenje" xmlns:tip="http://localhost:8080/tipovi">
     <xs:import id="tipovi" namespace="http://localhost:8080/tipovi" schemaLocation="tipovi.xsd"/>
     <xs:element name="obavestenja">
@@ -20,13 +20,28 @@
                                 <xs:complexType>
                                     <xs:sequence>
                                         <xs:element name="naziv_organa" type="xs:string"/>
-                                        <xs:element name="sediste_organa" type="xs:string"
-                                        />
+                                        <xs:element name="sediste_organa">
+                                            <xs:complexType>
+                                                <xs:simpleContent>
+                                                  <xs:extension base="xs:string">
+                                                  <xs:attributeGroup ref="obv:rdfAttributes"/>
+                                                  </xs:extension>
+                                                </xs:simpleContent>
+                                            </xs:complexType>
+                                        </xs:element>
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>
                             <xs:element name="broj_predmeta" type="xs:string"/>
-                            <xs:element name="datum" type="tip:Tdatum" nillable="false"/>
+                            <xs:element name="datum" nillable="false">
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="tip:Tdatum">
+                                            <xs:attributeGroup ref="obv:rdfAttributes"/>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
                             <xs:element name="podnosioc_zahteva">
                                 <xs:complexType>
                                     <xs:sequence>
@@ -46,10 +61,16 @@
                             <xs:element name="trazena_informacija">
                                 <xs:complexType>
                                     <xs:sequence>
-                                        <xs:element name="datum_informacija"
-                                                    type="tip:Tdatum"/>
-                                        <xs:element name="opis_informacije"
-                                                    type="xs:string"/>
+                                        <xs:element name="datum_informacija">
+                                            <xs:complexType>
+                                                <xs:simpleContent>
+                                                  <xs:extension base="tip:Tdatum">
+                                                  <xs:attributeGroup ref="obv:rdfAttributes"/>
+                                                  </xs:extension>
+                                                </xs:simpleContent>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="opis_informacije" type="xs:string"/>
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>
@@ -59,39 +80,49 @@
                                         <xs:element name="vreme">
                                             <xs:complexType>
                                                 <xs:sequence>
-                                                    <xs:element name="datum" type="tip:Tdatum"/>
-                                                    <xs:element name="cas" type="tip:cas"/>
-                                                    <xs:element name="trajanje">
-                                                        <xs:complexType>
-                                                            <xs:sequence>
-                                                                <xs:element name="pocetak" type="tip:cas"/>
-                                                                <xs:element name="kraj" type="tip:cas"/>
-                                                            </xs:sequence>
-                                                        </xs:complexType>
-                                                    </xs:element>
+                                                  <xs:element name="datum" type="tip:Tdatum"/>
+                                                  <xs:element name="cas" type="tip:cas"/>
+                                                  <xs:element name="trajanje">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element name="pocetak" type="tip:cas"/>
+                                                  <xs:element name="kraj" type="tip:cas"/>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                  </xs:element>
                                                 </xs:sequence>
                                             </xs:complexType>
                                         </xs:element>
                                         <xs:element name="adresa">
                                             <xs:complexType>
                                                 <xs:sequence>
-                                                    <xs:element name="mesto" type="xs:string"/>
-                                                    <xs:element name="ulica" type="xs:string"/>
-                                                    <xs:element name="broj" type="xs:string"/>
-                                                    <xs:element name="br_kancelarije" type="xs:string"
-                                                    />
+                                                  <xs:element name="mesto" type="xs:string"/>
+                                                  <xs:element name="ulica" type="xs:string"/>
+                                                  <xs:element name="broj" type="xs:string"/>
+                                                  <xs:element name="br_kancelarije" type="xs:string"
+                                                  />
                                                 </xs:sequence>
                                             </xs:complexType>
                                         </xs:element>
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>
-                            <xs:element name="trosak" type="tip:Ttrosak" nillable="true"
-                            />
+                            <xs:element name="trosak" type="tip:Ttrosak" nillable="true"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
+            <xs:attributeGroup ref="obv:rdfAttributesRes"/>
         </xs:complexType>
     </xs:element>
+    <xs:attributeGroup name="rdfAttributesRes">
+        <xs:attribute name="about"/>
+        <xs:attribute name="rel"/>
+        <xs:attribute name="href"/>
+        <xs:attribute name="vocab"/>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="rdfAttributes">
+        <xs:attribute name="property"/>
+        <xs:attribute name="datatype"/>
+    </xs:attributeGroup>
 </xs:schema>
