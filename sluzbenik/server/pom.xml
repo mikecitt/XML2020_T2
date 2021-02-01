@@ -74,8 +74,43 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jaxb2-maven-plugin</artifactId>
+				<version>2.4</version>
+				<executions>
+					<execution>
+						<id>xjc</id>
+						<goals>
+							<goal>xjc</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<xjbSources>
+						<xjbSource>src/main/resources/global.xjb</xjbSource>
+					</xjbSources>
+					<sources>
+						<source>src\main\resources\schemas\tipovi.xsd</source>
+						<source>src\main\resources\schemas\obavestenjecir.xsd</source>
+						<source>src\main\resources\schemas\resenje.xsd</source>
+						<source>src\main\resources\schemas\zahtevcir.xsd</source>
+						<source>src\main\resources\schemas\zalbacutanjecir.xsd</source>
+						<source>src\main\resources\schemas\zalbanaodlukucir.xsd</source>
+					</sources>
+					<packageName>com.administration.services.model</packageName>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.glassfish.jaxb</groupId>
+						<artifactId>jaxb-xjc</artifactId>
+						<version>2.3.2</version>
+					</dependency>
+					<dependency>
+						<groupId>com.sun.activation</groupId>
+						<artifactId>jakarta.activation</artifactId>
+						<version>1.2.1</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>

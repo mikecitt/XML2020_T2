@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://localhost:8080/zalbanaodluku"
+    xmlns:zlbod="http://localhost:8080/zalbanaodluku" xmlns:tip="http://localhost:8080/tipovi" xmlns="http://www.w3.org/ns/rdfa#">
+    <xs:import id="tipovi" namespace="http://localhost:8080/tipovi" schemaLocation="tipovi.xsd"/>
+    <xs:element name="zalbenaodluku">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="zlbod:zalbanaodluku" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="zalbanaodluku">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="podnosilac_zalbe">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="ime" type="xs:string"/>
+                            <xs:element name="prezime" type="xs:string"/>
+                            <xs:element name="naziv" type="xs:string"/>
+                            <xs:element name="adresa" type="xs:string"/>
+                            <xs:element name="sediste" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="naziv_organa">
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="xs:string">
+                                <xs:attributeGroup ref="zlbod:rdfAttributes"/>
+                            </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="resenje">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="broj_resenja" type="xs:string"/>
+                            <xs:element name="datum_resenja">
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="tip:Tdatum">
+                                            <xs:attributeGroup ref="zlbod:rdfAttributes"/>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="datum_podnosenja_zahteva">
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="tip:Tdatum">
+                                <xs:attributeGroup ref="zlbod:rdfAttributes"/>
+                            </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="opis_zalbe" type="xs:string"/>
+                <xs:element name="detalji_predaje">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="mesto">
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="xs:string">
+                                            <xs:attributeGroup ref="zlbod:rdfAttributes"/>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="datum">
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="tip:Tdatum">
+                                            <xs:attributeGroup ref="zlbod:rdfAttributes"/>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="informacije_o_podnosiocu_zalbe">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="ime" type="xs:string"/>
+                            <xs:element name="prezime" type="xs:string"/>
+                            <xs:element name="adresa" type="xs:string"/>
+                            <xs:element name="drugi_kontakt" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attributeGroup ref="zlbod:rdfAttributesRes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="rdfAttributesRes">
+        <xs:attribute name="about"/>
+        <xs:attribute name="rel"/>
+        <xs:attribute name="href"/>
+        <xs:attribute name="vocab"/>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="rdfAttributes">
+        <xs:attribute name="property"/>
+        <xs:attribute name="datatype"/>
+    </xs:attributeGroup>
+</xs:schema>
