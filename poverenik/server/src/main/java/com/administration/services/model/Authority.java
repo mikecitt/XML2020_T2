@@ -1,6 +1,6 @@
 package com.administration.services.model;
 
-/*import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.GrantedAuthority;
 
 public class Authority implements GrantedAuthority {
     private String authority;
@@ -14,4 +14,3 @@ public class Authority implements GrantedAuthority {
         return this.authority;
     }
 }
-*/

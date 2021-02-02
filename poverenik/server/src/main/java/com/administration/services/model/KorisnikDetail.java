@@ -1,6 +1,6 @@
 package com.administration.services.model;
 
-/*import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.*;
@@ -43,4 +43,20 @@ public class KorisnikDetail extends Korisnik implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-}*/
+
+    public static KorisnikDetail createDetail(Korisnik korisnik) {
+        if(korisnik == null) {
+            return null;
+        }
+
+        KorisnikDetail k = new KorisnikDetail();
+        k.setEmailAdresa(korisnik.getEmailAdresa());
+        k.setSifra(korisnik.getSifra());
+        k.setIme(korisnik.getIme());
+        k.setPrezime(korisnik.getPrezime());
+        k.setDatumPromeneSifre(korisnik.getDatumPromeneSifre());
+        k.setTipKorisnika(korisnik.getTipKorisnika());
+
+        return k;
+    }
+}

@@ -5,9 +5,11 @@ import com.administration.services.configs.JenaConfiguration;
 import com.administration.services.helpers.DefaultNamespacePrefixMapper;
 import com.administration.services.model.Korisnici;
 import com.administration.services.model.Korisnik;
+import com.administration.services.model.KorisnikDetail;
 import org.exist.xmldb.EXistResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.xmldb.api.base.*;
 import org.xmldb.api.modules.XMLResource;
@@ -24,6 +26,9 @@ import java.util.UUID;
 
 @Service
 public class KorisnikService {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private ExistConfiguration existConfiguration;
@@ -87,10 +92,11 @@ public class KorisnikService {
         return korisnikDetail;
     }
 
-    public void addNewKorisnik(Korisnik korisnik) throws Exception {
+    public Korisnik addNewKorisnik(Korisnik korisnik) throws Exception {
         Collection col = null;
         XMLResource res = null;
         ByteArrayOutputStream os = new ByteArrayOutputStream();
+        Korisnik createdKorisnik = null;
 
         try {
 
@@ -105,8 +111,7 @@ public class KorisnikService {
             } catch (XMLDBException ex) {
                 korisnici = new Korisnici();
             }
-            //zalbacutanje.setAbout(
-            //        "http://localhost:8080/zalbacutanje/zal_" + UUID.randomUUID().toString().replace("-", ""));
+            korisnik.setSifra(passwordEncoder.encode(korisnik.getSifra()));
             korisnici.getKorisnik().add(korisnik);
 
             Marshaller marshaller = context.createMarshaller();
@@ -134,5 +139,7 @@ public class KorisnikService {
                 }
             }
         }
+        createdKorisnik = korisnik;
+        return createdKorisnik;
     }
 }
