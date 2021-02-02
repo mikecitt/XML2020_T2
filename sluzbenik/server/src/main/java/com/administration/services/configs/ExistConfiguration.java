@@ -40,7 +40,7 @@ public class ExistConfiguration {
         Class<?> cl = Class.forName(driver);
 
         // encapsulation of the database driver functionality
-        Database database = (Database) cl.newInstance();
+        Database database = (Database) cl.getDeclaredConstructor().newInstance();
         database.setProperty("create-database", "true");
 
         // entry point for the API which enables you to get the Collection reference
