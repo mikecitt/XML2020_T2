@@ -22,6 +22,7 @@ public class DefaultNamespacePrefixMapper extends NamespacePrefixMapper {
      */
     public DefaultNamespacePrefixMapper() {
         namespaceMap.put("http://localhost:8080/obavestenje", "obv");
+        namespaceMap.put("http://localhost:8080/korisnici", "kor");
         namespaceMap.put("http://localhost:8080/resenje", "res");
         namespaceMap.put("http://localhost:8080/tipovi", "tip");
         namespaceMap.put("http://localhost:8080/zahtevcir", "zah");
