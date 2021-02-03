@@ -28,7 +28,7 @@ public class KorisnikDetail extends Korisnik implements UserDetails {
 
     @Override
     public String getUsername() {
-        return emailAdresa;
+        return emailAdresa.getValue();
     }
 
     @Override

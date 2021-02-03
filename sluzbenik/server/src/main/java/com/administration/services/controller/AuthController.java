@@ -54,7 +54,8 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> addUser(@RequestBody Korisnik userRequest, HttpServletRequest request) {
-        if (korisnikService.getKorisnikByEmail(userRequest.getEmailAdresa()) != null) // temporary, should optimize
+        if (korisnikService.getKorisnikByEmail(userRequest.getEmailAdresa().getValue()) != null) // temporary, should
+            // optimize
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         Korisnik existUser;
         try {

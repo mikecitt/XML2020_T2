@@ -63,4 +63,19 @@
             </xs:simpleType>
         </xs:union>
     </xs:simpleType>
+    <xs:attributeGroup name="rdfAttributesResource">
+        <xs:attribute name="about"/>
+        <xs:attribute name="rel"/>
+        <xs:attribute name="href"/>
+        <xs:attribute name="vocab"/>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="rdfAttributes">
+        <xs:attribute name="property"/>
+        <xs:attribute name="datatype"/>
+    </xs:attributeGroup>
+    <xs:simpleType name="TemailAdresa">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[^@]+@[^\.]+\..+"/>
+        </xs:restriction>
+    </xs:simpleType>
 </xs:schema>

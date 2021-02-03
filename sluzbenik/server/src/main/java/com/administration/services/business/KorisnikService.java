@@ -20,6 +20,7 @@ import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 @Service
 public class KorisnikService {
@@ -106,6 +107,8 @@ public class KorisnikService {
                 korisnici = new Korisnici();
             }
             korisnik.setSifra(passwordEncoder.encode(korisnik.getSifra()));
+            korisnik.setTipKorisnika("GRADJANIN"); // SLUZBENIK je predefinisan
+            korisnik.setAbout("http://localhost:8080/korisnici/kor_" + UUID.randomUUID().toString().replace("-", ""));
             korisnici.getKorisnik().add(korisnik);
 
             Marshaller marshaller = context.createMarshaller();

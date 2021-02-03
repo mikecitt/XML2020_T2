@@ -17,7 +17,7 @@
                     <xs:complexType>
                         <xs:simpleContent>
                             <xs:extension base="xs:string">
-                                <xs:attributeGroup ref="zal:rdfAttributes"/>
+                                <xs:attributeGroup ref="tip:rdfAttributes"/>
                             </xs:extension>
                         </xs:simpleContent>
                     </xs:complexType>
@@ -40,7 +40,7 @@
                                 <xs:complexType>
                                     <xs:simpleContent>
                                         <xs:extension base="xs:string">
-                                            <xs:attributeGroup ref="zal:rdfAttributes"/>
+                                            <xs:attributeGroup ref="tip:rdfAttributes"/>
                                         </xs:extension>
                                     </xs:simpleContent>
                                 </xs:complexType>
@@ -49,7 +49,7 @@
                                 <xs:complexType>
                                     <xs:simpleContent>
                                         <xs:extension base="tip:Tdatum">
-                                            <xs:attributeGroup ref="zal:rdfAttributes"/>
+                                            <xs:attributeGroup ref="tip:rdfAttributes"/>
                                         </xs:extension>
                                     </xs:simpleContent>
                                 </xs:complexType>
@@ -68,17 +68,7 @@
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
-            <xs:attributeGroup ref="zal:rdfAttributesRes"/>
+            <xs:attributeGroup ref="tip:rdfAttributesResource"/>
         </xs:complexType>
     </xs:element>
-    <xs:attributeGroup name="rdfAttributesRes">
-        <xs:attribute name="about"/>
-        <xs:attribute name="rel"/>
-        <xs:attribute name="href"/>
-        <xs:attribute name="vocab"/>
-    </xs:attributeGroup>
-    <xs:attributeGroup name="rdfAttributes">
-        <xs:attribute name="property"/>
-        <xs:attribute name="datatype"/>
-    </xs:attributeGroup>
 </xs:schema>

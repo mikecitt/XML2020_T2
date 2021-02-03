@@ -15,8 +15,10 @@ import com.administration.services.configs.JenaConfiguration;
 import com.administration.services.helpers.DefaultNamespacePrefixMapper;
 import com.administration.services.helpers.MetadataExtractor;
 import com.administration.services.helpers.SparqlUtil;
+import com.administration.services.model.Korisnik;
 import com.administration.services.model.Zahtev;
 import com.administration.services.model.Zahtevi;
+import com.administration.services.model.Zahtev.Status;
 
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
@@ -31,6 +33,8 @@ import org.apache.jena.update.UpdateRequest;
 import org.exist.xmldb.EXistResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.XMLDBException;
@@ -44,6 +48,9 @@ public class ZahtevService {
 
     @Autowired
     private JenaConfiguration jenaConfiguration;
+
+    @Autowired
+    private KorisnikService korisnikService;
 
     @Value("/db/sluzbenik")
     private String collectionId;
@@ -95,6 +102,7 @@ public class ZahtevService {
     }
 
     public void addNewZahtev(Zahtev zahtev) throws Exception {
+
         Collection col = null;
         XMLResource res = null;
         ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -117,7 +125,25 @@ public class ZahtevService {
             } catch (XMLDBException ex) {
                 zahtevi = new Zahtevi();
             }
+            zahtev.setVocab("http://localhost:8080/rdf/predicate/");
             zahtev.setAbout("http://localhost:8080/zahtevcir/zah_" + UUID.randomUUID().toString().replace("-", ""));
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            Korisnik k = korisnikService.getKorisnikByEmail(authentication.getName());
+            zahtev.setRel("pred:createdBy");
+            zahtev.setHref(k.getAbout());
+            zahtev.setStatus(new Status());
+            zahtev.getStatus().setValue("OBRADA");
+            zahtev.getStatus().setProperty("pred:status_zahteva");
+            zahtev.getStatus().setDatatype("xs:string");
+
+            zahtev.getOrgan().getSediste().setProperty("pred:sediste_organa");
+            zahtev.getOrgan().getSediste().setDatatype("xs:string");
+
+            zahtev.getDetaljiPredaje().getMesto().setProperty("pred:mesto_predaje");
+            zahtev.getDetaljiPredaje().getMesto().setDatatype("xs:string");
+            zahtev.getDetaljiPredaje().getDatum().setProperty("pred:datum_predaje");
+            zahtev.getDetaljiPredaje().getDatum().setDatatype("xs:date");
+
             zahtevi.getZahtev().add(zahtev);
 
             Marshaller marshaller = context.createMarshaller();
