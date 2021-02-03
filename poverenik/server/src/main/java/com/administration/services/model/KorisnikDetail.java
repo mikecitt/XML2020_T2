@@ -56,6 +56,10 @@ public class KorisnikDetail extends Korisnik implements UserDetails {
         k.setPrezime(korisnik.getPrezime());
         k.setDatumPromeneSifre(korisnik.getDatumPromeneSifre());
         k.setTipKorisnika(korisnik.getTipKorisnika());
+        k.setAbout(korisnik.getAbout());
+        k.setVocab(korisnik.getVocab());
+        k.setHref(korisnik.getHref());
+        k.setRel(korisnik.getRel());
 
         return k;
     }

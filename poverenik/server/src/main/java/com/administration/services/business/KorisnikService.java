@@ -54,7 +54,6 @@ public class KorisnikService {
             byte[] encoded = Files.readAllBytes(Paths.get("src/main/resources/xquery/getOneKorisnik.xqy"));
             String xqueryExpression = new String(encoded, StandardCharsets.UTF_8);
             xqueryExpression = String.format(xqueryExpression, email);
-            System.out.println(xqueryExpression);
             CompiledExpression compiledXquery = xqueryService.compile(xqueryExpression);
             ResourceSet result = xqueryService.execute(compiledXquery);
 

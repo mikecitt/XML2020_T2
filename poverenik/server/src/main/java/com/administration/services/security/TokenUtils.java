@@ -80,7 +80,7 @@ public class TokenUtils {
         final String username = getUsernameFromToken(token);
         final Date created = getIssuedAtDateFromToken(token);
 
-        return (username != null && username.equals(korisnik.getEmailAdresa())
+        return (username != null && username.equals(korisnik.getEmailAdresa().getValue())
                 && !isCreatedBeforeLastPasswordReset(created, korisnik.getDatumPromeneSifre()));
     }
 

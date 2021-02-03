@@ -17,7 +17,7 @@ public class ZalbaController {
     private ZalbaService zalbaService;
 
     @GetMapping("/cutanje")
-    @PreAuthorize("hasAnyRole('GRADJANIN', 'POVERENIK')")
+    @PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_POVERENIK')")
     public ResponseEntity<Zalbecutanje> getAllZalbeCutanje() {
         Zalbecutanje zalbecutanje = null;
         try {
@@ -30,7 +30,7 @@ public class ZalbaController {
     }
 
     @PostMapping("/cutanje")
-    @PreAuthorize("hasRole('GRADJANIN')")
+    @PreAuthorize("hasRole('ROLE_GRADJANIN')")
     public ResponseEntity<?> addNewZalbaCutanje(@RequestBody Zalbacutanje zalbacutanje) {
         try {
             zalbaService.addNewZalbaCutanje(zalbacutanje);
@@ -42,7 +42,7 @@ public class ZalbaController {
     }
 
     @GetMapping("/odluka")
-    @PreAuthorize("hasAnyRole('GRADJANIN', 'POVERENIK')")
+    @PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_POVERENIK')")
     public ResponseEntity<?> getAllZalbeOdluku() {
         Zalbenaodluku zalbenaodluku = null;
         try {
@@ -55,7 +55,7 @@ public class ZalbaController {
     }
 
     @PostMapping("/odluka")
-    @PreAuthorize("hasRole('GRADJANIN')")
+    @PreAuthorize("hasRole('ROLE_GRADJANIN')")
     public ResponseEntity<?> addNewZalbaOdluku(@RequestBody Zalbanaodluku zalbanaodluku) {
         try {
             zalbaService.addNewZalbaOdluka(zalbanaodluku);

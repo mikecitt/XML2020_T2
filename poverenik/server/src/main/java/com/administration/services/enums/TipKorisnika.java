@@ -1,8 +1,8 @@
 package com.administration.services.enums;
 
 public enum TipKorisnika {
-    GRADJANIN("GRADJANIN"),
-    POVERENIK("POVERENIK");
+    GRADJANIN("ROLE_GRADJANIN"),
+    POVERENIK("ROLE_POVERENIK");
 
     private final String text;
 

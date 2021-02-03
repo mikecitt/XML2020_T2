@@ -19,7 +19,7 @@ public class ResenjeController {
     private ResenjeService resenjeService;
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('GRADJANIN', 'POVERENIK')")
+    @PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_POVERENIK')")
     public ResponseEntity<Resenja> getAllResenja() {
         Resenja resenja = null;
         try {
@@ -32,7 +32,7 @@ public class ResenjeController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('POVERENIK')")
+    @PreAuthorize("hasRole('ROLE_POVERENIK')")
     public ResponseEntity<?> addNewResenje(@RequestBody Resenje resenje) {
         try {
             resenjeService.addNewResenje(resenje);
