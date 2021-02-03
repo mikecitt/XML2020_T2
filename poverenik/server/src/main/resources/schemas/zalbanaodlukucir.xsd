@@ -92,6 +92,7 @@
                             <xs:element name="adresa" type="xs:string"/>
                             <xs:element name="drugi_kontakt" type="xs:string"/>
                         </xs:sequence>
+                        <xs:attributeGroup ref="tip:rdfAttributesResource"/>
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>

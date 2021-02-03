@@ -57,6 +57,7 @@
                             <xs:element name="podnositelj_zalbe" type="tip:Tosoba"/>
                             <xs:element name="razlog" type="xs:string"/>
                         </xs:sequence>
+                        <xs:attributeGroup ref="tip:rdfAttributesResource"/>
                     </xs:complexType>
                 </xs:element>
                 <xs:element name="telo_resenja">
@@ -94,7 +95,15 @@
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="poverenik" type="tip:Tosoba"/>
+                <xs:element name="poverenik">
+                    <xs:complexType>
+                        <xs:complexContent>
+                            <xs:extension base="tip:Tosoba">
+                                <xs:attributeGroup ref="tip:rdfAttributesResource"/>
+                            </xs:extension>
+                        </xs:complexContent>
+                    </xs:complexType>
+                </xs:element>
             </xs:sequence>
             <xs:attributeGroup ref="tip:rdfAttributesResource"/>
         </xs:complexType>

@@ -1,5 +1,6 @@
 package com.administration.services.controller;
 
+import com.administration.services.business.KorisnikService;
 import com.administration.services.business.ZalbaService;
 import com.administration.services.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @RestController
 @CrossOrigin
 @RequestMapping("/zalbe")
@@ -15,6 +18,9 @@ public class ZalbaController {
 
     @Autowired
     private ZalbaService zalbaService;
+
+    @Autowired
+    private KorisnikService korisnikService;
 
     @GetMapping("/cutanje")
     @PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_POVERENIK')")
@@ -31,9 +37,12 @@ public class ZalbaController {
 
     @PostMapping("/cutanje")
     @PreAuthorize("hasRole('ROLE_GRADJANIN')")
-    public ResponseEntity<?> addNewZalbaCutanje(@RequestBody Zalbacutanje zalbacutanje) {
+    public ResponseEntity<?> addNewZalbaCutanje(@RequestBody Zalbacutanje zalbacutanje, Principal user) {
         try {
-            zalbaService.addNewZalbaCutanje(zalbacutanje);
+            Korisnik korisnik = korisnikService.getKorisnikByEmail(user.getName());
+            if(korisnik ==  null)
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            zalbaService.addNewZalbaCutanje(zalbacutanje, korisnik);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -56,9 +65,12 @@ public class ZalbaController {
 
     @PostMapping("/odluka")
     @PreAuthorize("hasRole('ROLE_GRADJANIN')")
-    public ResponseEntity<?> addNewZalbaOdluku(@RequestBody Zalbanaodluku zalbanaodluku) {
+    public ResponseEntity<?> addNewZalbaOdluku(@RequestBody Zalbanaodluku zalbanaodluku, Principal user) {
         try {
-            zalbaService.addNewZalbaOdluka(zalbanaodluku);
+            Korisnik korisnik = korisnikService.getKorisnikByEmail(user.getName());
+            if(korisnik ==  null)
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            zalbaService.addNewZalbaOdluka(zalbanaodluku, korisnik);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

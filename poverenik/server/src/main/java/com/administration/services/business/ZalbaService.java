@@ -74,7 +74,7 @@ public class ZalbaService {
         return zalbecutanje;
     }
 
-    public void addNewZalbaCutanje(Zalbacutanje zalbacutanje) throws Exception {
+    public void addNewZalbaCutanje(Zalbacutanje zalbacutanje, Korisnik korisnik) throws Exception {
         Collection col = null;
         XMLResource res = null;
         ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -91,7 +91,7 @@ public class ZalbaService {
             } catch (XMLDBException ex) {
                 zalbecutanje = new Zalbecutanje();
             }
-            prepareZalbCut(zalbacutanje);
+            prepareZalbCut(zalbacutanje, korisnik);
             zalbecutanje.getZalbacutanje().add(zalbacutanje);
 
             Marshaller marshaller = context.createMarshaller();
@@ -160,7 +160,7 @@ public class ZalbaService {
         return zalbenaodluku;
     }
 
-    public void addNewZalbaOdluka(Zalbanaodluku zalbanaodluku) throws Exception {
+    public void addNewZalbaOdluka(Zalbanaodluku zalbanaodluku, Korisnik korisnik) throws Exception {
         Collection col = null;
         XMLResource res = null;
         ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -178,7 +178,7 @@ public class ZalbaService {
                 zalbenaodluku = new Zalbenaodluku();
 
             }
-            prepareZalbOd(zalbanaodluku);
+            prepareZalbOd(zalbanaodluku, korisnik);
             zalbenaodluku.getZalbanaodluku().add(zalbanaodluku);
 
             Marshaller marshaller = context.createMarshaller();
@@ -210,10 +210,12 @@ public class ZalbaService {
         }
     }
 
-    private void prepareZalbOd(Zalbanaodluku zalbanaodluku) {
+    private void prepareZalbOd(Zalbanaodluku zalbanaodluku, Korisnik korisnik) {
         zalbanaodluku.setAbout("http://localhost:8080/zalbanaodluku/" +
                 UUID.randomUUID().toString().replace("-", ""));
         zalbanaodluku.setVocab("http://localhost:8080/rdf/predicate/");
+        zalbanaodluku.getInformacijeOPodnosiocuZalbe().setRel("pred:createdBy");
+        zalbanaodluku.getInformacijeOPodnosiocuZalbe().setHref(korisnik.getAbout());
         zalbanaodluku.getNazivOrgana().setDatatype("xs:string");
         zalbanaodluku.getNazivOrgana().setProperty("pred:naziv_organa");
         zalbanaodluku.getResenje().getDatumResenja().setDatatype("tip:Tdatum");
@@ -226,10 +228,12 @@ public class ZalbaService {
         zalbanaodluku.getDetaljiPredaje().getMesto().setProperty("pred:mesto_predaje");
     }
 
-    private void prepareZalbCut(Zalbacutanje zalbacutanje) {
+    private void prepareZalbCut(Zalbacutanje zalbacutanje, Korisnik korisnik) {
         zalbacutanje.setAbout("http://localhost:8080/zalba/" +
                 UUID.randomUUID().toString().replace("-", ""));
         zalbacutanje.setVocab("http://localhost:8080/rdf/predicate/");
+        zalbacutanje.getInformacijeOPodnosiocuZalbe().setRel("pred:createdBy");
+        zalbacutanje.getInformacijeOPodnosiocuZalbe().setHref(korisnik.getAbout());
         zalbacutanje.getNazivOrgana().setDatatype("xs:string");
         zalbacutanje.getNazivOrgana().setProperty("pred:naziv_organa");
         zalbacutanje.getDetaljiPredaje().getDatum().setDatatype("tip:Tdatum");
