@@ -5,6 +5,7 @@ import com.administration.services.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,6 +17,7 @@ public class ZalbaController {
     private ZalbaService zalbaService;
 
     @GetMapping("/cutanje")
+    @PreAuthorize("hasAnyRole('GRADJANIN', 'POVERENIK')")
     public ResponseEntity<Zalbecutanje> getAllZalbeCutanje() {
         Zalbecutanje zalbecutanje = null;
         try {
@@ -28,6 +30,7 @@ public class ZalbaController {
     }
 
     @PostMapping("/cutanje")
+    @PreAuthorize("hasRole('GRADJANIN')")
     public ResponseEntity<?> addNewZalbaCutanje(@RequestBody Zalbacutanje zalbacutanje) {
         try {
             zalbaService.addNewZalbaCutanje(zalbacutanje);
@@ -39,6 +42,7 @@ public class ZalbaController {
     }
 
     @GetMapping("/odluka")
+    @PreAuthorize("hasAnyRole('GRADJANIN', 'POVERENIK')")
     public ResponseEntity<?> getAllZalbeOdluku() {
         Zalbenaodluku zalbenaodluku = null;
         try {
@@ -51,6 +55,7 @@ public class ZalbaController {
     }
 
     @PostMapping("/odluka")
+    @PreAuthorize("hasRole('GRADJANIN')")
     public ResponseEntity<?> addNewZalbaOdluku(@RequestBody Zalbanaodluku zalbanaodluku) {
         try {
             zalbaService.addNewZalbaOdluka(zalbanaodluku);

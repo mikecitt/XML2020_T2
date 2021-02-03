@@ -7,6 +7,7 @@ import com.administration.services.model.Resenje;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,6 +19,7 @@ public class ResenjeController {
     private ResenjeService resenjeService;
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('GRADJANIN', 'POVERENIK')")
     public ResponseEntity<Resenja> getAllResenja() {
         Resenja resenja = null;
         try {
@@ -30,6 +32,7 @@ public class ResenjeController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('POVERENIK')")
     public ResponseEntity<?> addNewResenje(@RequestBody Resenje resenje) {
         try {
             resenjeService.addNewResenje(resenje);

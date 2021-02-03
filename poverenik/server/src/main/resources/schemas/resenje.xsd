@@ -31,7 +31,7 @@
                                             <xs:complexType>
                                                 <xs:simpleContent>
                                                   <xs:extension base="tip:TdatumBroj">
-                                                  <xs:attributeGroup ref="res:rdfAttributes"/>
+                                                  <xs:attributeGroup ref="tip:rdfAttributes"/>
                                                   </xs:extension>
                                                 </xs:simpleContent>
                                             </xs:complexType>
@@ -43,7 +43,7 @@
                                 <xs:complexType>
                                     <xs:simpleContent>
                                         <xs:extension base="tip:Tdatum">
-                                            <xs:attributeGroup ref="res:rdfAttributes"/>
+                                            <xs:attributeGroup ref="tip:rdfAttributes"/>
                                         </xs:extension>
                                     </xs:simpleContent>
                                 </xs:complexType>
@@ -81,7 +81,7 @@
                                             <xs:complexType>
                                                 <xs:simpleContent>
                                                   <xs:extension base="xs:string">
-                                                  <xs:attributeGroup ref="res:rdfAttributes"/>
+                                                  <xs:attributeGroup ref="tip:rdfAttributes"/>
                                                   </xs:extension>
                                                 </xs:simpleContent>
                                             </xs:complexType>
@@ -96,17 +96,7 @@
                 </xs:element>
                 <xs:element name="poverenik" type="tip:Tosoba"/>
             </xs:sequence>
-            <xs:attributeGroup ref="res:rdfAttributesRes"/>
+            <xs:attributeGroup ref="tip:rdfAttributesResource"/>
         </xs:complexType>
     </xs:element>
-    <xs:attributeGroup name="rdfAttributesRes">
-        <xs:attribute name="about"/>
-        <xs:attribute name="rel"/>
-        <xs:attribute name="href"/>
-        <xs:attribute name="vocab"/>
-    </xs:attributeGroup>
-    <xs:attributeGroup name="rdfAttributes">
-        <xs:attribute name="property"/>
-        <xs:attribute name="datatype"/>
-    </xs:attributeGroup>
 </xs:schema>

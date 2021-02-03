@@ -58,40 +58,17 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> addUser(@RequestBody Korisnik userRequest,
+    public ResponseEntity<?> registerUser(@RequestBody Korisnik userRequest,
                                      HttpServletRequest request) {
         Korisnik existUser;
         try {
             existUser = korisnikService.addNewKorisnik(userRequest);
-            if(existUser == null)
-                throw new Exception("Crash");
         } catch (Exception e) {
+            if(e.getMessage().equals("User exist")) {
+                return new ResponseEntity<>(HttpStatus.CONFLICT);
+            }
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
-    @GetMapping("/{email}")
-    public ResponseEntity<Korisnik> getKorisnik(@PathVariable String email) {
-        Korisnik korisnikDetail = null;
-
-        try {
-            korisnikDetail = korisnikService.getKorisnikByEmail(email);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>(korisnikDetail, HttpStatus.OK);
-    }
-
-    @PostMapping
-    public ResponseEntity<?> addNewKorisnik(@RequestBody Korisnik korisnik) {
-        try {
-            korisnikService.addNewKorisnik(korisnik);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>(korisnik, HttpStatus.OK);
     }
 }

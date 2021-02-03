@@ -2,10 +2,10 @@ package com.administration.services.business;
 
 import com.administration.services.configs.ExistConfiguration;
 import com.administration.services.configs.JenaConfiguration;
+import com.administration.services.enums.TipKorisnika;
 import com.administration.services.helpers.DefaultNamespacePrefixMapper;
 import com.administration.services.model.Korisnici;
 import com.administration.services.model.Korisnik;
-import com.administration.services.model.KorisnikDetail;
 import org.exist.xmldb.EXistResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -98,6 +98,10 @@ public class KorisnikService {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         Korisnik createdKorisnik = null;
 
+        if(getKorisnikByEmail(korisnik.getEmailAdresa().getValue()) != null) {
+            throw new Exception("User exist");
+        }
+
         try {
 
             col = existConfiguration.getOrCreateCollection(collectionId, 0);
@@ -111,7 +115,10 @@ public class KorisnikService {
             } catch (XMLDBException ex) {
                 korisnici = new Korisnici();
             }
+
             korisnik.setSifra(passwordEncoder.encode(korisnik.getSifra()));
+            korisnik.setTipKorisnika(TipKorisnika.GRADJANIN.toString());
+            prepareKorisnik(korisnik);
             korisnici.getKorisnik().add(korisnik);
 
             Marshaller marshaller = context.createMarshaller();
@@ -122,6 +129,8 @@ public class KorisnikService {
 
             res.setContent(os);
             col.storeResource(res);
+            jenaConfiguration.updateRDF(new String(os.toByteArray(), StandardCharsets.UTF_8));
+
         } finally {
             if (res != null) {
                 try {
@@ -141,5 +150,12 @@ public class KorisnikService {
         }
         createdKorisnik = korisnik;
         return createdKorisnik;
+    }
+
+    private void prepareKorisnik(Korisnik korisnik) {
+        korisnik.setAbout("http://localhost:8080/korisnici/" + korisnik.getEmailAdresa().getValue());
+        korisnik.setVocab("http://localhost:8080/rdf/predicate/");
+        korisnik.getEmailAdresa().setDatatype("tip:TemailAdresa");
+        korisnik.getEmailAdresa().setProperty("pred:email_adresa");
     }
 }
