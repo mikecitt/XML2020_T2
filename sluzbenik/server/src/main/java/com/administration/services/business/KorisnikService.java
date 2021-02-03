@@ -107,7 +107,7 @@ public class KorisnikService {
                 korisnici = new Korisnici();
             }
             korisnik.setSifra(passwordEncoder.encode(korisnik.getSifra()));
-            korisnik.setTipKorisnika("GRADJANIN"); // SLUZBENIK je predefinisan
+            korisnik.setTipKorisnika("ROLE_GRADJANIN"); // SLUZBENIK je predefinisan
             korisnik.setAbout("http://localhost:8080/korisnici/kor_" + UUID.randomUUID().toString().replace("-", ""));
             korisnici.getKorisnik().add(korisnik);
 
