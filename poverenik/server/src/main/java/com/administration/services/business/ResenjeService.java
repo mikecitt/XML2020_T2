@@ -16,6 +16,7 @@ import com.administration.services.configs.JenaConfiguration;
 import com.administration.services.helpers.DefaultNamespacePrefixMapper;
 import com.administration.services.helpers.MetadataExtractor;
 import com.administration.services.helpers.SparqlUtil;
+import com.administration.services.model.Korisnik;
 import com.administration.services.model.Resenja;
 import com.administration.services.model.Resenje;
 
@@ -89,7 +90,7 @@ public class ResenjeService {
         return resenja;
     }
 
-    public void addNewResenje(Resenje resenje) throws Exception {
+    public void addNewResenje(Resenje resenje, Korisnik korisnik, String aboutZalba) throws Exception {
         Collection col = null;
         XMLResource res = null;
         ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -107,7 +108,9 @@ public class ResenjeService {
                 resenja = new Resenja();
             }
 
-            prepareResenje(resenje);
+            prepareResenje(resenje, korisnik);
+            resenje.getRazlogZalbe().setRel("pred:refTo");
+            resenje.getRazlogZalbe().setHref("http://localhost:8080/" + aboutZalba);
             resenja.getResenje().add(resenje);
 
             Marshaller marshaller = context.createMarshaller();
@@ -139,10 +142,12 @@ public class ResenjeService {
         }
     }
 
-    private void prepareResenje(Resenje resenje) {
+    private void prepareResenje(Resenje resenje, Korisnik korisnik) {
         resenje.setAbout("http://localhost:8080/resenje/" +
                 UUID.randomUUID().toString().replace("-", ""));
         resenje.setVocab("http://localhost:8080/rdf/predicate/");
+        resenje.getPoverenik().setRel("pred:createdBy");
+        resenje.getPoverenik().setHref(korisnik.getAbout());
         resenje.getZaglavlje().getInformacijePredmeta()
                 .getDatumPredmeta().setDatatype("tip:TdatumBroj");
         resenje.getZaglavlje().getInformacijePredmeta()
