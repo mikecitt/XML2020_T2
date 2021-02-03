@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -38,9 +39,9 @@ public class ObavestenjeController {
 
     @PreAuthorize("hasRole('ROLE_SLUZBENIK')")
     @PostMapping
-    public ResponseEntity<?> addNewObavestenje(@RequestBody Obavestenje obavestenje) {
+    public ResponseEntity<?> addNewObavestenje(@RequestParam String zahtevId, @RequestBody Obavestenje obavestenje) {
         try {
-            obavestenjeService.addNewObavestenje(obavestenje);
+            obavestenjeService.addNewObavestenje(zahtevId, obavestenje);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

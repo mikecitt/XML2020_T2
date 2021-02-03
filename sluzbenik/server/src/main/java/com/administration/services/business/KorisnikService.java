@@ -1,6 +1,7 @@
 package com.administration.services.business;
 
 import com.administration.services.configs.ExistConfiguration;
+import com.administration.services.configs.JenaConfiguration;
 import com.administration.services.helpers.DefaultNamespacePrefixMapper;
 import com.administration.services.model.Korisnici;
 import com.administration.services.model.Korisnik;
@@ -20,7 +21,6 @@ import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.UUID;
 
 @Service
 public class KorisnikService {
@@ -30,6 +30,9 @@ public class KorisnikService {
 
     @Autowired
     private ExistConfiguration existConfiguration;
+
+    @Autowired
+    private JenaConfiguration jenaConfiguration;
 
     @Value("/db/sluzbenik")
     private String collectionId;
@@ -49,7 +52,6 @@ public class KorisnikService {
             byte[] encoded = Files.readAllBytes(Paths.get("src/main/resources/xquery/getOneKorisnik.xqy"));
             String xqueryExpression = new String(encoded, StandardCharsets.UTF_8);
             xqueryExpression = String.format(xqueryExpression, email);
-            System.out.println(xqueryExpression);
             CompiledExpression compiledXquery = xqueryService.compile(xqueryExpression);
             ResourceSet result = xqueryService.execute(compiledXquery);
 
@@ -108,7 +110,9 @@ public class KorisnikService {
             }
             korisnik.setSifra(passwordEncoder.encode(korisnik.getSifra()));
             korisnik.setTipKorisnika("ROLE_GRADJANIN"); // SLUZBENIK je predefinisan
-            korisnik.setAbout("http://localhost:8080/korisnici/kor_" + UUID.randomUUID().toString().replace("-", ""));
+            korisnik.setAbout("http://localhost:8080/korisnici/" + korisnik.getEmailAdresa().getValue());
+            korisnik.getEmailAdresa().setDatatype("tip:TemailAdresa");
+            korisnik.getEmailAdresa().setProperty("pred:email_adresa");
             korisnici.getKorisnik().add(korisnik);
 
             Marshaller marshaller = context.createMarshaller();
@@ -119,6 +123,7 @@ public class KorisnikService {
 
             res.setContent(os);
             col.storeResource(res);
+            jenaConfiguration.updateRDF(new String(os.toByteArray(), StandardCharsets.UTF_8));
         } finally {
             if (res != null) {
                 try {
