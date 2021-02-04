@@ -2,6 +2,8 @@ package com.administration.services.business;
 
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.UUID;
 
 import javax.xml.bind.JAXBContext;
@@ -19,8 +21,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.xmldb.api.base.Collection;
+import org.xmldb.api.base.CompiledExpression;
+import org.xmldb.api.base.ResourceIterator;
+import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
+import org.xmldb.api.modules.XQueryService;
 
 @Service
 public class ObavestenjeService {
@@ -36,6 +42,104 @@ public class ObavestenjeService {
 
     @Value("obavestenje.xml")
     private String obavestenjeId;
+
+    public Obavestenje getObavestenje(String obavestenjeId) {
+        Collection col = null;
+        Obavestenje obavestenje = null;
+
+        try {
+            col = existConfiguration.getOrCreateCollection(collectionId, 0);
+            XQueryService xqueryService = (XQueryService) col.getService("XQueryService", "1.0");
+            xqueryService.setProperty("indent", "yes");
+
+            byte[] encoded = Files.readAllBytes(Paths.get("src/main/resources/xquery/getOneObavestenje.xqy"));
+            String xqueryExpression = new String(encoded, StandardCharsets.UTF_8);
+            xqueryExpression = String.format(xqueryExpression, obavestenjeId);
+            CompiledExpression compiledXquery = xqueryService.compile(xqueryExpression);
+            ResourceSet result = xqueryService.execute(compiledXquery);
+
+            ResourceIterator i = result.getIterator();
+            XMLResource res = null;
+
+            if (i.hasMoreResources()) {
+                try {
+                    JAXBContext context = JAXBContext.newInstance("com.administration.services.model");
+
+                    Unmarshaller unmarshaller = context.createUnmarshaller();
+                    res = (XMLResource) i.nextResource();
+                    obavestenje = (Obavestenje) unmarshaller.unmarshal(res.getContentAsDOM());
+                } finally {
+                    try {
+                        ((EXistResource) res).freeResources();
+                    } catch (XMLDBException xe) {
+                        xe.printStackTrace();
+                    }
+                }
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            if (col != null) {
+                try {
+                    col.close();
+                } catch (XMLDBException xe) {
+                    xe.printStackTrace();
+                }
+            }
+        }
+
+        return obavestenje;
+    }
+
+    public Obavestenje getZahtevObavestenje(String zahtevId) {
+        Collection col = null;
+        Obavestenje obavestenje = null;
+
+        try {
+            col = existConfiguration.getOrCreateCollection(collectionId, 0);
+            XQueryService xqueryService = (XQueryService) col.getService("XQueryService", "1.0");
+            xqueryService.setProperty("indent", "yes");
+
+            byte[] encoded = Files.readAllBytes(Paths.get("src/main/resources/xquery/getZahtevObavestenje.xqy"));
+            String xqueryExpression = new String(encoded, StandardCharsets.UTF_8);
+            xqueryExpression = String.format(xqueryExpression, zahtevId);
+            CompiledExpression compiledXquery = xqueryService.compile(xqueryExpression);
+            ResourceSet result = xqueryService.execute(compiledXquery);
+
+            ResourceIterator i = result.getIterator();
+            XMLResource res = null;
+
+            if (i.hasMoreResources()) {
+                try {
+                    JAXBContext context = JAXBContext.newInstance("com.administration.services.model");
+
+                    Unmarshaller unmarshaller = context.createUnmarshaller();
+                    res = (XMLResource) i.nextResource();
+                    obavestenje = (Obavestenje) unmarshaller.unmarshal(res.getContentAsDOM());
+                } finally {
+                    try {
+                        ((EXistResource) res).freeResources();
+                    } catch (XMLDBException xe) {
+                        xe.printStackTrace();
+                    }
+                }
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            if (col != null) {
+                try {
+                    col.close();
+                } catch (XMLDBException xe) {
+                    xe.printStackTrace();
+                }
+            }
+        }
+
+        return obavestenje;
+    }
 
     public Obavestenja getAllObavestenja() throws Exception {
         Collection col = null;
