@@ -1,0 +1,21 @@
+.root {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  box-shadow: 0 2px 8px #f0f1f2;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.logoArea {
+  font-size: 26px;
+  font-weight: 500;
+}
+
+.emptySpace {
+  flex-grow: 1;
+}
+
+a {
+  color: inherit;
+}

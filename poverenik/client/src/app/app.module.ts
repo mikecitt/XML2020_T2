@@ -15,11 +15,13 @@ import { LoginFormComponent } from './modules/login/login-form/login-form.compon
 import { AntdModule } from './antd-module';
 import { RegisterPageComponent } from './modules/register/register-page/register-page.component';
 import { RegisterFormComponent } from './modules/register/register-form/register-form.component';
+import { NavigationBarComponent } from './core/navigation-bar/navigation-bar.component';
+import { HomePageComponent } from './modules/home/home-page/home-page.component';
 
 registerLocaleData(en);
 
 @NgModule({
-  declarations: [AppComponent, LoginPageComponent, LoginFormComponent, RegisterPageComponent, RegisterFormComponent],
+  declarations: [AppComponent, LoginPageComponent, LoginFormComponent, RegisterPageComponent, RegisterFormComponent, NavigationBarComponent, HomePageComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
