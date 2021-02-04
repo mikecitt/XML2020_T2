@@ -4,6 +4,7 @@ import com.administration.services.business.KorisnikService;
 import com.administration.services.business.UserDetailsServiceImpl;
 import com.administration.services.dto.UserLoginDTO;
 import com.administration.services.dto.UserTokenStateDTO;
+import com.administration.services.helpers.XSLFOTransformer;
 import com.administration.services.model.Korisnik;
 import com.administration.services.model.KorisnikDetail;
 import com.administration.services.security.TokenUtils;
@@ -35,6 +36,9 @@ public class AuthController {
 
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
+
+    @Autowired
+    private XSLFOTransformer xslfoTransformer;
 
     @PostMapping("/login")
     public ResponseEntity<UserTokenStateDTO> createAuthenticationToken(@RequestBody UserLoginDTO authenticationRequest,
@@ -70,5 +74,15 @@ public class AuthController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping("/xsl")
+    public ResponseEntity<?> registerUser() {
+        try {
+            xslfoTransformer.generatePDF();
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
