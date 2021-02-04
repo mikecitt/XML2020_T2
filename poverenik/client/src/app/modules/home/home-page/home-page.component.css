@@ -1,8 +1,16 @@
 .root {
   height: 100vh;
+  background-color: #ffffff;
 }
 
 .header {
   background-color: #ffffff;
   padding: 0;
+}
+
+.content {
+}
+
+.forbidden {
+  margin-top: 5vh;
 }

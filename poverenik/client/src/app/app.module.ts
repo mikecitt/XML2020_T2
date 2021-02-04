@@ -17,11 +17,13 @@ import { RegisterPageComponent } from './modules/register/register-page/register
 import { RegisterFormComponent } from './modules/register/register-form/register-form.component';
 import { NavigationBarComponent } from './core/navigation-bar/navigation-bar.component';
 import { HomePageComponent } from './modules/home/home-page/home-page.component';
+import { OverviewComponent } from './modules/complaint-silence/overview/overview.component';
+import { ComplaintsComponent } from './modules/home/complaints/complaints.component';
 
 registerLocaleData(en);
 
 @NgModule({
-  declarations: [AppComponent, LoginPageComponent, LoginFormComponent, RegisterPageComponent, RegisterFormComponent, NavigationBarComponent, HomePageComponent],
+  declarations: [AppComponent, LoginPageComponent, LoginFormComponent, RegisterPageComponent, RegisterFormComponent, NavigationBarComponent, HomePageComponent, OverviewComponent, ComplaintsComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
