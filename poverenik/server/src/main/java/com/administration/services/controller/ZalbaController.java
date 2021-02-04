@@ -2,6 +2,7 @@ package com.administration.services.controller;
 
 import com.administration.services.business.KorisnikService;
 import com.administration.services.business.ZalbaService;
+import com.administration.services.enums.TipKorisnika;
 import com.administration.services.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,15 +25,40 @@ public class ZalbaController {
 
     @GetMapping("/cutanje")
     @PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_POVERENIK')")
-    public ResponseEntity<Zalbecutanje> getAllZalbeCutanje() {
+    public ResponseEntity<Zalbecutanje> getAllZalbeCutanje(Principal user) {
         Zalbecutanje zalbecutanje = null;
         try {
-            zalbecutanje = zalbaService.getAllZalbeCutanje();
+            Korisnik korisnik = korisnikService.getKorisnikByEmail(user.getName());
+            if(korisnik.getTipKorisnika().equals(TipKorisnika.POVERENIK.toString())) {
+                zalbecutanje = zalbaService.getAllZalbeCutanje();
+            } else {
+                zalbecutanje = zalbaService.getKorisnikZalbeCutanje(
+                        korisnik.getEmailAdresa().getValue());
+            }
         } catch (Exception e) {
-            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(zalbecutanje, HttpStatus.OK);
+    }
+
+    @GetMapping("/cutanje/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_POVERENIK')")
+    public ResponseEntity<Zalbacutanje> getOneZalbaCutanje(@PathVariable String id, Principal user) {
+        Zalbacutanje zalbacutanje = null;
+        try {
+            String korisnikId = null;
+            Korisnik korisnik = korisnikService.getKorisnikByEmail(user.getName());
+            if(korisnik.getTipKorisnika().equals(TipKorisnika.GRADJANIN.toString())) {
+                korisnikId = user.getName();
+            }
+            zalbacutanje = zalbaService.getZalbaCutanje(id, korisnikId);
+        } catch (Exception e) {
+            if(e.getMessage().equals("Zalba not belong to Korisnik"))
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(zalbacutanje, HttpStatus.OK);
     }
 
     @PostMapping("/cutanje")
@@ -52,15 +78,41 @@ public class ZalbaController {
 
     @GetMapping("/odluka")
     @PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_POVERENIK')")
-    public ResponseEntity<?> getAllZalbeOdluku() {
+    public ResponseEntity<?> getAllZalbeOdluku(Principal user) {
         Zalbenaodluku zalbenaodluku = null;
         try {
-            zalbenaodluku = zalbaService.getAllZalbeOdluka();
+            Korisnik korisnik = korisnikService.getKorisnikByEmail(user.getName());
+            if(korisnik.getTipKorisnika().equals(TipKorisnika.POVERENIK.toString())) {
+                zalbenaodluku = zalbaService.getAllZalbeOdluka();
+            } else {
+                zalbenaodluku = zalbaService.getKorisnikZalbaOdluku(
+                        korisnik.getEmailAdresa().getValue());
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(zalbenaodluku, HttpStatus.OK);
+    }
+
+    @GetMapping("/odluka/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_POVERENIK')")
+    public ResponseEntity<Zalbanaodluku> getOneZalbaOdluka(@PathVariable String id, Principal user) {
+        Zalbanaodluku zalbaodluku = null;
+        try {
+            String korisnikId = null;
+            Korisnik korisnik = korisnikService.getKorisnikByEmail(user.getName());
+            if(korisnik.getTipKorisnika().equals(TipKorisnika.GRADJANIN.toString())) {
+                korisnikId = user.getName();
+            }
+            zalbaodluku = zalbaService.getZalbaOdluku(id, korisnikId);
+        } catch (Exception e) {
+            if(e.getMessage().equals("Zalba not belong to Korisnik"))
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(zalbaodluku, HttpStatus.OK);
     }
 
     @PostMapping("/odluka")

@@ -13,6 +13,15 @@
     <xs:element name="zalbacutanje">
         <xs:complexType>
             <xs:sequence>
+                <xs:element name="status">
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="xs:string">
+                                <xs:attributeGroup ref="tip:rdfAttributes"/>
+                            </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>
                 <xs:element name="naziv_organa">
                     <xs:complexType>
                         <xs:simpleContent>

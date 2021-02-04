@@ -1,10 +1,9 @@
 package com.administration.services.business;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.UUID;
 
 import javax.xml.bind.JAXBContext;
@@ -14,29 +13,15 @@ import javax.xml.bind.Unmarshaller;
 import com.administration.services.configs.ExistConfiguration;
 import com.administration.services.configs.JenaConfiguration;
 import com.administration.services.helpers.DefaultNamespacePrefixMapper;
-import com.administration.services.helpers.MetadataExtractor;
-import com.administration.services.helpers.SparqlUtil;
-import com.administration.services.model.Korisnik;
-import com.administration.services.model.Resenja;
-import com.administration.services.model.Resenje;
+import com.administration.services.model.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.xmldb.api.base.Collection;
-import org.xmldb.api.base.XMLDBException;
+import org.xmldb.api.base.*;
 import org.xmldb.api.modules.XMLResource;
-import org.apache.jena.query.QueryExecution;
-import org.apache.jena.query.QueryExecutionFactory;
-import org.apache.jena.query.ResultSet;
-import org.apache.jena.query.ResultSetFormatter;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.update.UpdateExecutionFactory;
-import org.apache.jena.update.UpdateFactory;
-import org.apache.jena.update.UpdateProcessor;
-import org.apache.jena.update.UpdateRequest;
 import org.exist.xmldb.EXistResource;
+import org.xmldb.api.modules.XQueryService;
 
 @Service
 public class ResenjeService {
@@ -47,11 +32,75 @@ public class ResenjeService {
     @Autowired
     private JenaConfiguration jenaConfiguration;
 
+    @Autowired
+    private ZalbaService zalbaService;
+
     @Value("/db/poverenik")
     private String collectionId;
 
     @Value("resenje.xml")
     private String resenjeId;
+
+    public Resenje getResenje(String id, String queryPath) {
+        Collection col = null;
+        Resenje resenje = null;
+
+        try {
+            col = existConfiguration.getOrCreateCollection(collectionId, 0);
+            XQueryService xqueryService = (XQueryService) col.getService("XQueryService", "1.0");
+            xqueryService.setProperty("indent", "yes");
+
+            byte[] encoded = Files.readAllBytes(Paths.get(queryPath));
+            String xqueryExpression = new String(encoded, StandardCharsets.UTF_8);
+            xqueryExpression = String.format(xqueryExpression, id);
+            CompiledExpression compiledXquery = xqueryService.compile(xqueryExpression);
+            ResourceSet result = xqueryService.execute(compiledXquery);
+
+            ResourceIterator i = result.getIterator();
+            XMLResource res = null;
+
+            if(i.hasMoreResources()) {
+                try {
+                    JAXBContext context = JAXBContext.newInstance("com.administration.services.model");
+
+                    Unmarshaller unmarshaller = context.createUnmarshaller();
+                    res = (XMLResource)i.nextResource();
+                    resenje = (Resenje) unmarshaller.unmarshal(res.getContentAsDOM());
+                } finally {
+                    try {
+                        ((EXistResource)res).freeResources();
+                    } catch (XMLDBException xe) {
+                        xe.printStackTrace();
+                    }
+                }
+            }
+
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            if(col != null) {
+                try {
+                    col.close();
+                } catch (XMLDBException xe) {
+                    xe.printStackTrace();
+                }
+            }
+        }
+
+        return resenje;
+    }
+
+    public Resenje getOneResenjeFromZalba(String zalbaId, String korisnikId) throws Exception {
+        if(korisnikId != null && !zalbaService.doesZalbaBelongToKorisnik(zalbaId, korisnikId)) {
+            throw new Exception("Zalba not belong to Korisnik");
+        }
+
+        return getResenje(zalbaId, "src/main/resources/xquery/getResenjeFromZalba.xqy");
+    }
+
+    public Resenje getOneResenje(String resenjeId) {
+        return getResenje(resenjeId, "src/main/resources/xquery/getOneResenje.xqy");
+    }
 
     public Resenja getAllResenja() throws Exception {
         Collection col = null;
@@ -90,7 +139,7 @@ public class ResenjeService {
         return resenja;
     }
 
-    public void addNewResenje(Resenje resenje, Korisnik korisnik, String aboutZalba) throws Exception {
+    public void addNewResenje(Resenje resenje, Korisnik korisnik, String zalbaId) throws Exception {
         Collection col = null;
         XMLResource res = null;
         ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -108,9 +157,22 @@ public class ResenjeService {
                 resenja = new Resenja();
             }
 
+            Object zalba = zalbaService.getOneZalba(zalbaId);
+            if(zalba == null) {
+                throw new Exception("No existing Zalba");
+            }
+
+            if(getOneResenjeFromZalba(zalbaId, null) != null) {
+                throw new Exception("Zalba already has Resenje");
+            }
+
             prepareResenje(resenje, korisnik);
             resenje.getRazlogZalbe().setRel("pred:refTo");
-            resenje.getRazlogZalbe().setHref("http://localhost:8080/" + aboutZalba);
+            if(zalba instanceof Zalbanaodluku) {
+                resenje.getRazlogZalbe().setHref(((Zalbanaodluku) zalba).getAbout());
+            } else {
+                resenje.getRazlogZalbe().setHref(((Zalbacutanje) zalba).getAbout());
+            }
             resenja.getResenje().add(resenje);
 
             Marshaller marshaller = context.createMarshaller();

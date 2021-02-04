@@ -8,15 +8,17 @@ import org.exist.xmldb.EXistResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.xmldb.api.base.Collection;
-import org.xmldb.api.base.XMLDBException;
+import org.xmldb.api.base.*;
 import org.xmldb.api.modules.XMLResource;
+import org.xmldb.api.modules.XQueryService;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.UUID;
 
 @Service
@@ -36,6 +38,178 @@ public class ZalbaService {
 
     @Value("zalbanaodluku.xml")
     private String zalbaOdlukuId;
+
+    public boolean doesExistZalba(String zalbaId) {
+        return getOneZalba(zalbaId) != null;
+    }
+
+    public Zalbacutanje getZalbaCutanje(String zalbaId, String korisnikId) throws Exception {
+        if(korisnikId != null && !doesZalbaBelongToKorisnik(zalbaId, korisnikId)) {
+            throw new Exception("Zalba not belong to Korisnik");
+        }
+        return (Zalbacutanje) getOneZalba(zalbaId);
+    }
+
+    public Zalbanaodluku getZalbaOdluku(String zalbaId, String korisnikId) throws Exception {
+        if(korisnikId != null && !doesZalbaBelongToKorisnik(zalbaId, korisnikId)) {
+            throw new Exception("Zalba not belong to Korisnik");
+        }
+        return (Zalbanaodluku) getOneZalba(zalbaId);
+    }
+
+    public Object getOneZalba(String zalbaId) {
+        Collection col = null;
+
+        try {
+            col = existConfiguration.getOrCreateCollection(collectionId, 0);
+            XQueryService xqueryService = (XQueryService) col.getService("XQueryService", "1.0");
+            xqueryService.setProperty("indent", "yes");
+
+            byte[] encoded = Files.readAllBytes(Paths.get("src/main/resources/xquery/getOneZalba.xqy"));
+            String xqueryExpression = new String(encoded, StandardCharsets.UTF_8);
+            xqueryExpression = String.format(xqueryExpression, zalbaId);
+            CompiledExpression compiledXquery = xqueryService.compile(xqueryExpression);
+            ResourceSet result = xqueryService.execute(compiledXquery);
+
+            ResourceIterator i = result.getIterator();
+            XMLResource res = null;
+
+            if (i.hasMoreResources()) {
+                try {
+                    JAXBContext context = JAXBContext.newInstance("com.administration.services.model");
+
+                    Unmarshaller unmarshaller = context.createUnmarshaller();
+                    res = (XMLResource) i.nextResource();
+                    return unmarshaller.unmarshal(res.getContentAsDOM());
+                } finally {
+                    try {
+                        ((EXistResource) res).freeResources();
+                    } catch (XMLDBException xe) {
+                        xe.printStackTrace();
+                    }
+                }
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            if (col != null) {
+                try {
+                    col.close();
+                } catch (XMLDBException xe) {
+                    xe.printStackTrace();
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public boolean doesZalbaBelongToKorisnik(String zalbaId, String korisnikId) {
+        Collection col = null;
+
+        try {
+            col = existConfiguration.getOrCreateCollection(collectionId, 0);
+            XQueryService xqueryService = (XQueryService) col.getService("XQueryService", "1.0");
+            xqueryService.setProperty("indent", "yes");
+
+            byte[] encoded = Files.readAllBytes(Paths.get("src/main/resources/xquery/getKorisnikZalba.xqy"));
+            String xqueryExpression = new String(encoded, StandardCharsets.UTF_8);
+            xqueryExpression = String.format(xqueryExpression, korisnikId, zalbaId);
+            CompiledExpression compiledXquery = xqueryService.compile(xqueryExpression);
+            ResourceSet result = xqueryService.execute(compiledXquery);
+
+            ResourceIterator i = result.getIterator();
+            XMLResource res = null;
+
+            if (i.hasMoreResources()) {
+                try {
+                    JAXBContext context = JAXBContext.newInstance("com.administration.services.model");
+
+                    Unmarshaller unmarshaller = context.createUnmarshaller();
+                    res = (XMLResource) i.nextResource();
+                    return unmarshaller.unmarshal(res.getContentAsDOM()) != null;
+                } finally {
+                    try {
+                        ((EXistResource) res).freeResources();
+                    } catch (XMLDBException xe) {
+                        xe.printStackTrace();
+                    }
+                }
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            if (col != null) {
+                try {
+                    col.close();
+                } catch (XMLDBException xe) {
+                    xe.printStackTrace();
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public Zalbecutanje getKorisnikZalbeCutanje(String korisnikId) {
+        return (Zalbecutanje) getKorisnikZalbe(korisnikId,
+                "src/main/resources/xquery/getKorisnikZalbeCutanje.xqy");
+    }
+
+    public Zalbenaodluku getKorisnikZalbaOdluku(String korisnikId) {
+        return (Zalbenaodluku) getKorisnikZalbe(korisnikId,
+                "src/main/resources/xquery/getKorisnikZalbeOdluka.xqy");
+    }
+
+    public Object getKorisnikZalbe(String korisnikId, String queryPath) {
+        Collection col = null;
+
+        try {
+            col = existConfiguration.getOrCreateCollection(collectionId, 0);
+            XQueryService xqueryService = (XQueryService) col.getService("XQueryService", "1.0");
+            xqueryService.setProperty("indent", "yes");
+
+            byte[] encoded = Files.readAllBytes(Paths.get(queryPath));
+            String xqueryExpression = new String(encoded, StandardCharsets.UTF_8);
+            xqueryExpression = String.format(xqueryExpression, korisnikId);
+            CompiledExpression compiledXquery = xqueryService.compile(xqueryExpression);
+            ResourceSet result = xqueryService.execute(compiledXquery);
+
+            ResourceIterator i = result.getIterator();
+            XMLResource res = null;
+
+            if (i.hasMoreResources()) {
+                try {
+                    JAXBContext context = JAXBContext.newInstance("com.administration.services.model");
+
+                    Unmarshaller unmarshaller = context.createUnmarshaller();
+                    res = (XMLResource) i.nextResource();
+                    return unmarshaller.unmarshal(res.getContentAsDOM());
+                } finally {
+                    try {
+                        ((EXistResource) res).freeResources();
+                    } catch (XMLDBException xe) {
+                        xe.printStackTrace();
+                    }
+                }
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            if (col != null) {
+                try {
+                    col.close();
+                } catch (XMLDBException xe) {
+                    xe.printStackTrace();
+                }
+            }
+        }
+
+        return null;
+    }
 
     public Zalbecutanje getAllZalbeCutanje() throws Exception {
         Collection col = null;
