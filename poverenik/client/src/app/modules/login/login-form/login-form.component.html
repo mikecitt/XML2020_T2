@@ -1,0 +1,30 @@
+<form nz-form [formGroup]="loginForm" (ngSubmit)="login()">
+  <nz-form-item>
+    <nz-form-control [nzErrorTip]="emailErrorTpl">
+      <nz-input-group nzPrefixIcon="mail">
+        <input type="email" nz-input formControlName="email" placeholder="Email" />
+        <ng-template #emailErrorTpl let-control>
+          <ng-container *ngIf="control.hasError('email')">
+            Email is not valid
+          </ng-container>
+          <ng-container *ngIf="control.hasError('required')">
+            Email is required
+          </ng-container>
+        </ng-template>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control [nzErrorTip]="passwordErrorTpl">
+      <nz-input-group nzPrefixIcon="lock">
+        <input type="password" nz-input formControlName="password" placeholder="Password" />
+        <ng-template #passwordErrorTpl let-control>
+          <ng-container *ngIf="control.hasError('required')">
+            Password is required
+          </ng-container>
+        </ng-template>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <button nz-button [nzBlock]="true" [nzType]="'primary'">Log in</button>
+</form>

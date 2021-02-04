@@ -1,0 +1,54 @@
+<form nz-form [formGroup]="registerForm" (ngSubmit)="register()">
+  <nz-form-item>
+    <nz-form-control [nzErrorTip]="firstNameErrorTpl">
+      <nz-input-group nzPrefixIcon="align-left">
+        <input type="text" nz-input formControlName="firstName" placeholder="First name" />
+        <ng-template #firstNameErrorTpl let-control>
+          <ng-container *ngIf="control.hasError('required')">
+            First name is required
+          </ng-container>
+        </ng-template>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control [nzErrorTip]="lastNameErrorTpl">
+      <nz-input-group nzPrefixIcon="align-left">
+        <input type="text" nz-input formControlName="lastName" placeholder="Last name" />
+        <ng-template #lastNameErrorTpl let-control>
+          <ng-container *ngIf="control.hasError('required')">
+            Last name is required
+          </ng-container>
+        </ng-template>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control [nzErrorTip]="emailErrorTpl">
+      <nz-input-group nzPrefixIcon="mail">
+        <input type="email" nz-input formControlName="email" placeholder="Email" />
+        <ng-template #emailErrorTpl let-control>
+          <ng-container *ngIf="control.hasError('email')">
+            Email is not valid
+          </ng-container>
+          <ng-container *ngIf="control.hasError('required')">
+            Email is required
+          </ng-container>
+        </ng-template>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control [nzErrorTip]="passwordErrorTpl">
+      <nz-input-group nzPrefixIcon="lock">
+        <input type="password" nz-input formControlName="password" placeholder="Password" />
+        <ng-template #passwordErrorTpl let-control>
+          <ng-container *ngIf="control.hasError('required')">
+            Password is required
+          </ng-container>
+        </ng-template>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <button nz-button [nzBlock]="true" [nzType]="'primary'">Register</button>
+</form>
