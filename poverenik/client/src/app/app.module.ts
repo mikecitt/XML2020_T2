@@ -13,11 +13,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginPageComponent } from './modules/login/login-page/login-page.component';
 import { LoginFormComponent } from './modules/login/login-form/login-form.component';
 import { AntdModule } from './antd-module';
+import { RegisterPageComponent } from './modules/register/register-page/register-page.component';
+import { RegisterFormComponent } from './modules/register/register-form/register-form.component';
 
 registerLocaleData(en);
 
 @NgModule({
-  declarations: [AppComponent, LoginPageComponent, LoginFormComponent],
+  declarations: [AppComponent, LoginPageComponent, LoginFormComponent, RegisterPageComponent, RegisterFormComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
