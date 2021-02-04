@@ -1,1 +1,19 @@
-<app-login-form></app-login-form>
+<nz-layout class="root">
+  <nz-content>
+    <nz-row class="content">
+      <nz-col [nzSm]="12" [nzMd]="14" [nzLg]="16" [nzXl]="17" [nzXXl]="18" class="background">
+      </nz-col>
+      <nz-col class="loginArea" [nzXs]="24" [nzSm]="12" [nzMd]="10" [nzLg]="8" [nzXl]="7" [nzXXl]="6">
+        <nz-space class="title" nzDirection="vertical" nzAlign="center">
+          <nz-space-item>
+            <i nz-icon nzType="login" nzTheme="outline"></i>
+          </nz-space-item>
+          <nz-space-item>
+            <span>Login</span>
+          </nz-space-item>
+        </nz-space>
+        <app-login-form></app-login-form>
+      </nz-col>
+    </nz-row>
+  </nz-content>
+</nz-layout>
