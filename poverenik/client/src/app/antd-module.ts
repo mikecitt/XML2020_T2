@@ -27,4 +27,4 @@ import { NzPopoverModule } from 'ng-zorro-antd/popover';
     NzPopoverModule,
   ],
 })
-export class MaterialModule {}
+export class AntdModule {}
