@@ -2,7 +2,9 @@ package com.administration.services.business;
 
 import com.administration.services.configs.ExistConfiguration;
 import com.administration.services.configs.JenaConfiguration;
+import com.administration.services.enums.XslDocumentsPaths;
 import com.administration.services.helpers.DefaultNamespacePrefixMapper;
+import com.administration.services.helpers.XSLFOTransformer;
 import com.administration.services.model.*;
 import org.exist.xmldb.EXistResource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,9 @@ public class ZalbaService {
     @Autowired
     private JenaConfiguration jenaConfiguration;
 
+    @Autowired
+    private XSLFOTransformer transformer;
+
     @Value("/db/poverenik")
     private String collectionId;
 
@@ -44,17 +49,43 @@ public class ZalbaService {
     }
 
     public Zalbacutanje getZalbaCutanje(String zalbaId, String korisnikId) throws Exception {
-        if(korisnikId != null && !doesZalbaBelongToKorisnik(zalbaId, korisnikId)) {
+        if (korisnikId != null && !doesZalbaBelongToKorisnik(zalbaId, korisnikId)) {
             throw new Exception("Zalba not belong to Korisnik");
         }
         return (Zalbacutanje) getOneZalba(zalbaId);
     }
 
+    public byte[] getZalbaCutanjePDF(Zalbacutanje zalbacutanje) throws Exception {
+        JAXBContext context = JAXBContext.newInstance("com.administration.services.model");
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new DefaultNamespacePrefixMapper());
+
+        existConfiguration.prepareForWriting(marshaller, os, zalbacutanje);
+
+        return transformer.generatePDF(XslDocumentsPaths.ZALBACUTANJE,
+                new String(os.toByteArray(), StandardCharsets.UTF_8));
+    }
+
     public Zalbanaodluku getZalbaOdluku(String zalbaId, String korisnikId) throws Exception {
-        if(korisnikId != null && !doesZalbaBelongToKorisnik(zalbaId, korisnikId)) {
+        if (korisnikId != null && !doesZalbaBelongToKorisnik(zalbaId, korisnikId)) {
             throw new Exception("Zalba not belong to Korisnik");
         }
         return (Zalbanaodluku) getOneZalba(zalbaId);
+    }
+
+    public byte[] getZalbaOdlukuPDF(Zalbanaodluku zalbanaodluku) throws Exception {
+        JAXBContext context = JAXBContext.newInstance("com.administration.services.model");
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new DefaultNamespacePrefixMapper());
+
+        existConfiguration.prepareForWriting(marshaller, os, zalbanaodluku);
+
+        return transformer.generatePDF(XslDocumentsPaths.ZALBAODLUKA,
+                new String(os.toByteArray(), StandardCharsets.UTF_8));
     }
 
     public Object getOneZalba(String zalbaId) {
@@ -154,13 +185,11 @@ public class ZalbaService {
     }
 
     public Zalbecutanje getKorisnikZalbeCutanje(String korisnikId) {
-        return (Zalbecutanje) getKorisnikZalbe(korisnikId,
-                "src/main/resources/xquery/getKorisnikZalbeCutanje.xqy");
+        return (Zalbecutanje) getKorisnikZalbe(korisnikId, "src/main/resources/xquery/getKorisnikZalbeCutanje.xqy");
     }
 
     public Zalbenaodluku getKorisnikZalbaOdluku(String korisnikId) {
-        return (Zalbenaodluku) getKorisnikZalbe(korisnikId,
-                "src/main/resources/xquery/getKorisnikZalbeOdluka.xqy");
+        return (Zalbenaodluku) getKorisnikZalbe(korisnikId, "src/main/resources/xquery/getKorisnikZalbeOdluka.xqy");
     }
 
     public Object getKorisnikZalbe(String korisnikId, String queryPath) {
@@ -385,8 +414,7 @@ public class ZalbaService {
     }
 
     private void prepareZalbOd(Zalbanaodluku zalbanaodluku, Korisnik korisnik) {
-        zalbanaodluku.setAbout("http://localhost:8080/zalbanaodluku/" +
-                UUID.randomUUID().toString().replace("-", ""));
+        zalbanaodluku.setAbout("http://localhost:8080/zalbanaodluku/" + UUID.randomUUID().toString().replace("-", ""));
         zalbanaodluku.setVocab("http://localhost:8080/rdf/predicate/");
         zalbanaodluku.getInformacijeOPodnosiocuZalbe().setRel("pred:createdBy");
         zalbanaodluku.getInformacijeOPodnosiocuZalbe().setHref(korisnik.getAbout());
@@ -403,8 +431,7 @@ public class ZalbaService {
     }
 
     private void prepareZalbCut(Zalbacutanje zalbacutanje, Korisnik korisnik) {
-        zalbacutanje.setAbout("http://localhost:8080/zalba/" +
-                UUID.randomUUID().toString().replace("-", ""));
+        zalbacutanje.setAbout("http://localhost:8080/zalba/" + UUID.randomUUID().toString().replace("-", ""));
         zalbacutanje.setVocab("http://localhost:8080/rdf/predicate/");
         zalbacutanje.getInformacijeOPodnosiocuZalbe().setRel("pred:createdBy");
         zalbacutanje.getInformacijeOPodnosiocuZalbe().setHref(korisnik.getAbout());
