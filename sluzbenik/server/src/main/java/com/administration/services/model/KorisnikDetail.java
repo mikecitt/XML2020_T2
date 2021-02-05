@@ -1,18 +1,13 @@
 package com.administration.services.model;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 public class KorisnikDetail extends Korisnik implements UserDetails {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -52,7 +47,7 @@ public class KorisnikDetail extends Korisnik implements UserDetails {
     }
 
     public static KorisnikDetail createDetail(Korisnik korisnik) {
-        if (korisnik == null) {
+        if(korisnik == null) {
             return null;
         }
 
@@ -63,6 +58,10 @@ public class KorisnikDetail extends Korisnik implements UserDetails {
         k.setPrezime(korisnik.getPrezime());
         k.setDatumPromeneSifre(korisnik.getDatumPromeneSifre());
         k.setTipKorisnika(korisnik.getTipKorisnika());
+        k.setAbout(korisnik.getAbout());
+        k.setVocab(korisnik.getVocab());
+        k.setHref(korisnik.getHref());
+        k.setRel(korisnik.getRel());
 
         return k;
     }
