@@ -16,6 +16,7 @@
 
 	<properties>
 		<java.version>1.8</java.version>
+		<cxf.version>3.2.1</cxf.version>
 	</properties>
 
 	<dependencies>
@@ -84,7 +85,15 @@
 			<artifactId>saxon</artifactId>
 			<version>8.7</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-spring-boot-starter-jaxws</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -134,6 +143,52 @@
 						<version>1.2.1</version>
 					</dependency>
 				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-java2ws-plugin</artifactId>
+				<version>${cxf.version}</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.cxf</groupId>
+						<artifactId>cxf-rt-frontend-jaxws</artifactId>
+						<version>${cxf.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.cxf</groupId>
+						<artifactId>cxf-rt-frontend-simple</artifactId>
+						<version>${cxf.version}</version>
+					</dependency>
+				</dependencies>
+
+				<!--<executions>
+					<execution>
+						<id>process-classes</id>
+						<phase>package</phase>
+						<configuration>
+							<className>com.spring.soap.ws.hello.HelloPortImpl</className>
+							<genWsdl>true</genWsdl>
+							<verbose>false</verbose>
+							<outputFile>${project.build.directory}/generated/wsdl/Hello.wsdl</outputFile>
+						</configuration>
+						<goals>
+							<goal>java2ws</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>process-classes1</id>
+						<phase>package</phase>
+						<configuration>
+							<className>com.spring.soap.ws.address.AddressBookPortImpl</className>
+							<genWsdl>true</genWsdl>
+							<verbose>false</verbose>
+							<outputFile>${project.build.directory}/generated/wsdl/AddressBook.wsdl</outputFile>
+						</configuration>
+						<goals>
+							<goal>java2ws</goal>
+						</goals>
+					</execution>
+				</executions>-->
 			</plugin>
 		</plugins>
 	</build>

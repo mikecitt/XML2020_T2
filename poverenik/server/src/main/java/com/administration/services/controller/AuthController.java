@@ -56,7 +56,7 @@ public class AuthController {
             String jwt = tokenUtils.generateToken(korisnikDetail.getUsername());
             int expiresIn = tokenUtils.getExpiredIn();
 
-            return ResponseEntity.ok(new UserTokenStateDTO(jwt, expiresIn));
+            return ResponseEntity.ok(new UserTokenStateDTO(jwt, expiresIn, korisnikDetail.getTipKorisnika()));
         } catch (Exception ex) {
             ex.printStackTrace();
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);

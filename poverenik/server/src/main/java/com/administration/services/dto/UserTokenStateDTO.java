@@ -5,7 +5,8 @@ import javax.xml.bind.annotation.*;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
         "accessToken",
-        "expiresIn"
+        "expiresIn",
+        "role"
 })
 @XmlRootElement(name = "token")
 public class UserTokenStateDTO {
@@ -13,15 +14,19 @@ public class UserTokenStateDTO {
     private String accessToken;
     @XmlElement(name = "expiresIn", required = true)
     private Long expiresIn;
+    @XmlElement(name = "role", required = true)
+    private String role;
 
     public UserTokenStateDTO() {
         this.accessToken = null;
         this.expiresIn = null;
+        this.role = null;
     }
 
-    public UserTokenStateDTO(String accessToken, long expiresIn) {
+    public UserTokenStateDTO(String accessToken, long expiresIn, String role) {
         this.accessToken = accessToken;
         this.expiresIn = expiresIn;
+        this.role = role;
     }
 
     public String getAccessToken() {
@@ -38,5 +43,13 @@ public class UserTokenStateDTO {
 
     public void setExpiresIn(Long expiresIn) {
         this.expiresIn = expiresIn;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }
