@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:b="http://www.ftn.uns.ac.rs/xpath/examples"
+    xmlns:zlbod="http://localhost:8080/zalbanaodluku"
     xmlns:fo="http://www.w3.org/1999/XSL/Format" version="2.0">
 
     <xsl:template match="/">
@@ -41,10 +41,26 @@
                         Ж А Л Б А
                     </fo:block>
                     <fo:block>
-                        (............................................................................................................................
+                        (
+                        <fo:inline-container text-align="center" width="12cm">
+                            <fo:block border-bottom="1px dotted">
+                                <xsl:value-of select="//zlbod:podnosilac_zalbe/zlbod:ime"/>
+                                <fo:leader/>
+                                <xsl:value-of select="//zlbod:podnosilac_zalbe/zlbod:prezime"/>
+                                <fo:leader/>
+                                <xsl:value-of select="//zlbod:podnosilac_zalbe/zlbod:naziv"/>
+                            </fo:block>
+                        </fo:inline-container>
                     </fo:block>
                     <fo:block>
-                        ....................................................................................................................)
+                        <fo:inline-container text-align="center" width="12cm">
+                            <fo:block border-bottom="1px dotted">
+                                <xsl:value-of select="//zlbod:podnosilac_zalbe/zlbod:adresa"/>
+                                <fo:leader/>
+                                <xsl:value-of select="//zlbod:podnosilac_zalbe/zlbod:sediste"/>
+                            </fo:block>
+                        </fo:inline-container>   
+                        )
                     </fo:block>
                     <fo:block>
                         Име, презиме, односно назив, адреса и седиште жалиоца)
@@ -56,24 +72,47 @@
                         против решења-закључка 
                     </fo:block>
                     <fo:block>
-                        (..............................................................................................................................................)
+                        (
+                        <fo:inline-container text-align="center" width="12cm">
+                            <fo:block border-bottom="1px dotted">
+                                <xsl:value-of select="//zlbod:naziv_organa"/>
+                            </fo:block>
+                        </fo:inline-container>   
+                        )
                     </fo:block>
                     <fo:block>
                         (назив органа који је донео одлуку)
                     </fo:block>
                     <fo:block text-align="left">
-                        Број.................................... од ............................... године. 
+                        Број
+                        <fo:inline-container text-align="center" width="4cm">
+                            <fo:block border-bottom="1px dotted">
+                                <xsl:value-of select="//zlbod:broj_resenja"/>
+                            </fo:block>
+                        </fo:inline-container>   
+                        од 
+                        <fo:inline-container text-align="center" width="2cm">
+                            <fo:block border-bottom="1px dotted">
+                                <xsl:value-of select="format-date(//zlbod:datum_resenja, '[D01].[M01].[Y0001].')"/>
+                            </fo:block>
+                        </fo:inline-container>  
+                        године. 
                     </fo:block>
                     <fo:block>
                         <fo:leader/>
                     </fo:block>
                     <fo:block text-align="justify">
-                    Наведеном одлуком органа власти (решењем, закључком, обавештењем у писаној форми са елементима одлуке) , супротно закону, одбијен-одбачен је мој захтев који сам поднео/ла-упутио/ла дана ............... године и тако ми ускраћено-онемогућено остваривање уставног и законског права на слободан приступ информацијама од јавног значаја. Oдлуку побијам у целости, односно у делу којим.............................................................................................................................                     </fo:block>
-                    <fo:block>
-                        ...................................................................................................................................................................
-                    </fo:block>
-                    <fo:block>
-                        ...................................................................................................................................................................
+                    Наведеном одлуком органа власти (решењем, закључком, обавештењем у писаној форми са елементима одлуке) , супротно закону, одбијен-одбачен је мој захтев који сам поднео/ла-упутио/ла дана 
+                        <fo:inline-container text-align="center" width="2cm">
+                            <fo:block border-bottom="1px dotted">
+                                <xsl:value-of select="format-date(//zlbod:datum_podnosenja_zahteva, '[D01].[M01].[Y0001].')"/>
+                            </fo:block>
+                        </fo:inline-container> 
+                    године и тако ми ускраћено-онемогућено остваривање уставног и законског права на слободан приступ информацијама од јавног значаја. Oдлуку побијам у целости, односно у делу којим                     
+                        <fo:inline border-bottom="1px dotted">
+                            <xsl:value-of select="//zlbod:opis_zalbe"/>
+                            <fo:leader/>
+                        </fo:inline>
                     </fo:block>
                     <fo:block text-align="left">
                         јер није заснована на Закону о слободном приступу информацијама од јавног значаја.
@@ -88,16 +127,32 @@
                         <fo:leader/>
                     </fo:block>
                     <fo:block text-align="right">
-                        .............................................................
+                        <fo:inline-container width="170px">
+                            <fo:block border-bottom="1px dotted">
+                                <xsl:value-of select="//zlbod:informacije_o_podnosiocu_zalbe/zlbod:ime"/>
+&#160;
+                                <xsl:value-of select="//zlbod:informacije_o_podnosiocu_zalbe/zlbod:prezime"/>
+                            </fo:block>
+                        </fo:inline-container>
                     </fo:block>
                     <fo:block text-align="right">
                         Подносилац жалбе / Име и презиме
                     </fo:block>
                     <fo:block text-align="left">
-                        У ............................................,
+                        У 
+                        <fo:inline-container width="120px">
+                            <fo:block text-align="center" border-bottom="1px dotted">
+                                <xsl:value-of select="//zlbod:mesto"/>
+                            </fo:block>
+                        </fo:inline-container>
+                        ,
                     </fo:block>
                     <fo:block text-align="right">
-                        .............................................................
+                        <fo:inline-container width="170px">
+                            <fo:block border-bottom="1px dotted">
+                                <xsl:value-of select="//zlbod:informacije_o_podnosiocu_zalbe/zlbod:adresa"/>
+                            </fo:block>
+                        </fo:inline-container>
                     </fo:block>
                     <fo:block text-align="right">
                         адреса
@@ -105,22 +160,42 @@
                     <fo:block>
                         <fo:leader/>
                     </fo:block>
-                    <fo:block text-align-last="justify">
-                        дана ............201... године
-                        <fo:leader leader-pattern="space" />
-                        .............................................................
+                    <fo:block>
+                        дана 
+                        <fo:inline-container width="40px">
+                            <fo:block border-bottom="1px dotted">
+                                <xsl:value-of select="format-date(//zlbod:datum, '[D01].[M01].')"/>
+                            </fo:block>
+                        </fo:inline-container>
+                        20
+                        <fo:inline-container width="20px">
+                            <fo:block text-align="center" border-bottom="1px dotted">
+                                <xsl:value-of select="format-date(//zlbod:datum, '[Y01].')"/>
+                            </fo:block>
+                        </fo:inline-container>
+                        године                        
+                        <fo:leader/>
+                        <fo:leader/>
+                        <fo:leader/>
+                        <fo:leader/>
+                        <fo:leader/>
+                        <fo:leader/>
+                        <fo:leader/>
+                        <fo:leader/>
+                        <fo:leader/>
+                        <fo:leader/>
+                        <fo:leader/>
+                        <fo:inline-container width="170px">
+                            <fo:block text-align="right" border-bottom="1px dotted">
+                                <xsl:value-of select="//zlbod:drugi_kontakt"/>
+                            </fo:block>
+                        </fo:inline-container>
                     </fo:block>
                     <fo:block text-align="right">
                         други подаци за контакт
                     </fo:block>
                     <fo:block>
                         <fo:leader/>
-                    </fo:block>
-                    <fo:block text-align="right">
-                        .............................................................
-                    </fo:block>
-                    <fo:block text-align="right">
-                        потпис
                     </fo:block>
                     <fo:block text-align="left" font-weight="bold">
                         Напомена: 
@@ -131,15 +206,6 @@
                     <fo:block text-align="left" font-size="10px">
                         •	Уз жалбу обавезно приложити копију поднетог захтева и доказ о његовој предаји-упућивању органу као и копију одлуке органа која се оспорава жалбом                    
                     </fo:block>
-
-
-
-
-
-
-
-
-
                 </fo:flow>
             </fo:page-sequence>
         </fo:root>
