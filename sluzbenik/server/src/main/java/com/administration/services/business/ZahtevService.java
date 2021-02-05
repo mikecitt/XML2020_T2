@@ -12,6 +12,7 @@ import javax.xml.bind.Unmarshaller;
 
 import com.administration.services.configs.ExistConfiguration;
 import com.administration.services.configs.JenaConfiguration;
+import com.administration.services.enums.StatusZahteva;
 import com.administration.services.enums.XslDocumentsPaths;
 import com.administration.services.helpers.DefaultNamespacePrefixMapper;
 import com.administration.services.helpers.XSLFOTransformer;
@@ -283,5 +284,70 @@ public class ZahtevService {
                 }
             }
         }
+    }
+
+    public Zahtev resolveZahtev(String resolveZahtevId, StatusZahteva result) throws Exception {
+        Zahtev zahtev = null;
+        Zahtevi zahtevi = null;
+        Collection col = null;
+        XMLResource res = null;
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+
+        System.out.println("[INFO] Retrieving the collection: " + collectionId);
+        col = existConfiguration.getOrCreateCollection(collectionId, 0);
+
+        System.out.println("[INFO] Inserting the document: " + zahtevId);
+        res = (XMLResource) col.createResource(zahtevId, XMLResource.RESOURCE_TYPE);
+
+        System.out.println("[INFO] Unmarshalling XML document to an JAXB instance: ");
+        JAXBContext context = JAXBContext.newInstance("com.administration.services.model");
+
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+        try {
+            zahtevi = (Zahtevi) unmarshaller.unmarshal(res.getContentAsDOM());
+        } catch (XMLDBException ex) {
+            zahtevi = new Zahtevi();
+        }
+
+        for (Zahtev z : zahtevi.getZahtev()) {
+            if (z.getAbout().substring(z.getAbout().lastIndexOf('/') + 1).equals(resolveZahtevId))
+                if (z.getStatus().getValue().equals("OBRADA")) {
+                    z.getStatus().setValue(result.toString());
+                    zahtev = z;
+                    break;
+                }
+        }
+
+        if (zahtev != null) {
+            Marshaller marshaller = context.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+            marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new DefaultNamespacePrefixMapper());
+
+            existConfiguration.prepareForWriting(marshaller, os, zahtevi);
+
+            res.setContent(os);
+            System.out.println("[INFO] Storing the document: " + res.getId());
+            col.storeResource(res);
+            jenaConfiguration.updateRDF(new String(os.toByteArray(), StandardCharsets.UTF_8));
+            System.out.println("[INFO] Done.");
+        }
+        if (res != null) {
+            try {
+                ((EXistResource) res).freeResources();
+            } catch (XMLDBException xe) {
+                xe.printStackTrace();
+            }
+        }
+
+        if (col != null) {
+            try {
+                col.close();
+            } catch (XMLDBException xe) {
+                xe.printStackTrace();
+            }
+        }
+
+        return zahtev;
+
     }
 }

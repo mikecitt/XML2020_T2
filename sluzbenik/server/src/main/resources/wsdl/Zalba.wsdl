@@ -1,0 +1,820 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="ZalbaService" targetNamespace="http://poverenik/ws/zalba" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://poverenik/ws/zalba" xmlns:ns1="http://localhost:8080/resenje" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+<xs:schema xmlns:ns1="http://localhost:8080/resenje" xmlns:tns="http://localhost:8080/zalbanaodluku" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://localhost:8080/zalbanaodluku" version="1.0">
+
+  <xs:import namespace="http://localhost:8080/resenje"/>
+
+  <xs:element name="datum_podnosenja_zahteva">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="property" type="xs:anySimpleType"/>
+          <xs:attribute name="datatype" type="xs:anySimpleType"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="detalji_predaje">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" name="mesto">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="property" type="xs:anySimpleType"/>
+                <xs:attribute name="datatype" type="xs:anySimpleType"/>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element form="qualified" name="datum">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="property" type="xs:anySimpleType"/>
+                <xs:attribute name="datatype" type="xs:anySimpleType"/>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="informacije_o_podnosiocu_zalbe">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" name="ime" type="xs:string"/>
+        <xs:element form="qualified" name="prezime" type="xs:string"/>
+        <xs:element form="qualified" name="adresa" type="xs:string"/>
+        <xs:element form="qualified" name="drugi_kontakt" type="xs:string"/>
+      </xs:sequence>
+      <xs:attribute name="about" type="xs:anySimpleType"/>
+      <xs:attribute name="rel" type="xs:anySimpleType"/>
+      <xs:attribute name="href" type="xs:anySimpleType"/>
+      <xs:attribute name="vocab" type="xs:anySimpleType"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="naziv_organa">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="property" type="xs:anySimpleType"/>
+          <xs:attribute name="datatype" type="xs:anySimpleType"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="opis_zalbe" type="xs:string"/>
+
+  <xs:element name="podnosilac_zalbe">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" name="ime" type="xs:string"/>
+        <xs:element form="qualified" name="prezime" type="xs:string"/>
+        <xs:element form="qualified" name="naziv" type="xs:string"/>
+        <xs:element form="qualified" name="adresa" type="xs:string"/>
+        <xs:element form="qualified" name="sediste" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="resenje">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" name="broj_resenja" type="xs:string"/>
+        <xs:element form="qualified" name="datum_resenja">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="property" type="xs:anySimpleType"/>
+                <xs:attribute name="datatype" type="xs:anySimpleType"/>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="status">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="property" type="xs:anySimpleType"/>
+          <xs:attribute name="datatype" type="xs:anySimpleType"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="zalbanaodluku" type="ns1:zalOd"/>
+
+  <xs:element name="zalbenaodluku">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:zalbanaodluku"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+
+</xs:schema>
+<xs:schema xmlns:ns1="http://localhost:8080/resenje" xmlns:tns="http://localhost:8080/zalba" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://localhost:8080/zalba" version="1.0">
+
+  <xs:import namespace="http://localhost:8080/resenje"/>
+
+  <xs:element name="datum_zahteva" type="xs:string"/>
+
+  <xs:element name="detalji_predaje">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" name="mesto">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="property" type="xs:anySimpleType"/>
+                <xs:attribute name="datatype" type="xs:anySimpleType"/>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element form="qualified" name="datum">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="property" type="xs:anySimpleType"/>
+                <xs:attribute name="datatype" type="xs:anySimpleType"/>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="informacije_o_podnosiocu_zalbe">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" name="ime" type="xs:string"/>
+        <xs:element form="qualified" name="prezime" type="xs:string"/>
+        <xs:element form="qualified" name="adresa" type="xs:string"/>
+        <xs:element form="qualified" name="drugi_kontakt" type="xs:string"/>
+      </xs:sequence>
+      <xs:attribute name="about" type="xs:anySimpleType"/>
+      <xs:attribute name="rel" type="xs:anySimpleType"/>
+      <xs:attribute name="href" type="xs:anySimpleType"/>
+      <xs:attribute name="vocab" type="xs:anySimpleType"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="naziv_organa">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="property" type="xs:anySimpleType"/>
+          <xs:attribute name="datatype" type="xs:anySimpleType"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="podaci_zahteva" type="xs:string"/>
+
+  <xs:element name="razlog_zalbe" type="xs:int"/>
+
+  <xs:element name="status">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="property" type="xs:anySimpleType"/>
+          <xs:attribute name="datatype" type="xs:anySimpleType"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="zalbacutanje" type="ns1:zalCut"/>
+
+  <xs:element name="zalbecutanje">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:zalbacutanje"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+
+</xs:schema>
+<xs:schema xmlns:tns="http://localhost:8080/zahtevcir" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://localhost:8080/zahtevcir" version="1.0">
+
+  <xs:element name="zahtev">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" name="status">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="property" type="xs:anySimpleType"/>
+                <xs:attribute name="datatype" type="xs:anySimpleType"/>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element form="qualified" name="organ">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element form="qualified" name="naziv" type="xs:string"/>
+              <xs:element form="qualified" name="sediste">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute name="property" type="xs:anySimpleType"/>
+                      <xs:attribute name="datatype" type="xs:anySimpleType"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element form="qualified" name="listaZahteva">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element form="qualified" name="svrha_zahteva" type="xs:int"/>
+              <xs:element form="qualified" name="nacin_dostave" type="xs:string"/>
+              <xs:element form="qualified" name="opis_informacije" type="xs:string"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element form="qualified" name="detalji_predaje">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element form="qualified" name="mesto">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute name="property" type="xs:anySimpleType"/>
+                      <xs:attribute name="datatype" type="xs:anySimpleType"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element form="qualified" name="datum">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute name="property" type="xs:anySimpleType"/>
+                      <xs:attribute name="datatype" type="xs:anySimpleType"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element form="qualified" name="informacije_o_traziocu">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element form="qualified" name="ime" type="xs:string"/>
+              <xs:element form="qualified" name="prezime" type="xs:string"/>
+              <xs:element form="qualified" name="adresa" type="xs:string"/>
+              <xs:element form="qualified" name="drugi_kontakt" type="xs:string"/>
+            </xs:sequence>
+            <xs:attribute name="about" type="xs:anySimpleType"/>
+            <xs:attribute name="rel" type="xs:anySimpleType"/>
+            <xs:attribute name="href" type="xs:anySimpleType"/>
+            <xs:attribute name="vocab" type="xs:anySimpleType"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="about" type="xs:anySimpleType"/>
+      <xs:attribute name="rel" type="xs:anySimpleType"/>
+      <xs:attribute name="href" type="xs:anySimpleType"/>
+      <xs:attribute name="vocab" type="xs:anySimpleType"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="zahtevi">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:zahtev"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://localhost:8080/tipovi" version="1.0">
+
+  <xs:complexType name="Tosoba">
+    <xs:sequence>
+      <xs:element form="qualified" name="ime" type="xs:string"/>
+      <xs:element form="qualified" name="prezime" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>
+<xs:schema xmlns:ns1="http://localhost:8080/zalbanaodluku" xmlns:ns2="http://localhost:8080/zalba" xmlns:ns3="http://localhost:8080/tipovi" xmlns:tns="http://localhost:8080/resenje" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://localhost:8080/resenje" version="1.0">
+
+  <xs:import namespace="http://localhost:8080/zalbanaodluku"/>
+
+  <xs:import namespace="http://localhost:8080/zalba"/>
+
+  <xs:import namespace="http://localhost:8080/tipovi"/>
+
+  <xs:element name="resenja">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" name="resenje" nillable="true">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="zaglavlje">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="rezultat_resenja" type="xs:string"/>
+                    <xs:element name="informacije_predmeta">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="broj_predmeta" type="xs:string"/>
+                          <xs:element name="datum_predmeta">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                  <xs:attribute name="property" type="xs:anySimpleType"/>
+                                  <xs:attribute name="datatype" type="xs:anySimpleType"/>
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="datum_resenja">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute name="property" type="xs:anySimpleType"/>
+                            <xs:attribute name="datatype" type="xs:anySimpleType"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="razlog_zalbe">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="podnositelj_zalbe" type="ns3:Tosoba"/>
+                    <xs:element name="razlog" type="xs:string"/>
+                  </xs:sequence>
+                  <xs:attribute name="about" type="xs:anySimpleType"/>
+                  <xs:attribute name="rel" type="xs:anySimpleType"/>
+                  <xs:attribute name="href" type="xs:anySimpleType"/>
+                  <xs:attribute name="vocab" type="xs:anySimpleType"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="telo_resenja">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="odgovor_na_zalbu" type="xs:string"/>
+                    <xs:element name="obrazlozenje">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="uvod_obrazlozenja" type="xs:string"/>
+                          <xs:element name="postupajuci_po_zalbi" type="xs:string"/>
+                          <xs:element name="uvid" type="xs:string"/>
+                          <xs:element name="dodatan_uvid" type="xs:string"/>
+                          <xs:element name="odgovor_poverenika" type="xs:string"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="upravni_spor">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="mesto">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                  <xs:attribute name="property" type="xs:anySimpleType"/>
+                                  <xs:attribute name="datatype" type="xs:anySimpleType"/>
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="rok_prijema" type="xs:string"/>
+                          <xs:element name="taksa" type="xs:string"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="poverenik">
+                <xs:complexType>
+                  <xs:complexContent>
+                    <xs:extension base="ns3:Tosoba">
+                      <xs:sequence/>
+                      <xs:attribute name="about" type="xs:anySimpleType"/>
+                      <xs:attribute name="rel" type="xs:anySimpleType"/>
+                      <xs:attribute name="href" type="xs:anySimpleType"/>
+                      <xs:attribute name="vocab" type="xs:anySimpleType"/>
+                    </xs:extension>
+                  </xs:complexContent>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="about" type="xs:anySimpleType"/>
+            <xs:attribute name="rel" type="xs:anySimpleType"/>
+            <xs:attribute name="href" type="xs:anySimpleType"/>
+            <xs:attribute name="vocab" type="xs:anySimpleType"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="resenje">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="zaglavlje">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="rezultat_resenja" type="xs:string"/>
+              <xs:element name="informacije_predmeta">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="broj_predmeta" type="xs:string"/>
+                    <xs:element name="datum_predmeta">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute name="property" type="xs:anySimpleType"/>
+                            <xs:attribute name="datatype" type="xs:anySimpleType"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="datum_resenja">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute name="property" type="xs:anySimpleType"/>
+                      <xs:attribute name="datatype" type="xs:anySimpleType"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="razlog_zalbe">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="podnositelj_zalbe" type="ns3:Tosoba"/>
+              <xs:element name="razlog" type="xs:string"/>
+            </xs:sequence>
+            <xs:attribute name="about" type="xs:anySimpleType"/>
+            <xs:attribute name="rel" type="xs:anySimpleType"/>
+            <xs:attribute name="href" type="xs:anySimpleType"/>
+            <xs:attribute name="vocab" type="xs:anySimpleType"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="telo_resenja">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="odgovor_na_zalbu" type="xs:string"/>
+              <xs:element name="obrazlozenje">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="uvod_obrazlozenja" type="xs:string"/>
+                    <xs:element name="postupajuci_po_zalbi" type="xs:string"/>
+                    <xs:element name="uvid" type="xs:string"/>
+                    <xs:element name="dodatan_uvid" type="xs:string"/>
+                    <xs:element name="odgovor_poverenika" type="xs:string"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="upravni_spor">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="mesto">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute name="property" type="xs:anySimpleType"/>
+                            <xs:attribute name="datatype" type="xs:anySimpleType"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="rok_prijema" type="xs:string"/>
+                    <xs:element name="taksa" type="xs:string"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="poverenik">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="ns3:Tosoba">
+                <xs:sequence/>
+                <xs:attribute name="about" type="xs:anySimpleType"/>
+                <xs:attribute name="rel" type="xs:anySimpleType"/>
+                <xs:attribute name="href" type="xs:anySimpleType"/>
+                <xs:attribute name="vocab" type="xs:anySimpleType"/>
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="about" type="xs:anySimpleType"/>
+      <xs:attribute name="rel" type="xs:anySimpleType"/>
+      <xs:attribute name="href" type="xs:anySimpleType"/>
+      <xs:attribute name="vocab" type="xs:anySimpleType"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="zalOd">
+    <xs:sequence>
+      <xs:element ref="ns1:status"/>
+      <xs:element ref="ns1:podnosilac_zalbe"/>
+      <xs:element ref="ns1:naziv_organa"/>
+      <xs:element ref="ns1:resenje"/>
+      <xs:element ref="ns1:datum_podnosenja_zahteva"/>
+      <xs:element ref="ns1:opis_zalbe"/>
+      <xs:element ref="ns1:detalji_predaje"/>
+      <xs:element ref="ns1:informacije_o_podnosiocu_zalbe"/>
+    </xs:sequence>
+    <xs:attribute name="about" type="xs:anySimpleType"/>
+    <xs:attribute name="rel" type="xs:anySimpleType"/>
+    <xs:attribute name="href" type="xs:anySimpleType"/>
+    <xs:attribute name="vocab" type="xs:anySimpleType"/>
+  </xs:complexType>
+
+  <xs:complexType name="zalCut">
+    <xs:sequence>
+      <xs:element ref="ns2:status"/>
+      <xs:element ref="ns2:naziv_organa"/>
+      <xs:element ref="ns2:razlog_zalbe"/>
+      <xs:element ref="ns2:datum_zahteva"/>
+      <xs:element ref="ns2:podaci_zahteva"/>
+      <xs:element ref="ns2:detalji_predaje"/>
+      <xs:element ref="ns2:informacije_o_podnosiocu_zalbe"/>
+    </xs:sequence>
+    <xs:attribute name="about" type="xs:anySimpleType"/>
+    <xs:attribute name="rel" type="xs:anySimpleType"/>
+    <xs:attribute name="href" type="xs:anySimpleType"/>
+    <xs:attribute name="vocab" type="xs:anySimpleType"/>
+  </xs:complexType>
+
+</xs:schema>
+<xs:schema xmlns:tns="http://localhost:8080/obavestenje" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://localhost:8080/obavestenje" version="1.0">
+
+  <xs:element name="obavestenja">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:obavestenje"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="obavestenje">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" name="zaglavlje">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element form="qualified" name="organ">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element form="qualified" name="naziv_organa" type="xs:string"/>
+                    <xs:element form="qualified" name="sediste_organa">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute name="property" type="xs:anySimpleType"/>
+                            <xs:attribute name="datatype" type="xs:anySimpleType"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element form="qualified" name="broj_predmeta" type="xs:string"/>
+              <xs:element form="qualified" name="datum">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute name="property" type="xs:anySimpleType"/>
+                      <xs:attribute name="datatype" type="xs:anySimpleType"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element form="qualified" name="podnosioc_zahteva">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element form="qualified" name="ime" type="xs:string"/>
+                    <xs:element form="qualified" name="prezime" type="xs:string"/>
+                    <xs:element form="qualified" name="naziv" type="xs:string"/>
+                    <xs:element form="qualified" name="adresa" type="xs:string"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element form="qualified" name="telo">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element form="qualified" name="trazena_informacija">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element form="qualified" name="datum_informacija">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute name="property" type="xs:anySimpleType"/>
+                            <xs:attribute name="datatype" type="xs:anySimpleType"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element form="qualified" name="opis_informacije" type="xs:string"/>
+                  </xs:sequence>
+                  <xs:attribute name="about" type="xs:anySimpleType"/>
+                  <xs:attribute name="rel" type="xs:anySimpleType"/>
+                  <xs:attribute name="href" type="xs:anySimpleType"/>
+                  <xs:attribute name="vocab" type="xs:anySimpleType"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element form="qualified" name="uvid">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element form="qualified" name="vreme">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element form="qualified" name="datum" type="xs:string"/>
+                          <xs:element form="qualified" name="cas" type="xs:string"/>
+                          <xs:element form="qualified" name="trajanje">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element form="qualified" name="pocetak" type="xs:string"/>
+                                <xs:element form="qualified" name="kraj" type="xs:string"/>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element form="qualified" name="adresa">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element form="qualified" name="mesto" type="xs:string"/>
+                          <xs:element form="qualified" name="ulica" type="xs:string"/>
+                          <xs:element form="qualified" name="broj" type="xs:string"/>
+                          <xs:element form="qualified" name="br_kancelarije" type="xs:string"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element form="qualified" name="trosak" nillable="true" type="xs:string"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="about" type="xs:anySimpleType"/>
+      <xs:attribute name="rel" type="xs:anySimpleType"/>
+      <xs:attribute name="href" type="xs:anySimpleType"/>
+      <xs:attribute name="vocab" type="xs:anySimpleType"/>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>
+<xs:schema xmlns:tns="http://localhost:8080/korisnici" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://localhost:8080/korisnici" version="1.0">
+
+  <xs:element name="korisnici">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:korisnik"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="korisnik">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" name="email_adresa">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="property" type="xs:anySimpleType"/>
+                <xs:attribute name="datatype" type="xs:anySimpleType"/>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element form="qualified" name="sifra" type="xs:string"/>
+        <xs:element form="qualified" name="ime" type="xs:string"/>
+        <xs:element form="qualified" name="prezime" type="xs:string"/>
+        <xs:element form="qualified" name="datum_promene_sifre" type="xs:string"/>
+        <xs:element form="qualified" name="tip_korisnika" type="xs:string"/>
+      </xs:sequence>
+      <xs:attribute name="about" type="xs:anySimpleType"/>
+      <xs:attribute name="rel" type="xs:anySimpleType"/>
+      <xs:attribute name="href" type="xs:anySimpleType"/>
+      <xs:attribute name="vocab" type="xs:anySimpleType"/>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="sendZalbaOdlukaResponse">
+  </wsdl:message>
+  <wsdl:message name="sendOdgovor">
+    <wsdl:part name="odgovor" type="xsd:string">
+    </wsdl:part>
+    <wsdl:part name="zalbaId" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="sendOdgovorResponse">
+  </wsdl:message>
+  <wsdl:message name="sendZalbaCutanjeResponse">
+  </wsdl:message>
+  <wsdl:message name="sendZalbaOdluka">
+    <wsdl:part name="zalbanaodluku" type="ns1:zalOd">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="sendZalbaCutanje">
+    <wsdl:part name="zalbacutanje" type="ns1:zalCut">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="Zalba">
+    <wsdl:operation name="sendZalbaOdluka">
+      <wsdl:input name="sendZalbaOdluka" message="tns:sendZalbaOdluka">
+    </wsdl:input>
+      <wsdl:output name="sendZalbaOdlukaResponse" message="tns:sendZalbaOdlukaResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sendOdgovor">
+      <wsdl:input name="sendOdgovor" message="tns:sendOdgovor">
+    </wsdl:input>
+      <wsdl:output name="sendOdgovorResponse" message="tns:sendOdgovorResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sendZalbaCutanje">
+      <wsdl:input name="sendZalbaCutanje" message="tns:sendZalbaCutanje">
+    </wsdl:input>
+      <wsdl:output name="sendZalbaCutanjeResponse" message="tns:sendZalbaCutanjeResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ZalbaServiceSoapBinding" type="tns:Zalba">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="sendZalbaOdluka">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="sendZalbaOdluka">
+        <soap:body use="literal" namespace="http://poverenik/ws/zalba"/>
+      </wsdl:input>
+      <wsdl:output name="sendZalbaOdlukaResponse">
+        <soap:body use="literal" namespace="http://poverenik/ws/zalba"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sendOdgovor">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="sendOdgovor">
+        <soap:body use="literal" namespace="http://poverenik/ws/zalba"/>
+      </wsdl:input>
+      <wsdl:output name="sendOdgovorResponse">
+        <soap:body use="literal" namespace="http://poverenik/ws/zalba"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sendZalbaCutanje">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="sendZalbaCutanje">
+        <soap:body use="literal" namespace="http://poverenik/ws/zalba"/>
+      </wsdl:input>
+      <wsdl:output name="sendZalbaCutanjeResponse">
+        <soap:body use="literal" namespace="http://poverenik/ws/zalba"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ZalbaService">
+    <wsdl:port name="ZalbaPort" binding="tns:ZalbaServiceSoapBinding">
+      <soap:address location="http://localhost:9090/ZalbaPort"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

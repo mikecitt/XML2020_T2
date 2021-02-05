@@ -4,6 +4,7 @@ import com.administration.services.business.KorisnikService;
 import com.administration.services.business.ZalbaService;
 import com.administration.services.enums.TipKorisnika;
 import com.administration.services.model.*;
+import com.administration.services.ws.client.ZalbaClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,9 @@ public class ZalbaController {
 
     @Autowired
     private KorisnikService korisnikService;
+
+    @Autowired
+    private ZalbaClient zalbaClient;
 
     @GetMapping("/cutanje")
     @PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_POVERENIK')")
@@ -128,5 +132,19 @@ public class ZalbaController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(zalbanaodluku, HttpStatus.OK);
+    }
+
+    @GetMapping("/testwdsl")
+    @PreAuthorize("hasRole('ROLE_POVERENIK')")
+    public ResponseEntity<Zalbanaodluku> checkZalbaRazlog(@RequestParam String id) {
+        Zalbanaodluku zalbaodluku = null;
+        try {
+            zalbaodluku = zalbaService.getZalbaOdluku(id, null);
+            zalbaClient.sendZalbaOdluku(zalbaodluku);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(zalbaodluku, HttpStatus.OK);
     }
 }

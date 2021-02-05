@@ -3,6 +3,7 @@ package com.administration.services.controller;
 import com.administration.services.business.KorisnikService;
 import com.administration.services.business.ObavestenjeService;
 import com.administration.services.business.ZahtevService;
+import com.administration.services.enums.StatusZahteva;
 import com.administration.services.model.Korisnik;
 import com.administration.services.model.Obavestenja;
 import com.administration.services.model.Obavestenje;
@@ -128,6 +129,7 @@ public class ObavestenjeController {
             if (obavestenjeService.getZahtevObavestenje(zahtevId) != null)
                 return new ResponseEntity<>(HttpStatus.CONFLICT);
             obavestenjeService.addNewObavestenje(zahtevId, obavestenje);
+            zahtevService.resolveZahtev(zahtevId, StatusZahteva.PRIHVACEN);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
