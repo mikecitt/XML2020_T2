@@ -12,7 +12,9 @@ import javax.xml.bind.Unmarshaller;
 
 import com.administration.services.configs.ExistConfiguration;
 import com.administration.services.configs.JenaConfiguration;
+import com.administration.services.enums.XslDocumentsPaths;
 import com.administration.services.helpers.DefaultNamespacePrefixMapper;
+import com.administration.services.helpers.XSLFOTransformer;
 import com.administration.services.model.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,9 @@ public class ResenjeService {
 
     @Autowired
     private ZalbaService zalbaService;
+
+    @Autowired
+    private XSLFOTransformer transformer;
 
     @Value("/db/poverenik")
     private String collectionId;
@@ -59,26 +64,26 @@ public class ResenjeService {
             ResourceIterator i = result.getIterator();
             XMLResource res = null;
 
-            if(i.hasMoreResources()) {
+            if (i.hasMoreResources()) {
                 try {
                     JAXBContext context = JAXBContext.newInstance("com.administration.services.model");
 
                     Unmarshaller unmarshaller = context.createUnmarshaller();
-                    res = (XMLResource)i.nextResource();
+                    res = (XMLResource) i.nextResource();
                     resenje = (Resenje) unmarshaller.unmarshal(res.getContentAsDOM());
                 } finally {
                     try {
-                        ((EXistResource)res).freeResources();
+                        ((EXistResource) res).freeResources();
                     } catch (XMLDBException xe) {
                         xe.printStackTrace();
                     }
                 }
             }
 
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
-            if(col != null) {
+            if (col != null) {
                 try {
                     col.close();
                 } catch (XMLDBException xe) {
@@ -91,7 +96,7 @@ public class ResenjeService {
     }
 
     public Resenje getOneResenjeFromZalba(String zalbaId, String korisnikId) throws Exception {
-        if(korisnikId != null && !zalbaService.doesZalbaBelongToKorisnik(zalbaId, korisnikId)) {
+        if (korisnikId != null && !zalbaService.doesZalbaBelongToKorisnik(zalbaId, korisnikId)) {
             throw new Exception("Zalba not belong to Korisnik");
         }
 
@@ -100,6 +105,18 @@ public class ResenjeService {
 
     public Resenje getOneResenje(String resenjeId) {
         return getResenje(resenjeId, "src/main/resources/xquery/getOneResenje.xqy");
+    }
+
+    public byte[] getOneResenjePDF(Resenje resenje) throws Exception {
+        JAXBContext context = JAXBContext.newInstance("com.administration.services.model");
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new DefaultNamespacePrefixMapper());
+
+        existConfiguration.prepareForWriting(marshaller, os, resenje);
+
+        return transformer.generatePDF(XslDocumentsPaths.RESENJE, new String(os.toByteArray(), StandardCharsets.UTF_8));
     }
 
     public Resenja getAllResenja() throws Exception {
@@ -158,17 +175,17 @@ public class ResenjeService {
             }
 
             Object zalba = zalbaService.getOneZalba(zalbaId);
-            if(zalba == null) {
+            if (zalba == null) {
                 throw new Exception("No existing Zalba");
             }
 
-            if(getOneResenjeFromZalba(zalbaId, null) != null) {
+            if (getOneResenjeFromZalba(zalbaId, null) != null) {
                 throw new Exception("Zalba already has Resenje");
             }
 
             prepareResenje(resenje, korisnik);
             resenje.getRazlogZalbe().setRel("pred:refTo");
-            if(zalba instanceof Zalbanaodluku) {
+            if (zalba instanceof Zalbanaodluku) {
                 resenje.getRazlogZalbe().setHref(((Zalbanaodluku) zalba).getAbout());
             } else {
                 resenje.getRazlogZalbe().setHref(((Zalbacutanje) zalba).getAbout());
@@ -205,15 +222,12 @@ public class ResenjeService {
     }
 
     private void prepareResenje(Resenje resenje, Korisnik korisnik) {
-        resenje.setAbout("http://localhost:8080/resenje/" +
-                UUID.randomUUID().toString().replace("-", ""));
+        resenje.setAbout("http://localhost:8080/resenje/" + UUID.randomUUID().toString().replace("-", ""));
         resenje.setVocab("http://localhost:8080/rdf/predicate/");
         resenje.getPoverenik().setRel("pred:createdBy");
         resenje.getPoverenik().setHref(korisnik.getAbout());
-        resenje.getZaglavlje().getInformacijePredmeta()
-                .getDatumPredmeta().setDatatype("tip:TdatumBroj");
-        resenje.getZaglavlje().getInformacijePredmeta()
-                .getDatumPredmeta().setProperty("pred:datum_predmeta");
+        resenje.getZaglavlje().getInformacijePredmeta().getDatumPredmeta().setDatatype("tip:TdatumBroj");
+        resenje.getZaglavlje().getInformacijePredmeta().getDatumPredmeta().setProperty("pred:datum_predmeta");
         resenje.getZaglavlje().getDatumResenja().setDatatype("tip:TdatumBroj");
         resenje.getZaglavlje().getDatumResenja().setProperty("pred:datum_resenja");
         resenje.getTeloResenja().getUpravniSpor().getMesto().setDatatype("xs:string");

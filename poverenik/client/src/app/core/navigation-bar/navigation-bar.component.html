@@ -13,17 +13,21 @@
   <div class="emptySpace"></div>
 
   <ul nz-menu nzMode="horizontal">
-    <li nz-menu-item>
+    <li nz-menu-item *ngIf="!isLogged">
       <a routerLink="/register">
         <i nz-icon nzType="user-add"></i>
         Register
       </a>
     </li>
-    <li nz-menu-item>
+    <li nz-menu-item *ngIf="!isLogged">
       <a routerLink="/login">
         <i nz-icon nzType="login"></i>
         Login
       </a>
+    </li>
+    <li nz-menu-item *ngIf="isLogged" (click)="logout()">
+      <i nz-icon nzType="logout"></i>
+      Logout
     </li>
   </ul>
 </div>
