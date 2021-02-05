@@ -23,9 +23,7 @@
 
   <!-- Use file name nl_Bel instead of the default nl_BE -->
   <hyphenation-pattern lang="nl" country="BE">nl_Bel</hyphenation-pattern>
-  
-  <use-cache>false</use-cache>
-  
+
   <renderers>
     <renderer mime="application/pdf">
       <fonts>

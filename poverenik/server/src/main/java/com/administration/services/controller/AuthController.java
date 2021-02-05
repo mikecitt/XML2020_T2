@@ -9,7 +9,9 @@ import com.administration.services.model.Korisnik;
 import com.administration.services.model.KorisnikDetail;
 import com.administration.services.security.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -84,5 +86,21 @@ public class AuthController {
             ex.printStackTrace();
         }
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value="/getpdf", method=RequestMethod.GET)
+    public ResponseEntity<byte[]> getPDF() {
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            // Here you have to set the actual filename of your pdf
+            String filename = "test.pdf";
+            //headers.setContentDispositionFormData(filename, filename);
+            headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+            return new ResponseEntity<>(xslfoTransformer.generatePDF(), headers, HttpStatus.OK);
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }
