@@ -12,6 +12,8 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { NzResultModule } from 'ng-zorro-antd/result';
+import { NzNotificationModule } from 'ng-zorro-antd/notification';
+import { NzMessageModule } from 'ng-zorro-antd/message';
 
 @NgModule({
   exports: [
@@ -27,6 +29,8 @@ import { NzResultModule } from 'ng-zorro-antd/result';
     NzEmptyModule,
     NzPopoverModule,
     NzResultModule,
+    NzNotificationModule,
+    NzMessageModule,
   ],
 })
 export class AntdModule {}

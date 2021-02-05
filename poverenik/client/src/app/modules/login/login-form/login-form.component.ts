@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthenticationService } from 'src/app/services/auth/authentication.service';
+import { Router } from '@angular/router';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
+import {
+  AuthenticationService,
+  LoginResponse,
+} from 'src/app/services/auth/authentication.service';
 
 @Component({
   selector: 'app-login-form',
@@ -10,6 +16,8 @@ import { AuthenticationService } from 'src/app/services/auth/authentication.serv
 export class LoginFormComponent implements OnInit {
   loginForm!: FormGroup;
 
+  loading: boolean = false;
+
   login(): void {
     for (const i in this.loginForm.controls) {
       this.loginForm.controls[i].markAsDirty();
@@ -17,13 +25,47 @@ export class LoginFormComponent implements OnInit {
     }
 
     if (this.loginForm.valid) {
-      this.authService.login('blabla', 'user');
+      this.loading = true;
+
+      this.authService
+        .login(this.loginForm.value.email, this.loginForm.value.password)
+        .subscribe(
+          (response) => {
+            if (response.body !== null) {
+              this.authService.setLoginCredentials(
+                response.body.accessToken,
+                response.body.role
+              );
+              this.router.navigateByUrl('/');
+            }
+          },
+          (error) => {
+            switch (error.status) {
+              case 401:
+                this.message.create('warning', `Incorrect email or password`);
+                break;
+              default:
+                this.notification.create(
+                  'error',
+                  'Error',
+                  'There was an error in the server'
+                );
+                break;
+            }
+          }
+        )
+        .add(() => {
+          this.loading = false;
+        });
     }
   }
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private notification: NzNotificationService,
+    private message: NzMessageService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
