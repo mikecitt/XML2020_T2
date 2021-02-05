@@ -2,6 +2,7 @@ package com.administration.services.controller;
 
 import com.administration.services.business.KorisnikService;
 import com.administration.services.business.ZahtevService;
+import com.administration.services.enums.StatusZahteva;
 import com.administration.services.model.Korisnik;
 import com.administration.services.model.Zahtev;
 import com.administration.services.model.Zahtevi;
@@ -17,6 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -104,6 +106,20 @@ public class ZahtevController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(zahtevi, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_SLUZBENIK')")
+    @PutMapping("/decline")
+    public ResponseEntity<Void> declineZahtev(@RequestParam String zahtevId) {
+        try {
+            Zahtev z = zahtevService.resolveZahtev(zahtevId, StatusZahteva.ODBIJEN);
+            if (z == null)
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PreAuthorize("hasRole('ROLE_GRADJANIN')")
