@@ -9,7 +9,9 @@ import com.administration.services.model.Obavestenje;
 import com.administration.services.model.Zahtev;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -48,6 +50,33 @@ public class ObavestenjeController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(obavestenja, HttpStatus.OK);
+    }
+
+    @GetMapping("/pdf")
+    public ResponseEntity<byte[]> getObavestenjePDF(@RequestParam String obavestenjeId) {
+        Obavestenje obavestenje = null;
+
+        try {
+            obavestenje = obavestenjeService.getObavestenje(obavestenjeId);
+            if (obavestenje == null)
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            Korisnik k = korisnikService.getKorisnikByEmail(authentication.getName());
+            if (k.getTipKorisnika().equals("ROLE_GRADJANIN") && obavestenje != null) {
+                String href = (obavestenje.getTelo().getTrazenaInformacija().getHref());
+                Zahtev z = zahtevService.getZahtev(href.substring(href.lastIndexOf('/') + 1));
+                if (z == null || !z.getInformacijeOTraziocu().getHref().equals(k.getAbout()))
+                    return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            }
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+            return new ResponseEntity<>(obavestenjeService.getObavestenjePDF(obavestenje), headers, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping

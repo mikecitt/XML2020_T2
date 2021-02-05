@@ -12,7 +12,9 @@ import javax.xml.bind.Unmarshaller;
 
 import com.administration.services.configs.ExistConfiguration;
 import com.administration.services.configs.JenaConfiguration;
+import com.administration.services.enums.XslDocumentsPaths;
 import com.administration.services.helpers.DefaultNamespacePrefixMapper;
+import com.administration.services.helpers.XSLFOTransformer;
 import com.administration.services.model.Korisnik;
 import com.administration.services.model.Zahtev;
 import com.administration.services.model.Zahtev.Status;
@@ -44,11 +46,26 @@ public class ZahtevService {
     @Autowired
     private KorisnikService korisnikService;
 
+    @Autowired
+    private XSLFOTransformer transformer;
+
     @Value("/db/sluzbenik")
     private String collectionId;
 
     @Value("zahtev.xml")
     private String zahtevId;
+
+    public byte[] getZahtevPDF(Zahtev zahtev) throws Exception {
+        JAXBContext context = JAXBContext.newInstance("com.administration.services.model");
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new DefaultNamespacePrefixMapper());
+
+        existConfiguration.prepareForWriting(marshaller, os, zahtev);
+
+        return transformer.generatePDF(XslDocumentsPaths.ZAHTEV, new String(os.toByteArray(), StandardCharsets.UTF_8));
+    }
 
     public Zahtev getZahtev(String zahtevId) throws Exception {
         Collection col = null;

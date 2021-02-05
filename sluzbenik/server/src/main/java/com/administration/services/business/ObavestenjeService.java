@@ -12,7 +12,9 @@ import javax.xml.bind.Unmarshaller;
 
 import com.administration.services.configs.ExistConfiguration;
 import com.administration.services.configs.JenaConfiguration;
+import com.administration.services.enums.XslDocumentsPaths;
 import com.administration.services.helpers.DefaultNamespacePrefixMapper;
+import com.administration.services.helpers.XSLFOTransformer;
 import com.administration.services.model.Obavestenja;
 import com.administration.services.model.Obavestenje;
 
@@ -37,11 +39,27 @@ public class ObavestenjeService {
     @Autowired
     private JenaConfiguration jenaConfiguration;
 
+    @Autowired
+    private XSLFOTransformer transformer;
+
     @Value("/db/sluzbenik")
     private String collectionId;
 
     @Value("obavestenje.xml")
     private String obavestenjeId;
+
+    public byte[] getObavestenjePDF(Obavestenje obavestenje) throws Exception {
+        JAXBContext context = JAXBContext.newInstance("com.administration.services.model");
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new DefaultNamespacePrefixMapper());
+
+        existConfiguration.prepareForWriting(marshaller, os, obavestenje);
+
+        return transformer.generatePDF(XslDocumentsPaths.OBAVESTENJE,
+                new String(os.toByteArray(), StandardCharsets.UTF_8));
+    }
 
     public Obavestenje getObavestenje(String obavestenjeId) {
         Collection col = null;
