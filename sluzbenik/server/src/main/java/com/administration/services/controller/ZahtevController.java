@@ -3,7 +3,6 @@ package com.administration.services.controller;
 import com.administration.services.business.KorisnikService;
 import com.administration.services.business.ZahtevService;
 import com.administration.services.enums.StatusZahteva;
-import com.administration.services.helpers.XSLTTransformer;
 import com.administration.services.model.Korisnik;
 import com.administration.services.model.Zahtev;
 import com.administration.services.model.Zahtevi;
@@ -35,9 +34,6 @@ public class ZahtevController {
 
     @Autowired
     private KorisnikService korisnikService;
-
-    @Autowired
-    private XSLTTransformer transformer;
 
     @GetMapping("/pdf")
     public ResponseEntity<byte[]> getZahtevPDF(@RequestParam String zahtevId) {
