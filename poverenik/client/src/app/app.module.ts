@@ -17,9 +17,11 @@ import { RegisterPageComponent } from './modules/register/register-page/register
 import { RegisterFormComponent } from './modules/register/register-form/register-form.component';
 import { NavigationBarComponent } from './core/navigation-bar/navigation-bar.component';
 import { HomePageComponent } from './modules/home/home-page/home-page.component';
-import { OverviewComponent } from './modules/complaint-silence/overview/overview.component';
-import { ComplaintsComponent } from './modules/home/complaints/complaints.component';
+import { HomeComplaintsComponent } from './modules/home/complaints/complaints.component';
 import { XmlInterceptor } from './interceptors/xml.interceptor';
+import { HomeComplaintsDecisionComponent } from './modules/home/complaints-decision/complaints-decision.component';
+import { TokenInterceptor } from './interceptors/token.interceptor';
+import { ComplaintDecisionOverviewComponent } from './modules/complaint-decision/overview/overview.component';
 
 registerLocaleData(en);
 
@@ -32,8 +34,10 @@ registerLocaleData(en);
     RegisterFormComponent,
     NavigationBarComponent,
     HomePageComponent,
-    OverviewComponent,
-    ComplaintsComponent,
+    ComplaintDecisionOverviewComponent,
+    HomeComplaintsComponent,
+    HomeComplaintsDecisionComponent,
+    ComplaintDecisionOverviewComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,6 +51,7 @@ registerLocaleData(en);
   providers: [
     { provide: NZ_I18N, useValue: en_US },
     { provide: HTTP_INTERCEPTORS, useClass: XmlInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })

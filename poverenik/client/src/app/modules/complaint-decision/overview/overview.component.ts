@@ -1,15 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-overview',
+  selector: 'app-complaint-decision-overview',
   templateUrl: './overview.component.html',
-  styleUrls: ['./overview.component.css']
+  styleUrls: ['./overview.component.css'],
 })
-export class OverviewComponent implements OnInit {
+export class ComplaintDecisionOverviewComponent implements OnInit {
+  @Input()
+  complaint: any;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
+    console.log(this.complaint);
+    this.complaint.opisZalbe =
+      'dasn dnasdkj nasjkdn asjkdnasjkdnaskjdnaksdn kasnd askndjk asdjk askjdasjkd dasd asdas dasd asd asdas dasd ';
   }
-
 }

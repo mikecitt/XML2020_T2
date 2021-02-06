@@ -1,0 +1,5 @@
+<nz-space nzDirection="horizontal">
+  <nz-space-item *ngFor="let complaint of complaints">
+    <app-complaint-decision-overview [complaint]="complaint"></app-complaint-decision-overview>
+  </nz-space-item>
+</nz-space>

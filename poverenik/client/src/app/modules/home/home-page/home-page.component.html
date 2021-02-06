@@ -3,13 +3,9 @@
     <app-navigation-bar></app-navigation-bar>
   </nz-header>
   <nz-content class="content" [ngSwitch]="isLogged">
-    <div *ngSwitchCase="true">
-      Ulogovan
-    </div>
-    <div *ngSwitchCase="false">
-      <nz-result class="forbidden" nzStatus="403" nzTitle="Unauthorized"
-        nzSubTitle="Sorry, you must be logged in to see this page">
-      </nz-result>
-    </div>
+    <app-home-complaints-decision *ngSwitchCase="true"></app-home-complaints-decision>
+    <nz-result *ngSwitchCase="false" class="forbidden" nzStatus="403" nzTitle="Unauthorized"
+      nzSubTitle="Sorry, you must be logged in to see this page">
+    </nz-result>
   </nz-content>
 </nz-layout>

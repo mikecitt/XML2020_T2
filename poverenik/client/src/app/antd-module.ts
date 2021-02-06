@@ -14,6 +14,7 @@ import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { NzResultModule } from 'ng-zorro-antd/result';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzMessageModule } from 'ng-zorro-antd/message';
+import { NzTypographyModule } from 'ng-zorro-antd/typography';
 
 @NgModule({
   exports: [
@@ -31,6 +32,7 @@ import { NzMessageModule } from 'ng-zorro-antd/message';
     NzResultModule,
     NzNotificationModule,
     NzMessageModule,
+    NzTypographyModule,
   ],
 })
 export class AntdModule {}
