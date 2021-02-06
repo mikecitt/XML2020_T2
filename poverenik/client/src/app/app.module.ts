@@ -20,9 +20,9 @@ import { HomePageComponent } from './modules/home/home-page/home-page.component'
 import { XmlInterceptor } from './interceptors/xml.interceptor';
 import { HomeComplaintsDecisionComponent } from './modules/home/complaints-decision/complaints-decision.component';
 import { TokenInterceptor } from './interceptors/token.interceptor';
-import { ComplaintDecisionOverviewComponent } from './modules/complaint-decision/overview/overview.component';
+import { ComplaintDecisionOverviewComponent } from './modules/complaints/complaint-decision-overview/complaint-decision-overview.component';
 import { HomeComplaintsSilenceComponent } from './modules/home/complaints-silence/complaints-silence.component';
-import { ComplaintSilenceOverviewComponent } from './modules/complaint-silence/overview/overview.component';
+import { ComplaintSilenceOverviewComponent } from './modules/complaints/complaint-silence-overview/complaint-silence-overview.component';
 
 registerLocaleData(en);
 
