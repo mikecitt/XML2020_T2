@@ -1,10 +1,10 @@
-package com.administration.services;
+package com.administration.mailservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ServicesApplicationTests {
+class MailServicesApplicationTests {
 
 	@Test
 	void contextLoads() {
