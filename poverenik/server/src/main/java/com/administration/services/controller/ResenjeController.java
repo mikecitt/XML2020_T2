@@ -87,6 +87,52 @@ public class ResenjeController {
         }
     }
 
+    @GetMapping("/zalba/pdf")
+    @PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_POVERENIK')")
+    public ResponseEntity<byte[]> getResenjeFromZalbaPDF(@RequestParam String id, Principal user) {
+        Resenje resenje = null;
+        try {
+            Korisnik korisnik = korisnikService.getKorisnikByEmail(user.getName());
+            if (korisnik.getTipKorisnika().equals(TipKorisnika.POVERENIK.toString())) {
+                resenje = resenjeService.getOneResenjeFromZalba(id, null);
+            } else {
+                resenje = resenjeService.getOneResenjeFromZalba(id, korisnik.getEmailAdresa().getValue());
+            }
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+            return new ResponseEntity<>(resenjeService.getOneResenjePDF(resenje), headers, HttpStatus.OK);
+        } catch (Exception e) {
+            if (e.getMessage().equals("Zalba not belong to Korisnik"))
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/zalba/html")
+    @PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_POVERENIK')")
+    public ResponseEntity<byte[]> getResenjeFromZalbaHTML(@RequestParam String id, Principal user) {
+        Resenje resenje = null;
+        try {
+            Korisnik korisnik = korisnikService.getKorisnikByEmail(user.getName());
+            if (korisnik.getTipKorisnika().equals(TipKorisnika.POVERENIK.toString())) {
+                resenje = resenjeService.getOneResenjeFromZalba(id, null);
+            } else {
+                resenje = resenjeService.getOneResenjeFromZalba(id, korisnik.getEmailAdresa().getValue());
+            }
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.TEXT_HTML);
+            headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+            return new ResponseEntity<>(resenjeService.getOneResenjeHTML(resenje), headers, HttpStatus.OK);
+        } catch (Exception e) {
+            if (e.getMessage().equals("Zalba not belong to Korisnik"))
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @GetMapping("/zalba")
     @PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_POVERENIK')")
     public ResponseEntity<Resenje> getResenjeFromZalba(@RequestParam String id, Principal user) {
@@ -130,17 +176,14 @@ public class ResenjeController {
             resenjeClient.sendResenje(resenje);
             Object temp = zalbaService.getOneZalba(zalbaId);
             String adresa = "";
-            if(temp instanceof Zalbanaodluku) {
-                String[] splitovano = ((Zalbanaodluku)temp)
-                        .getInformacijeOPodnosiocuZalbe().getHref().split("/");
+            if (temp instanceof Zalbanaodluku) {
+                String[] splitovano = ((Zalbanaodluku) temp).getInformacijeOPodnosiocuZalbe().getHref().split("/");
                 adresa = splitovano[splitovano.length - 1];
             } else {
-                String[] splitovano = ((Zalbacutanje)temp)
-                        .getInformacijeOPodnosiocuZalbe().getHref().split("/");
+                String[] splitovano = ((Zalbacutanje) temp).getInformacijeOPodnosiocuZalbe().getHref().split("/");
                 adresa = splitovano[splitovano.length - 1];
             }
-            ePostaClient.sendMail("REŠENJE",
-                    "Vaše REŠENJE je gotovo i se nalazi u prilogu", adresa,
+            ePostaClient.sendMail("REŠENJE", "Vaše REŠENJE je gotovo i se nalazi u prilogu", adresa,
                     resenjeService.getOneResenjePDF(resenje));
         } catch (Exception e) {
             e.printStackTrace();
