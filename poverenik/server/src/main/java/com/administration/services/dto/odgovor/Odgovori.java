@@ -14,7 +14,7 @@ public class Odgovori {
     protected List<OdgovorSluzbenika> odgovorSluzbenika;
 
 
-    public List<OdgovorSluzbenika> getKorisnik() {
+    public List<OdgovorSluzbenika> getOdgovori() {
         if (odgovorSluzbenika == null) {
             odgovorSluzbenika = new ArrayList<OdgovorSluzbenika>();
         }

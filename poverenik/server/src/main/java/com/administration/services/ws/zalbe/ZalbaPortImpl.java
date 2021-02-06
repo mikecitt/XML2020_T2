@@ -1,5 +1,6 @@
 package com.administration.services.ws.zalbe;
 
+import com.administration.services.business.OdgovorService;
 import com.administration.services.business.ZalbaService;
 import com.administration.services.model.Zalbacutanje;
 import com.administration.services.model.Zalbanaodluku;
@@ -21,6 +22,9 @@ public class ZalbaPortImpl implements ZalbaInterface {
 
     private static final Logger LOG = Logger.getLogger(ZalbaPortImpl.class.getName());
 
+    @Autowired
+    private OdgovorService odgovorService;
+
     @Override
     public void sendZalbaCutanje(Zalbacutanje zalbacutanje) {}
 
@@ -31,7 +35,8 @@ public class ZalbaPortImpl implements ZalbaInterface {
     public void sendOdgovor(String odgovor, String zalbaId) {
         LOG.info("Executing operation sendOdgovor");
 
-        System.out.print(zalbaId + " ");
-        System.out.println(odgovor);
+        if(!odgovorService.checkOdgovorIsticanje(zalbaId)) {
+            odgovorService.placeOdgovor(zalbaId, odgovor);
+        }
     }
 }

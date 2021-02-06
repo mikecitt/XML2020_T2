@@ -7,21 +7,21 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement(name = "odgovor")
 public class OdgovorDTO {
     @XmlElement(name = "tekst", required = true)
-    private String odgovor;
+    private String tekst;
 
     public OdgovorDTO() {
-        this.odgovor = null;
+        this.tekst = null;
     }
 
     public OdgovorDTO(String odgovor) {
-        this.odgovor = odgovor;
+        this.tekst = odgovor;
     }
 
     public String getOdgovor() {
-        return odgovor;
+        return tekst;
     }
 
-    public void setOdgovor(String odgovor) {
-        this.odgovor = odgovor;
+    public void setOdgovor(String tekst) {
+        this.tekst = tekst;
     }
 }

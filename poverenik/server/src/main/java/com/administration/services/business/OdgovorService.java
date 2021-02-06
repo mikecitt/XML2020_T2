@@ -6,7 +6,6 @@ import com.administration.services.dto.odgovor.OdgovorSluzbenika;
 import com.administration.services.dto.odgovor.Odgovori;
 import com.administration.services.helpers.DefaultNamespacePrefixMapper;
 import org.exist.xmldb.EXistResource;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -69,7 +68,7 @@ public class OdgovorService {
                     res = (XMLResource) i.nextResource();
                     odg = (OdgovorSluzbenika) unmarshaller.unmarshal(res.getContentAsDOM());
                     Date d = new Date();
-                    if(odg.getDatumZahtevanja().getTime() + WAIT_DURATION_IN_MILLIES <= d.getTime()) {
+                    if(!odg.isOdgovorio() && odg.getDatumZahtevanja().getTime() + WAIT_DURATION_IN_MILLIES <= d.getTime()) {
                         return true;
                     }
                 } finally {
@@ -96,8 +95,49 @@ public class OdgovorService {
         return false;
     }
 
-    public void placeOdgovor(String zalbaId) {
+    public void placeOdgovor(String zalbaId, String odgovor) {
+        Collection col = null;
+        XMLResource res = null;
+        Odgovori odgovori = null;
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        try {
+            col = existConfiguration.getOrCreateCollection(collectionId);
 
+            res = (XMLResource) col.createResource(odgovorId, XMLResource.RESOURCE_TYPE);
+            JAXBContext context = JAXBContext.newInstance("com.administration.services.dto.odgovor");
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+            try {
+                odgovori = (Odgovori) unmarshaller.unmarshal(res.getContentAsDOM());
+                for(OdgovorSluzbenika odg : odgovori.getOdgovori()) {
+                    if(odg.getHref().contains(zalbaId)) {
+                        odg.setOdgovorio(true);
+                        odg.setOdgovor(odgovor);
+                    }
+                }
+            } catch (XMLDBException ignored) {
+            }
+
+            Marshaller marshaller = context.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+            marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new DefaultNamespacePrefixMapper());
+
+            existConfiguration.prepareForWriting(marshaller, os, odgovori);
+
+            res.setContent(os);
+            col.storeResource(res);
+            jenaConfiguration.updateRDF(new String(os.toByteArray(), StandardCharsets.UTF_8));
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            if (col != null) {
+                try {
+                    col.close();
+                } catch (XMLDBException xe) {
+                    xe.printStackTrace();
+                }
+            }
+        }
     }
 
     public void addZahtevOdgovora(String zalbaId, String tipZalbe) throws Exception {
@@ -126,7 +166,7 @@ public class OdgovorService {
             odg.setDatumZahtevanja(new Date());
             odg.setVocab("http://localhost:8080/rdf/predicate/");
             odg.setAbout("http://localhost:8080/odgovori/" + UUID.randomUUID().toString().replace("-", ""));
-            odgovori.getKorisnik().add(odg);
+            odgovori.getOdgovori().add(odg);
 
             Marshaller marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
