@@ -1,1 +1,22 @@
-<p>overview works!</p>
+<nz-card style="width: 250px;margin-top: 16px" [nzActions]="[actionViewPdf, actionViewDecision]">
+  <nz-card-meta [nzAvatar]="avatarTemplate" [nzTitle]="complaint.nazivOrgana.value"
+    [nzDescription]="descriptionTemplate">
+  </nz-card-meta>
+</nz-card>
+<ng-template #avatarTemplate>
+  <i nz-icon nzType="container" nzTheme="outline"></i>
+</ng-template>
+<ng-template #descriptionTemplate>
+  <span nz-typography nzType="secondary" nzEllipsis nzExpandable [nzEllipsisRows]="7">
+    {{ complaint.podaciZahteva }}
+  </span>
+</ng-template>
+<ng-template #actionViewPdf>
+  <i nz-icon nzType="file-pdf"></i>
+</ng-template>
+<ng-template #actionDelete>
+  <i nz-icon nzType="delete"></i>
+</ng-template>
+<ng-template #actionViewDecision>
+  <i nz-icon nzType="file-protect"></i>
+</ng-template>

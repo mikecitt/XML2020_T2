@@ -4,6 +4,7 @@
   </nz-header>
   <nz-content class="content" [ngSwitch]="isLogged">
     <app-home-complaints-decision *ngSwitchCase="true"></app-home-complaints-decision>
+    <app-home-complaints-silence *ngSwitchCase="true"></app-home-complaints-silence>
     <nz-result *ngSwitchCase="false" class="forbidden" nzStatus="403" nzTitle="Unauthorized"
       nzSubTitle="Sorry, you must be logged in to see this page">
     </nz-result>

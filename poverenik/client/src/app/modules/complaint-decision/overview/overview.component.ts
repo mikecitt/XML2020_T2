@@ -11,9 +11,5 @@ export class ComplaintDecisionOverviewComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {
-    console.log(this.complaint);
-    this.complaint.opisZalbe =
-      'dasn dnasdkj nasjkdn asjkdnasjkdnaskjdnaksdn kasnd askndjk asdjk askjdasjkd dasd asdas dasd asd asdas dasd ';
-  }
+  ngOnInit(): void {}
 }

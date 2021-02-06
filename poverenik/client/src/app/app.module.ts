@@ -22,6 +22,8 @@ import { XmlInterceptor } from './interceptors/xml.interceptor';
 import { HomeComplaintsDecisionComponent } from './modules/home/complaints-decision/complaints-decision.component';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { ComplaintDecisionOverviewComponent } from './modules/complaint-decision/overview/overview.component';
+import { HomeComplaintsSilenceComponent } from './modules/home/complaints-silence/complaints-silence.component';
+import { ComplaintSilenceOverviewComponent } from './modules/complaint-silence/overview/overview.component';
 
 registerLocaleData(en);
 
@@ -38,6 +40,8 @@ registerLocaleData(en);
     HomeComplaintsComponent,
     HomeComplaintsDecisionComponent,
     ComplaintDecisionOverviewComponent,
+    HomeComplaintsSilenceComponent,
+    ComplaintSilenceOverviewComponent,
   ],
   imports: [
     BrowserModule,
