@@ -9,6 +9,8 @@ import { ComplaintSilenceService } from 'src/app/services/complaint-silence/comp
 export class HomeComplaintsSilenceComponent implements OnInit {
   complaints: any[] = [];
 
+  loading: boolean = true;
+
   constructor(private service: ComplaintSilenceService) {}
 
   ngOnInit(): void {
@@ -16,6 +18,7 @@ export class HomeComplaintsSilenceComponent implements OnInit {
       (response) => {
         if (response.body !== null) {
           this.complaints = response.body.zalbacutanje;
+          this.loading = false;
         }
       },
       () => {}

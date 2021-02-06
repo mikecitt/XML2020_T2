@@ -9,6 +9,8 @@ import { ComplaintDecisionService } from 'src/app/services/complaint-decision/co
 export class HomeComplaintsDecisionComponent implements OnInit {
   complaints: any[] = [];
 
+  loading: boolean = true;
+
   constructor(private service: ComplaintDecisionService) {}
 
   ngOnInit(): void {
@@ -16,6 +18,7 @@ export class HomeComplaintsDecisionComponent implements OnInit {
       (response) => {
         if (response.body !== null) {
           this.complaints = response.body.zalbanaodluku;
+          this.loading = false;
         }
       },
       () => {}

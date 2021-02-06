@@ -1,5 +1,12 @@
-<nz-space nzDirection="horizontal">
-  <nz-space-item *ngFor="let complaint of complaints">
-    <app-complaint-decision-overview [complaint]="complaint"></app-complaint-decision-overview>
-  </nz-space-item>
-</nz-space>
+<div class="spin" *ngIf="loading">
+  <nz-spin nzSimple [nzSize]="'large'">
+  </nz-spin>
+</div>
+<div *ngIf="!loading">
+  <nz-empty *ngIf="complaints.length === 0" class="empty" nzNotFoundContent="Nema zalbi"></nz-empty>
+  <nz-space *ngIf="complaints.length !== 0" nzDirection="horizontal">
+    <nz-space-item *ngFor="let complaint of complaints">
+      <app-complaint-decision-overview [complaint]="complaint"></app-complaint-decision-overview>
+    </nz-space-item>
+  </nz-space>
+</div>

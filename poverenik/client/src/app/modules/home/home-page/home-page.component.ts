@@ -7,7 +7,7 @@ import { AuthenticationService } from 'src/app/services/auth/authentication.serv
   styleUrls: ['./home-page.component.css'],
 })
 export class HomePageComponent implements OnInit {
-  selectedTab: string = 'cutanje';
+  selectedTab: string = 'odluka';
 
   constructor(private authService: AuthenticationService) {}
 
