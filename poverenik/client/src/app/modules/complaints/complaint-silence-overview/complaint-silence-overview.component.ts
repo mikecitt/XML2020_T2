@@ -1,13 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { ComplaintDecisionService } from 'src/app/services/complaint-decision/complaint-decision.service';
+import { ComplaintSilenceService } from 'src/app/services/complaint-silence/complaint-silence.service';
 
 @Component({
-  selector: 'app-complaint-decision-overview',
-  templateUrl: './overview.component.html',
-  styleUrls: ['./overview.component.css'],
+  selector: 'app-complaint-silence-overview',
+  templateUrl: './complaint-silence-overview.component.html',
+  styleUrls: ['./complaint-silence-overview.component.css'],
 })
-export class ComplaintDecisionOverviewComponent implements OnInit {
+export class ComplaintSilenceOverviewComponent implements OnInit {
   @Input()
   complaint: any;
 
@@ -15,7 +15,7 @@ export class ComplaintDecisionOverviewComponent implements OnInit {
   htmlLoading: boolean = false;
 
   constructor(
-    private service: ComplaintDecisionService,
+    private service: ComplaintSilenceService,
     private notification: NzNotificationService
   ) {}
 
