@@ -1,0 +1,25 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <button class="btn btn-primary" routerLink="/dashboard" routerLinkActive="active">
+            Pocetna stranica
+        </button>
+        <button class="btn btn-primary" (click)="logOut()">
+            Odjava
+        </button>
+    </div>
+  </nav>
+<div class="aux">
+    <button class="btn btn-primary block" routerLink="/svizahtevi" routerLinkActive="active">
+        Zahtevi
+    </button>
+    <hr>
+    <button class="btn btn-primary block" routerLink="/register" routerLinkActive="active" 
+        *ngIf="userType == 'ROLE_SLUZBENIK'">
+        Podnesi godisnji izvestaj
+    </button>
+    <hr>
+    <button class="btn btn-primary block" routerLink="/podnesizahtev" routerLinkActive="active"
+        *ngIf="userType == 'ROLE_GRADJANIN'">
+        Podnesi zahtev
+    </button>
+</div>

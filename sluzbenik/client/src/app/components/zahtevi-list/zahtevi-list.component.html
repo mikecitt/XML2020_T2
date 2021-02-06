@@ -1,0 +1,40 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+      <button class="btn btn-primary" routerLink="/dashboard" routerLinkActive="active">
+          Pocetna stranica
+      </button>
+      <button class="btn btn-primary" routerLink="/podnesizahtev" routerLinkActive="active"
+        *ngIf="userType == 'ROLE_GRADJANIN'">
+          Podnesi zahtev
+      </button>
+      <button class="btn btn-primary" (click)="logOut()">
+          Odjava
+      </button>
+  </div>
+</nav>
+<div class="aux">
+    <span><h4><b>Zahtevi</b></h4></span><br><br>
+      <div class="card" style="width: 32rem;" *ngFor = 'let z of zahtevi'>
+          <div class="card-body">
+            <h5 class="card-title">ID: {{z.id}}</h5>
+            <p class="card-text">Podneto: {{z.datum}}</p>
+            <p class="card-text"  *ngIf = "z.status == 'OBRADA'">Status: <button type="button" class="btn btn-sm btn-warning"
+                disabled>OBRADA</button></p>
+            <p class="card-text"  *ngIf = "z.status == 'ODBIJEN'">Status: <button type="button" class="btn btn-sm btn-danger"
+                disabled>ODBIJEN</button></p>
+            <p class="card-text"  *ngIf = "z.status == 'PRIHVACEN'">Status: <button type="button" class="btn btn-sm btn-success"
+                disabled>PRIHVACEN</button></p>
+            <br>
+            <hr>
+            <button type="button" class="btn btn-sm btn-primary" (click) = "getZahtevPDF(z.id)"
+              >Pregledaj</button> &nbsp;&nbsp;&nbsp;
+            <app-obavestenje-dodaj (added) = "onAdded($event)" [zahtev] = "z" *ngIf = "z.status == 'OBRADA' && userType == 'ROLE_SLUZBENIK'"></app-obavestenje-dodaj>
+              &nbsp;&nbsp;&nbsp;
+            <button type="button" class="btn btn-sm btn-danger" *ngIf = "z.status == 'OBRADA' && userType == 'ROLE_SLUZBENIK'"
+              (click)="declineZahtev(z.id)">Odbij</button>&nbsp;&nbsp;&nbsp;
+            <button type="button" class="btn btn-sm btn-primary" *ngIf = "z.status == 'PRIHVACEN'"
+              >Pogledaj obavestenje</button>&nbsp;&nbsp;&nbsp;
+          </div>
+      </div>
+      <br>
+</div>

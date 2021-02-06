@@ -9,27 +9,30 @@ import { map, catchError } from 'rxjs/operators';
 })
 export class RegistrationService {
 
-  private readonly port = "http://localhost:8080"
+  private readonly port = "http://localhost:8082"
   private readonly path = "/auth/register";
 	private headers = new HttpHeaders({'Content-Type': 'application/xml'});
 
   constructor(private http: HttpClient) { }
 
   register(password: string, firstName: string, lastName: string,
-    emailAddress: string)/*: Observable<boolean>*/ {
+    emailAddress: string): Observable<boolean> {
     var body;
     var xml2js = require('xml2js');
  
-    var obj = {user:{name: firstName, Surname: lastName, email: emailAddress, pw: password}};
+    var obj = {"kor:korisnik":{$: {
+      "xmlns:kor": "http://localhost:8080/korisnici"
+      }, 
+      "kor:email_adresa": emailAddress, "kor:sifra": password, "kor:ime": firstName, "kor:prezime":lastName}};
  
     var builder = new xml2js.Builder();
     body = builder.buildObject(obj); 
 
-    console.log(body);
-      //return true;
-    /*return this.http.post(this.port + this.path, body,
+    //console.log(body);
+    return this.http.post(this.port + this.path, body,
       {headers: this.headers, responseType: 'text'}).pipe(
       map((res: any) => {
+        console.log(res);
         return true;
       }),
       catchError(error => {
@@ -39,6 +42,6 @@ export class RegistrationService {
         else {
           return throwError ('Server error');
         }
-      }));*/
+      }));
   }
 }

@@ -1,5 +1,5 @@
 export interface UserToken {
-    id?: number;
+    id: string;
     authorities: string[];
     token: string;
     expireIn: number;

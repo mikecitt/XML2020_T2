@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { throwError } from 'rxjs';
 import { RegistrationService } from 'src/app/services/registration.service';
 
 @Component({
@@ -52,16 +53,13 @@ export class RegisterComponent implements OnInit {
     }
     else{
       this.registrationService.register(val.password, val.firstname, val.lastname, val.email)
-      /*.subscribe(
-        (loggedIn:boolean) => {
-            if(loggedIn){    
-              //console.log(this.loginService.getToken());
-              this.router.navigateByUrl('/postregistration');
-              //console.log("Uspesno registrovan")
-            } 
+      .subscribe(
+        (loggedIn) => {
+            //console.log("usao post reg");
+            this.router.navigateByUrl('/postregister');
           },
         (err:Error) => {
-          if(err.toString()==='Username or email already in use'){
+          if(err.toString()==='Email already in use'){
             this.wrongUsernameOrPass = true;
             console.log(err);
           }
@@ -69,7 +67,7 @@ export class RegisterComponent implements OnInit {
             throwError(err);
           }
         }
-      )*/;
+      );
     }
   }
 }

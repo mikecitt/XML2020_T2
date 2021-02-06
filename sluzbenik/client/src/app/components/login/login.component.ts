@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { throwError } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -35,12 +36,10 @@ export class LoginComponent implements OnInit {
     if (val.username && val.password) {
       this.invalidData = false;
       this.loginService.login(val.username, val.password)
-          /*.subscribe(
-              (loggedIn:boolean) => {
-                  if(loggedIn){    
-                    this.router.navigateByUrl('/');
-                  }
-                  
+          .subscribe(
+              (loggedIn) => {
+                this.router.navigateByUrl('/dashboard');
+                console.log("usao");
                 },
               (err:Error) => {
                 if(err.toString()==='Ilegal login'){
@@ -51,7 +50,7 @@ export class LoginComponent implements OnInit {
                   throwError(err);
                 }
               }
-          )*/; 
+          ); 
     }
     else{
       this.invalidData = true;

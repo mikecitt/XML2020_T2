@@ -4,20 +4,21 @@ import { Observable, throwError } from 'rxjs';
 import { UserToken } from '../model/user-token';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { catchError, map } from 'rxjs/operators';
+import { convertToObject } from 'typescript';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private headers = new HttpHeaders({ 'Content-Type': 'application/xml' });
+  private headers = new HttpHeaders({ 'Content-Type': 'text/xml', 'Accept': 'text/xml'});
   private refreshingToken: boolean = false;
 
   constructor(private http: HttpClient) {
   }
 
   private takeUserFrom(): UserToken {
-    let currentUser: UserToken = {authorities: [], token: "", expireIn: 0};
+    let currentUser: UserToken = {id: "", authorities: [], token: "", expireIn: 0};
     
     if (localStorage.getItem('user')) {
       currentUser = JSON.parse(localStorage.getItem('user') || '{}');
@@ -35,37 +36,45 @@ export class AuthService {
     }
   }
 
-  login(email: string, password: string)/*: Observable<any> */{
-    
+  login(email: string, password: string): Observable<any> {
     
     var body;
     var xml2js = require('xml2js');
  
-    var obj = {logindata:{email: email, password: password}};
+    var obj = {"kor:user_login_dto":{$: {
+      "xmlns:kor": "http://localhost:8080/korisnici"
+      }, 
+      "kor:email_adresa": email, "kor:sifra": password}};
  
     var builder = new xml2js.Builder();
     body = builder.buildObject(obj); 
 
-    console.log(body);
-    /*return this.http.post('api/auth/login', JSON.stringify({ username, password }),
+    return this.http.post('http://localhost:8082/auth/login', body,
       { headers: this.headers, responseType: 'text' }).pipe(
         map((res: any) => {
-          const token = res && res.accessToken;
+          var parseString = require('xml2js').parseString;
+          var xml = res;
+          parseString(xml, function (err: any, result: any) {
+              //console.dir(result);
+              
+              //console.log("usao");
+              const token = result.token.accessToken[0];
+              const jwt: JwtHelperService = new JwtHelperService();
+              const info = jwt.decodeToken(token);
+              //console.dir(info);
 
-          if (token) {
-            const jwt: JwtHelperService = new JwtHelperService();
-            const info = jwt.decodeToken(token);
-            const userToken: UserToken = {
-              id: parseInt(info.user_id, 10),
-              expireIn: info.exp * 1000,
-              authorities: info.roles.map((role: { authority: any; }) => role.authority),
-              token
-            };
-            localStorage.setItem('user', JSON.stringify(userToken));
-            return true;
-          } else {
-            return false;
-          }
+              const userToken: UserToken = {
+                id: info.sub,
+                expireIn: info.exp * 1000,
+                authorities: result.token.role,
+                token
+              };
+              localStorage.setItem('user', JSON.stringify(userToken));
+              //console.dir(userToken);
+              return true;
+          });
+
+          
         }),
         catchError(error => {
           if (error.status === 401) {
@@ -73,46 +82,13 @@ export class AuthService {
           } else {
             return throwError('Server error');
           }
-        }));*/
+        }));
   }
 
-  refreshToken(): Observable<boolean> {
-    return this.http.post('api/auth/refresh', {}).pipe(
-      map((res: any) => {
-        const token = res && res.accessToken;
-
-        if (token) {
-          const jwt: JwtHelperService = new JwtHelperService();
-          const info = jwt.decodeToken(token);
-          const userToken: UserToken = {
-            id: parseInt(info.user_id, 10),
-            expireIn: info.exp * 1000,
-            authorities: info.roles.map((role: { authority: any; }) => role.authority),
-            token
-          };
-          localStorage.setItem('user', JSON.stringify(userToken));
-          return true;
-        } else {
-          return false;
-        }
-      }),
-      catchError(error => {
-        return throwError('Token could not be refreshed.');
-      }));
+  getUserId(): string {
+    const currentUser: UserToken = this.takeUserFrom();
+    return currentUser ? currentUser.id : "";
   }
-
-  isRefreshing(): boolean {
-    return this.refreshingToken;
-  }
-
-  setRefreshing(value: boolean): void {
-    this.refreshingToken = value;
-  }
-
-  /*getUserId(): number {
-    const currentUser: UserToken = this.takeUserFrom();\
-    return currentUser ? currentUser.id : null;
-  }*/
 
   getToken(): string {
     const currentUser: UserToken = this.takeUserFrom();

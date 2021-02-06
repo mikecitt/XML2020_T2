@@ -1,0 +1,19 @@
+.aux{
+    height: 320px;
+    width: 30%;
+    margin: 160px auto 0;
+    border: 1px solid black;
+    padding-top: 50px;
+    align-content: center;
+    padding-left: 40px;
+}
+
+.block {
+    display: block;
+    width: 90%;
+    border: none;
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+  }

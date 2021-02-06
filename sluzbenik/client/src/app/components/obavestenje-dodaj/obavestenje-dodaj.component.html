@@ -1,0 +1,81 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Obavestenje</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="myForm" (ngSubmit)="dodajObavestenje()">
+            <div class="form-group">
+                <label for="brojpredmeta">Broj predmeta</label>
+                <input 
+                    id = "brojpredmeta"
+                    formControlName="brojpredmeta"
+                    type="text" 
+                    class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="datumuvida">Datum uvida</label>
+                
+                <div class="input-group-append">
+                    <input class="form-control" placeholder="yyyy-mm-dd" id = "datumuvida"
+                        name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" formControlName = "datumuvida">
+                    <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="sat">Vreme uvida</label>
+                <ngb-timepicker [(ngModel)]="timeSat" formControlName="sat"></ngb-timepicker>
+            </div>
+            <div class="form-group">
+                <label for="mesto">Mesto uvida</label>
+                <input 
+                    id = "mesto"
+                    formControlName="mesto"
+                    type="text" 
+                    class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="ulica">Ulica uvida</label>
+                <input 
+                    id = "ulica"
+                    formControlName="ulica"
+                    type="text" 
+                    class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="broj">Ulicni broj uvida</label>
+                <input 
+                    id = "broj"
+                    formControlName="broj"
+                    type="text" 
+                    class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="brojkancelarije">Broj kancelarije uvida</label>
+                <input 
+                    id = "brojkancelarije"
+                    formControlName="brojkancelarije"
+                    type="text" 
+                    class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="cena">Troskovi</label>
+                <input 
+                    id = "cena"
+                    formControlName="cena"
+                    type="text" 
+                    class="form-control">
+            </div>
+            <div *ngIf="submitValidate" class="alert alert-danger">
+                <div *ngIf="submitValidate">Sva polja su neophodna.</div>
+            </div>
+            
+            <button class="btn btn-primary">Dodaj obavestenje</button>
+        </form>
+    </div>
+</ng-template>
+
+<button class="btn btn-sm btn-success" (click)="open(content)" id="add-comment"
+    >Dodaj obavestenje</button>

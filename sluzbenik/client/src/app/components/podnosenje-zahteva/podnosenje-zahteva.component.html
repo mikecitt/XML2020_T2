@@ -1,0 +1,80 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <button class="btn btn-primary" routerLink="/dashboard" routerLinkActive="active">
+            Pocetna stranica
+        </button>
+        <button class="btn btn-primary" routerLink="/svizahtevi" routerLinkActive="active">
+            Zahtevi
+        </button>
+        <button class="btn btn-primary" (click)="logOut()">
+            Odjava
+        </button>
+    </div>
+  </nav>
+<div class="aux">
+    <form [formGroup]="form">
+        <fieldset>
+            <Legend><b>Podnosenje zahteva</b></Legend>
+            <br>
+            <h5><b>Podaci o organu</b></h5>
+            <div class="mb-3">
+                <label for="nazivorgana" class="form-label">Naziv organa</label>
+                <input type="text" class="form-control" id="nazivorgana" formControlName="nazivorgana">                
+            </div>
+            <div class="mb-3">
+                <label for="sedisteorgana" class="form-label">Sediste organa</label>
+                <input type="text" class="form-control" id="sedisteorgana" formControlName="sedisteorgana">
+            </div>
+            <br>
+            <h5><b>Podaci o zahtevu</b></h5>
+            <div class="mb-3">
+                <label for="svrhazahteva" class="form-label">Svrha zahteva</label>
+                <select class="form-control" aria-label="Default select example" formControlName="svrhazahteva"
+                    id="svrhazahteva"> 
+                    <option selected value="1">Obavestenje da li poseduje trazenu informaciju</option>
+                    <option value="2">Uvid u dokument koji sadrzi trazenu informaciju</option>
+                    <option value="3">Kopiju dokumenta koji sadrzi trazenu informaciju</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="nacindostave" class="form-label">Nacin dostave</label>
+                <input type="text" class="form-control" id="nacindostave" name="nacindostave" formControlName="nacindostave">
+            </div>
+            <div class="mb-3">
+                <label for="detaljanopis" class="form-label">Detaljan opis</label>
+                <input type="textarea" class="form-control" id="detaljanopis" formControlName="detaljanopis">
+            </div>
+            <div class="mb-3">
+                <label for="mestopredaje" class="form-label">Mesto predaje</label>
+                <input type="text" class="form-control" id="mestopredaje" name="mestopredaje" formControlName="mestopredaje">
+            </div>
+            <br>
+            <h5><b>Detalji o traziocu</b></h5>
+            <div class="mb-3">
+                <label for="ime" class="form-label">Ime</label>
+                <input type="text" class="form-control" id="ime" formControlName="ime">
+            </div>
+            <div class="mb-3">
+                <label for="prezime" class="form-label">Prezime</label>
+                <input type="text" class="form-control" id="prezime" formControlName="prezime">
+            </div>
+            <div class="mb-3">
+                <label for="adresa" class="form-label">Adresa</label>
+                <input type="text" class="form-control" id="adresa" formControlName="adresa">
+            </div>
+            <div class="mb-3">
+                <label for="brojtelefona" class="form-label">Broj telefona</label>
+                <input type="text" class="form-control" id="brojtelefona" formControlName="brojtelefona">
+            </div>
+        </fieldset>
+        <br>
+        <div class="mb-3" *ngIf="emptyField"
+            class="alert alert-danger">
+            <div>Sva polja su neophodna</div>
+        </div>
+        <div class="form-buttons">
+            <button class="btn btn-primary" id="reg-btn" (click)= "podnesiZahtev()">Podnesi zahtev</button>
+        </div>
+    </form>
+    <br>
+</div>
