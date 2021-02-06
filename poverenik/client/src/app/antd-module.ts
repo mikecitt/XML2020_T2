@@ -15,6 +15,8 @@ import { NzResultModule } from 'ng-zorro-antd/result';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
 
 @NgModule({
   exports: [
@@ -33,6 +35,8 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
     NzNotificationModule,
     NzMessageModule,
     NzTypographyModule,
+    NzTabsModule,
+    NzRadioModule,
   ],
 })
 export class AntdModule {}

@@ -3,8 +3,29 @@
     <app-navigation-bar></app-navigation-bar>
   </nz-header>
   <nz-content class="content" [ngSwitch]="isLogged">
-    <app-home-complaints-decision *ngSwitchCase="true"></app-home-complaints-decision>
-    <app-home-complaints-silence *ngSwitchCase="true"></app-home-complaints-silence>
+    <nz-space nzDirection="vertical" class="homeTasks" *ngSwitchCase="true">
+      <nz-space-item>
+        <div nz-row>
+          <div nz-col nzFlex="auto">
+            <nz-radio-group nzButtonStyle="solid" [(ngModel)]="selectedTab">
+              <label nz-radio-button nzValue="cutanje">Zalbe cutanje</label>
+              <label nz-radio-button nzValue="odluka">Zalbe odluka</label>
+            </nz-radio-group>
+          </div>
+          <div nz-col><button nz-button nzType="primary"><i nz-icon nzType="plus"></i>dodaj</button></div>
+        </div>
+      </nz-space-item>
+      <nz-space-item>
+        <nz-tabset [nzSelectedIndex]="selectedTab === 'cutanje' ? 0 : 1">
+          <nz-tab>
+            <app-home-complaints-decision></app-home-complaints-decision>
+          </nz-tab>
+          <nz-tab>
+            <app-home-complaints-silence></app-home-complaints-silence>
+          </nz-tab>
+        </nz-tabset>
+      </nz-space-item>
+    </nz-space>
     <nz-result *ngSwitchCase="false" class="forbidden" nzStatus="403" nzTitle="Unauthorized"
       nzSubTitle="Sorry, you must be logged in to see this page">
     </nz-result>

@@ -7,6 +7,8 @@ import { AuthenticationService } from 'src/app/services/auth/authentication.serv
   styleUrls: ['./home-page.component.css'],
 })
 export class HomePageComponent implements OnInit {
+  selectedTab: string = 'cutanje';
+
   constructor(private authService: AuthenticationService) {}
 
   get isLogged(): boolean {
