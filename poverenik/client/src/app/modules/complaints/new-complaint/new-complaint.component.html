@@ -139,7 +139,85 @@
     </div>
     <div *ngIf="complaintType === 'cutanje'">
       <form nz-form [formGroup]="silenceForm" (ngSubmit)="addComplaintSilence()">
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Naziv organa je obavezno">
+            <nz-input-group nzPrefixIcon="align-left">
+              <input nz-input formControlName="nazivorgana" placeholder="Naziv organa" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
 
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Razlog zalbe je obavezno">
+            <nz-input-group nzPrefixIcon="align-left">
+              <input nz-input formControlName="razlogzalbe" placeholder="Razlgo zalbe" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Datum zahteva je obavezan">
+            <nz-input-group nzPrefixIcon="align-left">
+              <input nz-input formControlName="datumzahteva" placeholder="Datum zahteva" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Podaci zahteva je obavezna">
+            <nz-input-group nzPrefixIcon="align-left">
+              <input nz-input formControlName="podacizahteva" placeholder="Podaci zahteva" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Mesto je obavezno">
+            <nz-input-group nzPrefixIcon="align-left">
+              <input nz-input formControlName="mesto" placeholder="Mesto" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Datum je obavezan">
+            <nz-input-group nzPrefixIcon="align-left">
+              <input nz-input formControlName="datum" placeholder="Datum" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Ime je obaveno">
+            <nz-input-group nzPrefixIcon="align-left">
+              <input nz-input formControlName="ime" placeholder="Ime" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Prezime je obavezan">
+            <nz-input-group nzPrefixIcon="align-left">
+              <input nz-input formControlName="prezime" placeholder="prezime" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Adresa je obavezan">
+            <nz-input-group nzPrefixIcon="align-left">
+              <input nz-input formControlName="adresa" placeholder="Adresa" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Kontakt je obavezan">
+            <nz-input-group nzPrefixIcon="align-left">
+              <input nz-input formControlName="drugikontakt" placeholder="Kontakt" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
         <button nz-button [nzType]="'primary'">dodaj</button>
       </form>
     </div>
