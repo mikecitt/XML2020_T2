@@ -14,6 +14,9 @@ export class ComplaintSilenceOverviewComponent implements OnInit {
   pdfLoading: boolean = false;
   htmlLoading: boolean = false;
 
+  decisionPdfLoading: boolean = false;
+  decisionHtmlLoading: boolean = false;
+
   constructor(
     private service: ComplaintSilenceService,
     private notification: NzNotificationService
@@ -78,6 +81,68 @@ export class ComplaintSilenceOverviewComponent implements OnInit {
       )
       .add(() => {
         this.htmlLoading = false;
+      });
+  }
+
+  openDecisionPdf() {
+    this.decisionPdfLoading = true;
+
+    let id = this.complaint.about.substring(
+      this.complaint.about.lastIndexOf('/') + 1
+    );
+
+    this.service
+      .getDecisionPdf(id)
+      .subscribe(
+        (response) => {
+          if (response.body !== null) {
+            let file = new Blob([response.body], { type: 'application/pdf' });
+            var fileURL = URL.createObjectURL(file);
+            window.open(fileURL);
+          }
+        },
+        () => {
+          this.notification.create(
+            'error',
+            'Error',
+            'There was an error in the server'
+          );
+        }
+      )
+      .add(() => {
+        this.decisionPdfLoading = false;
+      });
+  }
+
+  openDecisionHtml() {
+    this.decisionHtmlLoading = true;
+
+    let id = this.complaint.about.substring(
+      this.complaint.about.lastIndexOf('/') + 1
+    );
+
+    this.service
+      .getDecisionHtml(id)
+      .subscribe(
+        (response) => {
+          if (response.body !== null) {
+            var win = window.open('', '_blank');
+            if (win !== null) {
+              win.document.write(response.body);
+              win.focus();
+            }
+          }
+        },
+        () => {
+          this.notification.create(
+            'error',
+            'Error',
+            'There was an error in the server'
+          );
+        }
+      )
+      .add(() => {
+        this.decisionHtmlLoading = false;
       });
   }
 

@@ -54,4 +54,24 @@ export class ComplaintSilenceService {
       responseType: 'text' as 'json',
     });
   }
+
+  getDecisionPdf(id: string) {
+    return this.http.get<any>(
+      `http://localhost:8080/resenja/zalba/pdf?id=${id}`,
+      {
+        observe: 'response',
+        responseType: 'arraybuffer' as 'json',
+      }
+    );
+  }
+
+  getDecisionHtml(id: string) {
+    return this.http.get<any>(
+      `http://localhost:8080/resenja/zalba/html?id=${id}`,
+      {
+        observe: 'response',
+        responseType: 'text' as 'json',
+      }
+    );
+  }
 }

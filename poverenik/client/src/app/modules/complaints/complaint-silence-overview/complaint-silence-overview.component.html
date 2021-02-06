@@ -1,4 +1,5 @@
-<nz-card style="width: 250px;margin-top: 16px" [nzActions]="[actionViewPdf, actionViewHtml, actionViewDecision]">
+<nz-card style="width: 250px;margin-top: 16px"
+  [nzActions]="complaint.status?.value === 'GOTOV' ? [actionsComplaint, actionsDecision] : [actionsComplaint]">
   <nz-card-meta [nzAvatar]="avatarTemplate" [nzTitle]="complaint.nazivOrgana.value"
     [nzDescription]="descriptionTemplate">
   </nz-card-meta>
@@ -11,21 +12,35 @@
     {{ complaint.podaciZahteva }}
   </span>
 </ng-template>
-<ng-template #actionViewPdf>
-  <nz-spin nz-tooltip nzTooltipTitle="Open pdf" [nzSpinning]="pdfLoading" [nzSize]="'small'"
-    (click)="openComplaintPdf()">
-    <i nz-icon nzType="file-pdf"></i>
-  </nz-spin>
+<ng-template #actionsComplaint>
+  <nz-space>
+    <nz-space-item>
+      <nz-spin nz-tooltip nzTooltipTitle="Otvori zalbu pdf" [nzSpinning]="pdfLoading" [nzSize]="'small'"
+        (click)="openComplaintPdf()">
+        <i nz-icon nzType="file-pdf"></i>
+      </nz-spin>
+    </nz-space-item>
+    <nz-space-item>
+      <nz-spin nz-tooltip nzTooltipTitle="Otvori zalbu html" [nzSpinning]="htmlLoading" [nzSize]="'small'"
+        (click)="openComplaintHtml()">
+        <i nz-icon nzType="code"></i>
+      </nz-spin>
+    </nz-space-item>
+  </nz-space>
 </ng-template>
-<ng-template #actionViewHtml>
-  <nz-spin nz-tooltip nzTooltipTitle="Open html" [nzSpinning]="htmlLoading" [nzSize]="'small'"
-    (click)="openComplaintHtml()">
-    <i nz-icon nzType="code"></i>
-  </nz-spin>
-</ng-template>
-<ng-template #actionDelete>
-  <i nz-icon nzType="delete"></i>
-</ng-template>
-<ng-template #actionViewDecision>
-  <i nz-icon nzType="file-protect"></i>
+<ng-template #actionsDecision>
+  <nz-space>
+    <nz-space-item>
+      <nz-spin nz-tooltip nzTooltipTitle=" Otvori resenje pdf" [nzSpinning]="decisionPdfLoading" [nzSize]="'small'"
+        (click)="openDecisionPdf()">
+        <i nz-icon nzType="file-pdf"></i>
+      </nz-spin>
+    </nz-space-item>
+    <nz-space-item>
+      <nz-spin nz-tooltip nzTooltipTitle="Otvori resenje html" [nzSpinning]="decisionHtmlLoading" [nzSize]="'small'"
+        (click)="openDecisionHtml()">
+        <i nz-icon nzType="code"></i>
+      </nz-spin>
+    </nz-space-item>
+  </nz-space>
 </ng-template>
