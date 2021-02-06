@@ -33,12 +33,9 @@ export class ZalbaListComponent implements OnInit {
   }
 
   onAdded(added: any) {
-    this.zalbeCutanje = this.zalbeCutanje.filter(function(el) {
-      return el.id != added;
-    });
-    this.zalbeOdluka = this.zalbeOdluka.filter(function(el) {
-      return el.id != added;
-    });
+    console.log(added);
+    this.zalbeCutanje = this.zalbeCutanje.filter(item => item.id !== added);
+    this.zalbeOdluka = this.zalbeOdluka.filter(item => item.id !== added);
   }
 
   getZalbaCutanjePDF(id:string){

@@ -44,7 +44,7 @@ export class ZalbaService {
     body = builder.buildObject(obj);
     console.log('odluka');
     console.log(body);
-    return this.http.post("http://localhost:8082/zalbe/odluka/status/"+zalbaId,
+    return this.http.post("http://localhost:8082/zalbe/odluka/status/"+zalbaId, body,
       {headers: this.headers, responseType: 'text'})
   }
 
@@ -58,7 +58,7 @@ export class ZalbaService {
     body = builder.buildObject(obj);
     console.log('cutanje');
     console.log(body);
-    return this.http.post("http://localhost:8082/zalbe/cutanje/status/"+zalbaId,
+    return this.http.post("http://localhost:8082/zalbe/cutanje/status/"+zalbaId, body,
       {headers: this.headers, responseType: 'text'})
   }
 
@@ -71,9 +71,11 @@ export class ZalbaService {
         var parseString = require('xml2js').parseString;
         var xml = res;
         parseString(xml, function (err: any, result: any) {
-          console.dir(result);
+          //console.dir(result);
           result.zalbecutanje.zalbacutanje.forEach((element: any) => {
-            let pomString = element.$.about.split("/");
+            if(element.status[0] == "OBRADA"){
+              console.log("obrada");
+              let pomString = element.$.about.split("/");
             //let pomId = element.$.about.substring(pomIndex);
 
             let res : Zalba = {
@@ -82,6 +84,7 @@ export class ZalbaService {
             };
             //console.dir(res);
             zalbe.push(res);
+            }
           });
         });
         return zalbe;
@@ -105,17 +108,20 @@ export class ZalbaService {
         var parseString = require('xml2js').parseString;
         var xml = res;
         parseString(xml, function (err: any, result: any) {
-          console.dir(result);
+          //console.dir(result.zalbenaodluku.zalbanaodluku);
           result.zalbenaodluku.zalbanaodluku.forEach((element: any) => {
-            let pomString = element.$.about.split("/");
-            //let pomId = element.$.about.substring(pomIndex);
+            if(element.status[0] == "OBRADA"){
+              console.log("obrada")
+              let pomString = element.$.about.split("/");
+              //let pomId = element.$.about.substring(pomIndex);
 
-            let res : Zalba = {
-              id: pomString[4],
-              datum: element.detalji_predaje[0].datum[0]._
-            };
-            //console.dir(res);
-            zalbe.push(res);
+              let res : Zalba = {
+                id: pomString[4],
+                datum: element.detalji_predaje[0].datum[0]._
+              };
+              //console.dir(res);
+              zalbe.push(res);
+            }
           });
         });
         return zalbe;

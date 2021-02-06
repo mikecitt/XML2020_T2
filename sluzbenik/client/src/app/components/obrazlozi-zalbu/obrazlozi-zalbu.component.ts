@@ -57,6 +57,8 @@ export class ObrazloziZalbuComponent implements OnInit {
      else{
        this.zalbaService.obrazloziZalbuCutanje(val.obrazlozenje, this.zalba.id).subscribe((res)=>{
         this.added.emit(this.zalba.id);
+        
+        this.modalService.dismissAll();
       });
      }
    }
