@@ -18,7 +18,6 @@ export class HomePageComponent implements OnInit {
   }
 
   get isPoverenik() {
-    console.log(this.authService.getRole() === 'ROLE_POVERENIK');
     return this.authService.getRole() === 'ROLE_POVERENIK';
   }
 
