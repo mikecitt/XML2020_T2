@@ -147,7 +147,10 @@ public class ZahtevController {
             if (z == null)
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             String[] splitovano = z.getInformacijeOTraziocu().getHref().split("/");
-            ePostaClient.sendMail("Zahtev odbijen", "Vaš zahtev je odbijen.", splitovano[splitovano.length - 1]);
+            String[] splitovano1 = z.getAbout().split("/");
+            ePostaClient.sendMail("Zahtev odbijen",
+                    "Vaš zahtev sa ID-jem " + splitovano1[splitovano1.length - 1] + " je odbijen.",
+                    splitovano[splitovano.length - 1]);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
