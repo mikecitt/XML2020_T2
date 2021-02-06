@@ -60,7 +60,7 @@
                     </div>
                     <div>
                         <div style="text-align: center; border-bottom: 1px dotted; max-width: 250px">
-                            <xsl:value-of select="//obv:podnosioc_zahteva/obv:naziv"/>
+                            
 &#160;
                         </div>
                     </div>

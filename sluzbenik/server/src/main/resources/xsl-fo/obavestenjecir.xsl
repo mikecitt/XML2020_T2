@@ -64,7 +64,7 @@
                     <fo:block>
                         <fo:inline-container width="250px">
                             <fo:block text-align="center" border-bottom="1px dotted">
-                                <xsl:value-of select="//obv:podnosioc_zahteva/obv:naziv"/>
+                                &#160;
                                 <fo:leader/>
                             </fo:block>
                         </fo:inline-container>
