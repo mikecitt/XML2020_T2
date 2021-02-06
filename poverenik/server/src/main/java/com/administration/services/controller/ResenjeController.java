@@ -64,7 +64,21 @@ public class ResenjeController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
 
+    @GetMapping("/html/{resenjeId}")
+    @PreAuthorize("hasAnyRole('ROLE_POVERENIK')")
+    public ResponseEntity<byte[]> getOneResenjeHTML(@PathVariable String resenjeId) {
+        Resenje resenje = null;
+        try {
+            resenje = resenjeService.getOneResenje(resenjeId);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.TEXT_HTML);
+            headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+            return new ResponseEntity<>(resenjeService.getOneResenjeHTML(resenje), headers, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/zalba")

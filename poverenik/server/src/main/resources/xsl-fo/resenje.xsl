@@ -34,7 +34,7 @@
                         <fo:leader/>
                     </fo:block>
                     <fo:block text-indent="40px">
-                        <xsl:text>Повереник за информације од јавног значаја и заштиту података о личности, у поступку по алби
+                        <xsl:text>Повереник за информације од јавног значаја и заштиту података о личности, у поступку по жалби
                         коју је изјавио </xsl:text>
                         <xsl:value-of select="substring(//res:podnositelj_zalbe/res:ime, 1, 1)"/>
                         <xsl:value-of select="substring(//res:podnositelj_zalbe/res:prezime, 1, 1)"/>

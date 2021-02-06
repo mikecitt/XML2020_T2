@@ -13,8 +13,10 @@ import javax.xml.bind.Unmarshaller;
 import com.administration.services.configs.ExistConfiguration;
 import com.administration.services.configs.JenaConfiguration;
 import com.administration.services.enums.XslDocumentsPaths;
+import com.administration.services.enums.XsltDocumentsPaths;
 import com.administration.services.helpers.DefaultNamespacePrefixMapper;
 import com.administration.services.helpers.XSLFOTransformer;
+import com.administration.services.helpers.XSLTTransformer;
 import com.administration.services.model.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,9 @@ public class ResenjeService {
 
     @Autowired
     private XSLFOTransformer transformer;
+
+    @Autowired
+    private XSLTTransformer xsltTransformer;
 
     @Value("/db/poverenik")
     private String collectionId;
@@ -117,6 +122,19 @@ public class ResenjeService {
         existConfiguration.prepareForWriting(marshaller, os, resenje);
 
         return transformer.generatePDF(XslDocumentsPaths.RESENJE, new String(os.toByteArray(), StandardCharsets.UTF_8));
+    }
+
+    public byte[] getOneResenjeHTML(Resenje resenje) throws Exception {
+        JAXBContext context = JAXBContext.newInstance("com.administration.services.model");
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new DefaultNamespacePrefixMapper());
+
+        existConfiguration.prepareForWriting(marshaller, os, resenje);
+
+        return xsltTransformer.generateHTML(XsltDocumentsPaths.RESENJE,
+                new String(os.toByteArray(), StandardCharsets.UTF_8));
     }
 
     public Resenja getAllResenja() throws Exception {
