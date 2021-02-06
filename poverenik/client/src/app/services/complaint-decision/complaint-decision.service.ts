@@ -13,4 +13,11 @@ export class ComplaintDecisionService {
       observe: 'response',
     });
   }
+
+  getPdf(id: string) {
+    return this.http.get<any>(`http://localhost:8080/zalbe/odluka/pdf/${id}`, {
+      observe: 'response',
+      responseType: 'arraybuffer' as 'json',
+    });
+  }
 }

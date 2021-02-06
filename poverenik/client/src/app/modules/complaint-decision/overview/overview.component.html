@@ -12,7 +12,9 @@
   </span>
 </ng-template>
 <ng-template #actionViewPdf>
-  <i nz-icon nzType="file-pdf"></i>
+  <nz-spin [nzSpinning]="pdfLoading" [nzSize]="'small'" (click)="openComplaintPdf()">
+    <i nz-icon nzType="file-pdf"></i>
+  </nz-spin>
 </ng-template>
 <ng-template #actionDelete>
   <i nz-icon nzType="delete"></i>

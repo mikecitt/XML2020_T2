@@ -17,7 +17,6 @@ import { RegisterPageComponent } from './modules/register/register-page/register
 import { RegisterFormComponent } from './modules/register/register-form/register-form.component';
 import { NavigationBarComponent } from './core/navigation-bar/navigation-bar.component';
 import { HomePageComponent } from './modules/home/home-page/home-page.component';
-import { HomeComplaintsComponent } from './modules/home/complaints/complaints.component';
 import { XmlInterceptor } from './interceptors/xml.interceptor';
 import { HomeComplaintsDecisionComponent } from './modules/home/complaints-decision/complaints-decision.component';
 import { TokenInterceptor } from './interceptors/token.interceptor';
@@ -37,7 +36,6 @@ registerLocaleData(en);
     NavigationBarComponent,
     HomePageComponent,
     ComplaintDecisionOverviewComponent,
-    HomeComplaintsComponent,
     HomeComplaintsDecisionComponent,
     ComplaintDecisionOverviewComponent,
     HomeComplaintsSilenceComponent,

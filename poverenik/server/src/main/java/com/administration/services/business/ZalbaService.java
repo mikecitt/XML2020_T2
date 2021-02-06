@@ -4,8 +4,10 @@ import com.administration.services.configs.ExistConfiguration;
 import com.administration.services.configs.JenaConfiguration;
 import com.administration.services.enums.Status;
 import com.administration.services.enums.XslDocumentsPaths;
+import com.administration.services.enums.XsltDocumentsPaths;
 import com.administration.services.helpers.DefaultNamespacePrefixMapper;
 import com.administration.services.helpers.XSLFOTransformer;
+import com.administration.services.helpers.XSLTTransformer;
 import com.administration.services.model.*;
 import org.exist.xmldb.EXistResource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,9 @@ public class ZalbaService {
 
     @Autowired
     private XSLFOTransformer transformer;
+
+    @Autowired
+    private XSLTTransformer xsltTransformer;
 
     @Value("/db/poverenik")
     private String collectionId;
@@ -69,6 +74,19 @@ public class ZalbaService {
                 new String(os.toByteArray(), StandardCharsets.UTF_8));
     }
 
+    public byte[] getZalbaCutanjeHTML(Zalbacutanje zalbacutanje) throws Exception {
+        JAXBContext context = JAXBContext.newInstance("com.administration.services.model");
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new DefaultNamespacePrefixMapper());
+
+        existConfiguration.prepareForWriting(marshaller, os, zalbacutanje);
+
+        return xsltTransformer.generateHTML(XsltDocumentsPaths.ZALBACUTANJE,
+                new String(os.toByteArray(), StandardCharsets.UTF_8));
+    }
+
     public Zalbanaodluku getZalbaOdluku(String zalbaId, String korisnikId) throws Exception {
         if (korisnikId != null && !doesZalbaBelongToKorisnik(zalbaId, korisnikId)) {
             throw new Exception("Zalba not belong to Korisnik");
@@ -86,6 +104,19 @@ public class ZalbaService {
         existConfiguration.prepareForWriting(marshaller, os, zalbanaodluku);
 
         return transformer.generatePDF(XslDocumentsPaths.ZALBAODLUKA,
+                new String(os.toByteArray(), StandardCharsets.UTF_8));
+    }
+
+    public byte[] getZalbaOdlukuHTML(Zalbanaodluku zalbanaodluku) throws Exception {
+        JAXBContext context = JAXBContext.newInstance("com.administration.services.model");
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new DefaultNamespacePrefixMapper());
+
+        existConfiguration.prepareForWriting(marshaller, os, zalbanaodluku);
+
+        return xsltTransformer.generateHTML(XsltDocumentsPaths.ZALBAODLUKA,
                 new String(os.toByteArray(), StandardCharsets.UTF_8));
     }
 
