@@ -14,8 +14,10 @@ import com.administration.services.configs.ExistConfiguration;
 import com.administration.services.configs.JenaConfiguration;
 import com.administration.services.enums.StatusZahteva;
 import com.administration.services.enums.XslDocumentsPaths;
+import com.administration.services.enums.XsltDocumentsPaths;
 import com.administration.services.helpers.DefaultNamespacePrefixMapper;
 import com.administration.services.helpers.XSLFOTransformer;
+import com.administration.services.helpers.XSLTTransformer;
 import com.administration.services.model.Korisnik;
 import com.administration.services.model.Zahtev;
 import com.administration.services.model.Zahtev.Status;
@@ -50,11 +52,27 @@ public class ZahtevService {
     @Autowired
     private XSLFOTransformer transformer;
 
+    @Autowired
+    private XSLTTransformer xsltTransformer;
+
     @Value("/db/sluzbenik")
     private String collectionId;
 
     @Value("zahtev.xml")
     private String zahtevId;
+
+    public byte[] getZahtevHTML(Zahtev zahtev) throws Exception {
+        JAXBContext context = JAXBContext.newInstance("com.administration.services.model");
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new DefaultNamespacePrefixMapper());
+
+        existConfiguration.prepareForWriting(marshaller, os, zahtev);
+
+        return xsltTransformer.generateHTML(XsltDocumentsPaths.ZAHTEV,
+                new String(os.toByteArray(), StandardCharsets.UTF_8));
+    }
 
     public byte[] getZahtevPDF(Zahtev zahtev) throws Exception {
         JAXBContext context = JAXBContext.newInstance("com.administration.services.model");

@@ -3,6 +3,7 @@ package com.administration.services.controller;
 import com.administration.services.business.KorisnikService;
 import com.administration.services.business.ZahtevService;
 import com.administration.services.enums.StatusZahteva;
+import com.administration.services.helpers.XSLTTransformer;
 import com.administration.services.model.Korisnik;
 import com.administration.services.model.Zahtev;
 import com.administration.services.model.Zahtevi;
@@ -35,6 +36,9 @@ public class ZahtevController {
     @Autowired
     private KorisnikService korisnikService;
 
+    @Autowired
+    private XSLTTransformer transformer;
+
     @GetMapping("/pdf")
     public ResponseEntity<byte[]> getZahtevPDF(@RequestParam String zahtevId) {
         Zahtev zahtev = null;
@@ -53,6 +57,33 @@ public class ZahtevController {
             headers.setContentType(MediaType.APPLICATION_PDF);
             headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
             return new ResponseEntity<>(zahtevService.getZahtevPDF(zahtev), headers, HttpStatus.OK);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/html")
+    public ResponseEntity<byte[]> getZahtevHTML(@RequestParam String zahtevId) {
+        Zahtev zahtev = null;
+
+        try {
+            zahtev = zahtevService.getZahtev(zahtevId);
+            if (zahtev == null)
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            Korisnik k = korisnikService.getKorisnikByEmail(authentication.getName());
+            if (k.getTipKorisnika().equals("ROLE_GRADJANIN") && zahtev != null
+                    && !zahtev.getInformacijeOTraziocu().getHref().equals(k.getAbout()))
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.TEXT_HTML);
+            headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+
+            return new ResponseEntity<>(zahtevService.getZahtevHTML(zahtev), headers, HttpStatus.OK);
 
         } catch (Exception e) {
             e.printStackTrace();
