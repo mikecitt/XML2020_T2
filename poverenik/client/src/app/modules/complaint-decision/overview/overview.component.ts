@@ -12,6 +12,7 @@ export class ComplaintDecisionOverviewComponent implements OnInit {
   complaint: any;
 
   pdfLoading: boolean = false;
+  htmlLoading: boolean = false;
 
   constructor(
     private service: ComplaintDecisionService,
@@ -45,6 +46,38 @@ export class ComplaintDecisionOverviewComponent implements OnInit {
       )
       .add(() => {
         this.pdfLoading = false;
+      });
+  }
+
+  openComplaintHtml() {
+    this.htmlLoading = true;
+
+    let id = this.complaint.about.substring(
+      this.complaint.about.lastIndexOf('/') + 1
+    );
+
+    this.service
+      .getHtml(id)
+      .subscribe(
+        (response) => {
+          if (response.body !== null) {
+            var win = window.open('', '_blank');
+            if (win !== null) {
+              win.document.write(response.body);
+              win.focus();
+            }
+          }
+        },
+        () => {
+          this.notification.create(
+            'error',
+            'Error',
+            'There was an error in the server'
+          );
+        }
+      )
+      .add(() => {
+        this.htmlLoading = false;
       });
   }
 

@@ -20,4 +20,11 @@ export class ComplaintDecisionService {
       responseType: 'arraybuffer' as 'json',
     });
   }
+
+  getHtml(id: string) {
+    return this.http.get<any>(`http://localhost:8080/zalbe/odluka/html/${id}`, {
+      observe: 'response',
+      responseType: 'text' as 'json',
+    });
+  }
 }

@@ -1,4 +1,4 @@
-<nz-card style="width: 250px;margin-top: 16px" [nzActions]="[actionViewPdf, actionViewDecision]">
+<nz-card style="width: 250px;margin-top: 16px" [nzActions]="[actionViewPdf, actionViewHtml, actionViewDecision]">
   <nz-card-meta [nzAvatar]="avatarTemplate" [nzTitle]="complaint.nazivOrgana.value"
     [nzDescription]="descriptionTemplate">
   </nz-card-meta>
@@ -14,6 +14,11 @@
 <ng-template #actionViewPdf>
   <nz-spin [nzSpinning]="pdfLoading" [nzSize]="'small'" (click)="openComplaintPdf()">
     <i nz-icon nzType="file-pdf"></i>
+  </nz-spin>
+</ng-template>
+<ng-template #actionViewHtml>
+  <nz-spin [nzSpinning]="htmlLoading" [nzSize]="'small'" (click)="openComplaintHtml()">
+    <i nz-icon nzType="code"></i>
   </nz-spin>
 </ng-template>
 <ng-template #actionDelete>
