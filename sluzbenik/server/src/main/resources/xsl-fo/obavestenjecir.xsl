@@ -150,7 +150,11 @@
                         <fo:inline border-bottom="1px dotted">
                             <xsl:value-of select="//obv:adresa/obv:br_kancelarije"/>
                         </fo:inline>
-                        <xsl:text> можете извршити увид у документ/е у коме је садржана тражена информација</xsl:text>
+                        <xsl:text> можете </xsl:text>
+                        <fo:inline font-weight="bold">
+                            <xsl:text>извршити увид</xsl:text>
+                        </fo:inline>
+                        <xsl:text> у документ/е у коме је садржана тражена информација</xsl:text>
                     </fo:block>
                     <fo:block>
                         <fo:leader/>

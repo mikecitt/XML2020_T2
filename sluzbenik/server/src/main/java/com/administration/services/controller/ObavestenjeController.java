@@ -78,6 +78,31 @@ public class ObavestenjeController {
         }
     }
 
+    @GetMapping("/byZahtev/html")
+    public ResponseEntity<byte[]> getZahtevObavestenjeHTML(@RequestParam String zahtevId) {
+        Obavestenje obavestenje = null;
+
+        try {
+            obavestenje = obavestenjeService.getZahtevObavestenje(zahtevId);
+            if (obavestenje == null)
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            Korisnik k = korisnikService.getKorisnikByEmail(authentication.getName());
+            Zahtev z = zahtevService.getZahtev(zahtevId);
+            if (k.getTipKorisnika().equals("ROLE_GRADJANIN") && z != null
+                    && !z.getInformacijeOTraziocu().getHref().equals(k.getAbout()))
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.TEXT_HTML);
+            headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+            return new ResponseEntity<>(obavestenjeService.getObavestenjeHTML(obavestenje), headers, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @GetMapping
     public ResponseEntity<Obavestenje> getObavestenje(@RequestParam String obavestenjeId) {
         Obavestenje obavestenje = null;
