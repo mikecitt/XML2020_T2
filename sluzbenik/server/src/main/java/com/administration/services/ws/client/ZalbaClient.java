@@ -12,9 +12,9 @@ import java.net.URL;
 @org.springframework.stereotype.Service
 public class ZalbaClient {
 
-    public void sendZalbaCutanje(Zalbacutanje zalbacutanje) {
+    public void sendZalbaCutanje(String odgovor, String zalbaId) {
         try {
-            URL wsdlLocation = new URL("http://localhost:8082/ws/zalbaOdgovor?wsdl");
+            URL wsdlLocation = new URL("http://localhost:8080/ws/zalbaOdgovor?wsdl");
             QName serviceName = new QName("http://administracija/ws/zalba", "ZalbaService");
             QName portName = new QName("http://administracija/ws/zalba", "ZalbaPort");
 
@@ -22,23 +22,7 @@ public class ZalbaClient {
 
             ZalbaInterface zalbaService = service.getPort(portName, ZalbaInterface.class);
 
-            zalbaService.sendZalbaCutanje(zalbacutanje);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void sendZalbaOdluku(Zalbanaodluku zalbanaodluku) {
-        try {
-            URL wsdlLocation = new URL("http://localhost:8082/ws/zalbaOdgovor?wsdl");
-            QName serviceName = new QName("http://administracija/ws/zalba", "ZalbaService");
-            QName portName = new QName("http://administracija/ws/zalba", "ZalbaPort");
-
-            Service service = Service.create(wsdlLocation, serviceName);
-
-            ZalbaInterface zalbaService = service.getPort(portName, ZalbaInterface.class);
-
-            zalbaService.sendZalbaOdluka(zalbanaodluku);
+            zalbaService.sendOdgovor(odgovor, zalbaId);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

@@ -11,7 +11,7 @@ import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
-@WebService(targetNamespace = "http://poverenik/ws/zalba", name = "Zalba")
+@WebService(targetNamespace = "http://administracija/ws/zalba", name = "Zalba")
 @XmlSeeAlso(ObjectFactory.class)
 @SOAPBinding(style = SOAPBinding.Style.RPC)
 public interface ZalbaInterface {
@@ -29,9 +29,10 @@ public interface ZalbaInterface {
     );
 
     @WebMethod
-    @WebResult
     public void sendOdgovor(
             @WebParam(partName = "odgovor", name = "odgovor")
-                    String odgovor
+                    String odgovor,
+            @WebParam(partName = "zalbaId", name = "zalbaId")
+                    String zalbaId
     );
 }

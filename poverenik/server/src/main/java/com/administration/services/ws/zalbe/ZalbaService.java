@@ -9,13 +9,13 @@ import java.net.URL;
 
 @WebServiceClient(name = "ZalbaService",
                   wsdlLocation = "classpath:wsdl/Zalba.wsdl",
-                  targetNamespace = "http://poverenik/ws/zalba")
+                  targetNamespace = "http://administracija/ws/zalba")
 public class ZalbaService extends Service {
 
     public final static URL WSDL_LOCATION;
 
-    public final static QName SERVICE = new QName("http://poverenik/ws/zalba", "ZalbaService");
-    public final static QName ZalbaPort = new QName("http://poverenik/ws/zalba", "ZalbaPort");
+    public final static QName SERVICE = new QName("http://administracija/ws/zalba", "ZalbaService");
+    public final static QName ZalbaPort = new QName("http://administracija/ws/zalba", "ZalbaPort");
     static {
         URL url = ZalbaService.class.getClassLoader().getResource("wsdl/Zalba.wsdl");
         if (url == null) {

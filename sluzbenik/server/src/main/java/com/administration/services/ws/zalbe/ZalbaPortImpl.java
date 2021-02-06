@@ -12,8 +12,7 @@ import java.util.logging.Logger;
 @WebService(
       serviceName = "ZalbaService",
       portName = "ZalbaPort",
-      targetNamespace = "http://poverenik/ws/zalba",
-     // wsdlLocation = "classpath:wsdl/Hello.wsdl",
+      targetNamespace = "http://administracija/ws/zalba",
       endpointInterface = "com.administration.services.ws.zalbe.ZalbaInterface")
 
 public class ZalbaPortImpl implements ZalbaInterface {
@@ -51,5 +50,5 @@ public class ZalbaPortImpl implements ZalbaInterface {
     }
 
     @Override
-    public void sendOdgovor(String odgovor) {}
+    public void sendOdgovor(String odgovor, String zalbaId) {}
 }
