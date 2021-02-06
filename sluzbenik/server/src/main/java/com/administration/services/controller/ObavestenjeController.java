@@ -53,23 +53,21 @@ public class ObavestenjeController {
         return new ResponseEntity<>(obavestenja, HttpStatus.OK);
     }
 
-    @GetMapping("/pdf")
-    public ResponseEntity<byte[]> getObavestenjePDF(@RequestParam String obavestenjeId) {
+    @GetMapping("/byZahtev/pdf")
+    public ResponseEntity<byte[]> getZahtevObavestenjePDF(@RequestParam String zahtevId) {
         Obavestenje obavestenje = null;
 
         try {
-            obavestenje = obavestenjeService.getObavestenje(obavestenjeId);
+            obavestenje = obavestenjeService.getZahtevObavestenje(zahtevId);
             if (obavestenje == null)
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             Korisnik k = korisnikService.getKorisnikByEmail(authentication.getName());
-            if (k.getTipKorisnika().equals("ROLE_GRADJANIN") && obavestenje != null) {
-                String href = (obavestenje.getTelo().getTrazenaInformacija().getHref());
-                Zahtev z = zahtevService.getZahtev(href.substring(href.lastIndexOf('/') + 1));
-                if (z == null || !z.getInformacijeOTraziocu().getHref().equals(k.getAbout()))
-                    return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-            }
+            Zahtev z = zahtevService.getZahtev(zahtevId);
+            if (k.getTipKorisnika().equals("ROLE_GRADJANIN") && z != null
+                    && !z.getInformacijeOTraziocu().getHref().equals(k.getAbout()))
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_PDF);
             headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
