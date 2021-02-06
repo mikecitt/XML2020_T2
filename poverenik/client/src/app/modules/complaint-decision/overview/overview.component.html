@@ -12,12 +12,14 @@
   </span>
 </ng-template>
 <ng-template #actionViewPdf>
-  <nz-spin [nzSpinning]="pdfLoading" [nzSize]="'small'" (click)="openComplaintPdf()">
+  <nz-spin nz-tooltip nzTooltipTitle="Open pdf" [nzSpinning]="pdfLoading" [nzSize]="'small'"
+    (click)="openComplaintPdf()">
     <i nz-icon nzType="file-pdf"></i>
   </nz-spin>
 </ng-template>
 <ng-template #actionViewHtml>
-  <nz-spin [nzSpinning]="htmlLoading" [nzSize]="'small'" (click)="openComplaintHtml()">
+  <nz-spin nz-tooltip nzTooltipTitle="Open html" [nzSpinning]="htmlLoading" [nzSize]="'small'"
+    (click)="openComplaintHtml()">
     <i nz-icon nzType="code"></i>
   </nz-spin>
 </ng-template>
