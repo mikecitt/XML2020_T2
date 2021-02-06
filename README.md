@@ -7,10 +7,10 @@
 - Milan Pavlov SW35/2017
 
 ##### Tehnologije:
-Backend je rađen u Java Spring Boot,
-Frontend je rađen u Angular-u.
-Za čuvanje XML baza korišćena je Exist baza,
-dok je za RDF grafove korišćena Jena Fuseki.
+Backend je rađen u Java Spring Boot,  
+Frontend je rađen u Angular-u.  
+Za čuvanje XML baza korišćena je Exist baza,  
+dok je za RDF grafove korišćena Jena Fuseki.  
 
 #### Pokretanje XML baza
 
@@ -53,7 +53,7 @@ ng serve --port 4201
 (go to http://localhost:4201)
 ```
 #### Pokretanje servera
-Pokretanje server aplikacija se vrši kao pokretanje Java Spring Boot aplikacije u nekom od Java opkruženja. Npr. IDEA Intellij.
+Pokretanje server aplikacija se vrši kao pokretanje Java Spring Boot aplikacije u nekom od Java opkruženja. Npr. IDEA Intellij.  
 Server poverenika nalazi se na putanji
 ```sh
 cd poverenik/server
