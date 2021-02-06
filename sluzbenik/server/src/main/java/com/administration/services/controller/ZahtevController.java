@@ -6,6 +6,7 @@ import com.administration.services.enums.StatusZahteva;
 import com.administration.services.model.Korisnik;
 import com.administration.services.model.Zahtev;
 import com.administration.services.model.Zahtevi;
+import com.administration.services.ws.client.EPostaClient;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -34,6 +35,9 @@ public class ZahtevController {
 
     @Autowired
     private KorisnikService korisnikService;
+
+    @Autowired
+    private EPostaClient ePostaClient;
 
     @GetMapping("/pdf")
     public ResponseEntity<byte[]> getZahtevPDF(@RequestParam String zahtevId) {
@@ -142,6 +146,8 @@ public class ZahtevController {
             Zahtev z = zahtevService.resolveZahtev(zahtevId, StatusZahteva.ODBIJEN);
             if (z == null)
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            String[] splitovano = z.getInformacijeOTraziocu().getHref().split("/");
+            ePostaClient.sendMail("Zahtev odbijen", "Vaš zahtev je odbijen.", splitovano[splitovano.length - 1]);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
