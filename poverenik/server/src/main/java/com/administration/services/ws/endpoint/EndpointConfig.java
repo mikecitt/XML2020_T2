@@ -3,6 +3,7 @@ package com.administration.services.ws.endpoint;
 import javax.xml.ws.Endpoint;
 
 import com.administration.services.ws.izvestaj.IzvestajPortImpl;
+import com.administration.services.ws.resenje.ResenjePortImpl;
 import com.administration.services.ws.zalbe.ZalbaPortImpl;
 import org.apache.cxf.Bus;
 import org.apache.cxf.jaxws.EndpointImpl;
@@ -17,16 +18,22 @@ public class EndpointConfig {
     @Autowired
     private Bus bus;
 
+    @Autowired
+    private ZalbaPortImpl zalbaPort;
+
+    @Autowired
+    private IzvestajPortImpl izvestajPort;
+
     @Bean
     public Endpoint zalbaEndpoint() {
-        EndpointImpl endpoint = new EndpointImpl(bus, new ZalbaPortImpl());
+        EndpointImpl endpoint = new EndpointImpl(bus, zalbaPort);
         endpoint.publish("/zalbaOdgovor");
         return endpoint;
     }
 
     @Bean
     public Endpoint izvestajEndpoint() {
-        EndpointImpl endpoint = new EndpointImpl(bus, new IzvestajPortImpl());
+        EndpointImpl endpoint = new EndpointImpl(bus, izvestajPort);
         endpoint.publish("/izvestaj");
         return endpoint;
     }

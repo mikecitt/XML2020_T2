@@ -9,6 +9,7 @@ import com.administration.services.model.Korisnik;
 import com.administration.services.model.Resenja;
 import com.administration.services.model.Resenje;
 
+import com.administration.services.ws.client.ResenjeClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -34,6 +35,9 @@ public class ResenjeController {
 
     @Autowired
     private KorisnikService korisnikService;
+
+    @Autowired
+    private ResenjeClient resenjeClient;
 
     @GetMapping("/{resenjeId}")
     @PreAuthorize("hasAnyRole('ROLE_POVERENIK')")
@@ -103,6 +107,7 @@ public class ResenjeController {
             if (korisnik == null)
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             resenjeService.addNewResenje(resenje, korisnik, zalbaId);
+            resenjeClient.sendResenje(resenje);
         } catch (Exception e) {
             if (e.getMessage().equals("Zalba already has Resenje"))
                 return new ResponseEntity<>(HttpStatus.CONFLICT);

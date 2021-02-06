@@ -1,10 +1,10 @@
 package com.administration.services.ws.resenje;
 
 import com.administration.services.model.Resenje;
-import com.administration.services.model.Zalbacutanje;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.jws.WebService;
-import java.util.Vector;
 import java.util.logging.Logger;
 
 @WebService(
@@ -12,19 +12,20 @@ import java.util.logging.Logger;
       portName = "ResenjePort",
       targetNamespace = "http://administracija/ws/resenje",
       endpointInterface = "com.administration.services.ws.resenje.ResenjeInterface")
-
+@Service
 public class ResenjePortImpl implements ResenjeInterface {
 
     private static final Logger LOG = Logger.getLogger(ResenjePortImpl.class.getName());
 
-    private Vector<Resenje> resenja = new Vector<Resenje>();
+    @Autowired
+    private com.administration.services.business.ResenjeService resenjeService;
 
     @Override
     public void sendResenje(Resenje resenje) {
         LOG.info("Executing operation sendResenje");
 
         try {
-            resenja.add(resenje);
+            resenjeService.addNewResenje(resenje);
         } catch(Exception ex) {
             ex.printStackTrace();
             throw new RuntimeException(ex);

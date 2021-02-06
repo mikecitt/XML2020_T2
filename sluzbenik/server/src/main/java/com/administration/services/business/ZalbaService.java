@@ -18,7 +18,7 @@ import org.xmldb.api.modules.XQueryService;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import java.io.*;
+import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -36,7 +36,7 @@ public class ZalbaService {
     @Autowired
     private XSLFOTransformer transformer;
 
-    @Value("/db/poverenik")
+    @Value("/db/sluzbenik")
     private String collectionId;
 
     @Value("zalbacutanje.xml")
@@ -49,10 +49,7 @@ public class ZalbaService {
         return getOneZalba(zalbaId) != null;
     }
 
-    public Zalbacutanje getZalbaCutanje(String zalbaId, String korisnikId) throws Exception {
-        if (korisnikId != null && !doesZalbaBelongToKorisnik(zalbaId, korisnikId)) {
-            throw new Exception("Zalba not belong to Korisnik");
-        }
+    public Zalbacutanje getZalbaCutanje(String zalbaId) throws Exception {
         return (Zalbacutanje) getOneZalba(zalbaId);
     }
 
@@ -69,10 +66,7 @@ public class ZalbaService {
                 new String(os.toByteArray(), StandardCharsets.UTF_8));
     }
 
-    public Zalbanaodluku getZalbaOdluku(String zalbaId, String korisnikId) throws Exception {
-        if (korisnikId != null && !doesZalbaBelongToKorisnik(zalbaId, korisnikId)) {
-            throw new Exception("Zalba not belong to Korisnik");
-        }
+    public Zalbanaodluku getZalbaOdluku(String zalbaId) throws Exception {
         return (Zalbanaodluku) getOneZalba(zalbaId);
     }
 
@@ -89,6 +83,28 @@ public class ZalbaService {
                 new String(os.toByteArray(), StandardCharsets.UTF_8));
     }
 
+    public boolean odgovoriNaZalbuCutanje(String zalbaId) throws Exception {
+        Zalbecutanje zalbecutanje = getAllZalbeCutanje();
+        for(Zalbacutanje zal : zalbecutanje.getZalbacutanje()) {
+            if(zal.getAbout().equals("http://localhost:8080/zalba/" + zalbaId)) {
+                zal.getStatus().setValue(Status.GOTOV.toString());
+            }
+        }
+
+        return true;
+    }
+
+    public boolean odgovoriNaZalbuOdluku(String zalbaId) throws Exception {
+        Zalbenaodluku zalbenaodluku = getAllZalbeOdluka();
+        for(Zalbanaodluku zal : zalbenaodluku.getZalbanaodluku()) {
+            if(zal.getAbout().equals("http://localhost:8080/zalbanaodluku/" + zalbaId)) {
+                zal.getStatus().setValue(Status.GOTOV.toString());
+            }
+        }
+
+        return true;
+    }
+
     public Object getOneZalba(String zalbaId) {
         Collection col = null;
 
@@ -100,110 +116,6 @@ public class ZalbaService {
             byte[] encoded = Files.readAllBytes(Paths.get("src/main/resources/xquery/getOneZalba.xqy"));
             String xqueryExpression = new String(encoded, StandardCharsets.UTF_8);
             xqueryExpression = String.format(xqueryExpression, zalbaId);
-            CompiledExpression compiledXquery = xqueryService.compile(xqueryExpression);
-            ResourceSet result = xqueryService.execute(compiledXquery);
-
-            ResourceIterator i = result.getIterator();
-            XMLResource res = null;
-
-            if (i.hasMoreResources()) {
-                try {
-                    JAXBContext context = JAXBContext.newInstance("com.administration.services.model");
-
-                    Unmarshaller unmarshaller = context.createUnmarshaller();
-                    res = (XMLResource) i.nextResource();
-                    return unmarshaller.unmarshal(res.getContentAsDOM());
-                } finally {
-                    try {
-                        ((EXistResource) res).freeResources();
-                    } catch (XMLDBException xe) {
-                        xe.printStackTrace();
-                    }
-                }
-            }
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        } finally {
-            if (col != null) {
-                try {
-                    col.close();
-                } catch (XMLDBException xe) {
-                    xe.printStackTrace();
-                }
-            }
-        }
-
-        return null;
-    }
-
-    public boolean doesZalbaBelongToKorisnik(String zalbaId, String korisnikId) {
-        Collection col = null;
-
-        try {
-            col = existConfiguration.getOrCreateCollection(collectionId, 0);
-            XQueryService xqueryService = (XQueryService) col.getService("XQueryService", "1.0");
-            xqueryService.setProperty("indent", "yes");
-
-            byte[] encoded = Files.readAllBytes(Paths.get("src/main/resources/xquery/getKorisnikZalba.xqy"));
-            String xqueryExpression = new String(encoded, StandardCharsets.UTF_8);
-            xqueryExpression = String.format(xqueryExpression, korisnikId, zalbaId);
-            CompiledExpression compiledXquery = xqueryService.compile(xqueryExpression);
-            ResourceSet result = xqueryService.execute(compiledXquery);
-
-            ResourceIterator i = result.getIterator();
-            XMLResource res = null;
-
-            if (i.hasMoreResources()) {
-                try {
-                    JAXBContext context = JAXBContext.newInstance("com.administration.services.model");
-
-                    Unmarshaller unmarshaller = context.createUnmarshaller();
-                    res = (XMLResource) i.nextResource();
-                    return unmarshaller.unmarshal(res.getContentAsDOM()) != null;
-                } finally {
-                    try {
-                        ((EXistResource) res).freeResources();
-                    } catch (XMLDBException xe) {
-                        xe.printStackTrace();
-                    }
-                }
-            }
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        } finally {
-            if (col != null) {
-                try {
-                    col.close();
-                } catch (XMLDBException xe) {
-                    xe.printStackTrace();
-                }
-            }
-        }
-
-        return false;
-    }
-
-    public Zalbecutanje getKorisnikZalbeCutanje(String korisnikId) {
-        return (Zalbecutanje) getKorisnikZalbe(korisnikId, "src/main/resources/xquery/getKorisnikZalbeCutanje.xqy");
-    }
-
-    public Zalbenaodluku getKorisnikZalbaOdluku(String korisnikId) {
-        return (Zalbenaodluku) getKorisnikZalbe(korisnikId, "src/main/resources/xquery/getKorisnikZalbeOdluka.xqy");
-    }
-
-    public Object getKorisnikZalbe(String korisnikId, String queryPath) {
-        Collection col = null;
-
-        try {
-            col = existConfiguration.getOrCreateCollection(collectionId, 0);
-            XQueryService xqueryService = (XQueryService) col.getService("XQueryService", "1.0");
-            xqueryService.setProperty("indent", "yes");
-
-            byte[] encoded = Files.readAllBytes(Paths.get(queryPath));
-            String xqueryExpression = new String(encoded, StandardCharsets.UTF_8);
-            xqueryExpression = String.format(xqueryExpression, korisnikId);
             CompiledExpression compiledXquery = xqueryService.compile(xqueryExpression);
             ResourceSet result = xqueryService.execute(compiledXquery);
 
@@ -278,7 +190,7 @@ public class ZalbaService {
         return zalbecutanje;
     }
 
-    public void addNewZalbaCutanje(Zalbacutanje zalbacutanje, Korisnik korisnik) throws Exception {
+    public void addNewZalbaCutanje(Zalbacutanje zalbacutanje) throws Exception {
         Collection col = null;
         XMLResource res = null;
         ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -295,7 +207,6 @@ public class ZalbaService {
             } catch (XMLDBException ex) {
                 zalbecutanje = new Zalbecutanje();
             }
-            prepareZalbCut(zalbacutanje, korisnik);
             zalbecutanje.getZalbacutanje().add(zalbacutanje);
 
             Marshaller marshaller = context.createMarshaller();
@@ -364,7 +275,7 @@ public class ZalbaService {
         return zalbenaodluku;
     }
 
-    public void addNewZalbaOdluka(Zalbanaodluku zalbanaodluku, Korisnik korisnik) throws Exception {
+    public void addNewZalbaOdluka(Zalbanaodluku zalbanaodluku) throws Exception {
         Collection col = null;
         XMLResource res = null;
         ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -382,7 +293,6 @@ public class ZalbaService {
                 zalbenaodluku = new Zalbenaodluku();
 
             }
-            prepareZalbOd(zalbanaodluku, korisnik);
             zalbenaodluku.getZalbanaodluku().add(zalbanaodluku);
 
             Marshaller marshaller = context.createMarshaller();
@@ -412,45 +322,5 @@ public class ZalbaService {
                 }
             }
         }
-    }
-
-    private void prepareZalbOd(Zalbanaodluku zalbanaodluku, Korisnik korisnik) {
-        Zalbanaodluku.Status status = new Zalbanaodluku.Status();
-        status.setDatatype("xs:string");
-        status.setProperty("pred:status");
-        status.setValue(Status.OBRADA.toString());
-        zalbanaodluku.setStatus(status);
-        zalbanaodluku.setAbout("http://localhost:8080/zalbanaodluku/" + UUID.randomUUID().toString().replace("-", ""));
-        zalbanaodluku.setVocab("http://localhost:8080/rdf/predicate/");
-        zalbanaodluku.getInformacijeOPodnosiocuZalbe().setRel("pred:createdBy");
-        zalbanaodluku.getInformacijeOPodnosiocuZalbe().setHref(korisnik.getAbout());
-        zalbanaodluku.getNazivOrgana().setDatatype("xs:string");
-        zalbanaodluku.getNazivOrgana().setProperty("pred:naziv_organa");
-        zalbanaodluku.getResenje().getDatumResenja().setDatatype("tip:Tdatum");
-        zalbanaodluku.getResenje().getDatumResenja().setProperty("pred:datum_resenja");
-        zalbanaodluku.getDatumPodnosenjaZahteva().setDatatype("tip:Tdatum");
-        zalbanaodluku.getDatumPodnosenjaZahteva().setProperty("pred:datum_podnosenja_zahteva");
-        zalbanaodluku.getDetaljiPredaje().getDatum().setDatatype("tip:Tdatum");
-        zalbanaodluku.getDetaljiPredaje().getDatum().setProperty("pred:datum_predaje");
-        zalbanaodluku.getDetaljiPredaje().getMesto().setDatatype("xs:string");
-        zalbanaodluku.getDetaljiPredaje().getMesto().setProperty("pred:mesto_predaje");
-    }
-
-    private void prepareZalbCut(Zalbacutanje zalbacutanje, Korisnik korisnik) {
-        Zalbacutanje.Status status = new Zalbacutanje.Status();
-        status.setDatatype("xs:string");
-        status.setProperty("pred:status");
-        status.setValue(Status.OBRADA.toString());
-        zalbacutanje.setStatus(status);
-        zalbacutanje.setAbout("http://localhost:8080/zalba/" + UUID.randomUUID().toString().replace("-", ""));
-        zalbacutanje.setVocab("http://localhost:8080/rdf/predicate/");
-        zalbacutanje.getInformacijeOPodnosiocuZalbe().setRel("pred:createdBy");
-        zalbacutanje.getInformacijeOPodnosiocuZalbe().setHref(korisnik.getAbout());
-        zalbacutanje.getNazivOrgana().setDatatype("xs:string");
-        zalbacutanje.getNazivOrgana().setProperty("pred:naziv_organa");
-        zalbacutanje.getDetaljiPredaje().getDatum().setDatatype("tip:Tdatum");
-        zalbacutanje.getDetaljiPredaje().getDatum().setProperty("pred:datum_predaje");
-        zalbacutanje.getDetaljiPredaje().getMesto().setDatatype("xs:string");
-        zalbacutanje.getDetaljiPredaje().getMesto().setProperty("pred:mesto_predaje");
     }
 }

@@ -12,7 +12,7 @@ import java.net.URL;
 @org.springframework.stereotype.Service
 public class ZalbaClient {
 
-    public void sendZalbaCutanje(String odgovor, String zalbaId) {
+    public void sendOdgovor(String odgovor, String zalbaId) {
         try {
             URL wsdlLocation = new URL("http://localhost:8080/ws/zalbaOdgovor?wsdl");
             QName serviceName = new QName("http://administracija/ws/zalba", "ZalbaService");

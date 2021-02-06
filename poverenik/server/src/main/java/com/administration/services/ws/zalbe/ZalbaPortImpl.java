@@ -5,6 +5,7 @@ import com.administration.services.model.Zalbacutanje;
 import com.administration.services.model.Zalbanaodluku;
 import com.administration.services.model.Zalbenaodluku;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.jws.WebService;
 import java.util.Vector;
@@ -15,13 +16,10 @@ import java.util.logging.Logger;
       portName = "ZalbaPort",
       targetNamespace = "http://administracija/ws/zalba",
       endpointInterface = "com.administration.services.ws.zalbe.ZalbaInterface")
-
+@Service
 public class ZalbaPortImpl implements ZalbaInterface {
 
     private static final Logger LOG = Logger.getLogger(ZalbaPortImpl.class.getName());
-
-    /*@Autowired
-    private ZalbaService zalbaService;*/
 
     @Override
     public void sendZalbaCutanje(Zalbacutanje zalbacutanje) {}

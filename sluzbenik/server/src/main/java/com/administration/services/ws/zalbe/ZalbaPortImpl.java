@@ -2,11 +2,11 @@ package com.administration.services.ws.zalbe;
 
 import com.administration.services.model.Zalbacutanje;
 import com.administration.services.model.Zalbanaodluku;
-import com.administration.services.model.Zalbenaodluku;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import javax.jws.WebService;
-import java.util.Vector;
 import java.util.logging.Logger;
 
 @WebService(
@@ -14,23 +14,20 @@ import java.util.logging.Logger;
       portName = "ZalbaPort",
       targetNamespace = "http://administracija/ws/zalba",
       endpointInterface = "com.administration.services.ws.zalbe.ZalbaInterface")
-
+@Service
 public class ZalbaPortImpl implements ZalbaInterface {
 
     private static final Logger LOG = Logger.getLogger(ZalbaPortImpl.class.getName());
 
-    /*@Autowired
-    private ZalbaService zalbaService;*/
-
-    private Vector<Zalbacutanje> cutanje = new Vector<Zalbacutanje>();
-    private Vector<Zalbanaodluku> odluke = new Vector<Zalbanaodluku>();
+    @Autowired
+    private com.administration.services.business.ZalbaService zalbaService;
 
     @Override
     public void sendZalbaCutanje(Zalbacutanje zalbacutanje) {
         LOG.info("Executing operation sendZalbaCutanje");
 
         try {
-            cutanje.add(zalbacutanje);
+            zalbaService.addNewZalbaCutanje(zalbacutanje);
         } catch(Exception ex) {
             ex.printStackTrace();
             throw new RuntimeException(ex);
@@ -42,7 +39,7 @@ public class ZalbaPortImpl implements ZalbaInterface {
         LOG.info("Executing operation sendZalbaOdluka");
 
         try {
-            odluke.add(zalbanaodluku);
+            zalbaService.addNewZalbaOdluka(zalbanaodluku);
         } catch(Exception ex) {
             ex.printStackTrace();
             throw new RuntimeException(ex);
