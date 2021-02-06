@@ -12,7 +12,7 @@
               <label nz-radio-button nzValue="odluka">Zalbe odluka</label>
             </nz-radio-group>
           </div>
-          <div nz-col>
+          <div nz-col *ngIf="!isPoverenik">
             <app-new-complaint [complaintType]="selectedTab"></app-new-complaint>
           </div>
         </div>

@@ -1,0 +1,25 @@
+<nz-layout class="root">
+  <nz-header class="header">
+    <app-navigation-bar></app-navigation-bar>
+  </nz-header>
+  <nz-content class="content">
+    <nz-space nzDirection="vertical" class="homeTasks" *ngSwitchCase="true">
+      <nz-space-item>
+        <nz-space nzDirection="vertical">
+          <nz-space-item>
+            <i nz-icon nzType="file-pdf"></i>
+          </nz-space-item>
+          <nz-space-item>
+
+          </nz-space-item>
+        </nz-space>
+      </nz-space-item>
+      <nz-space-item>
+
+      </nz-space-item>
+    </nz-space>
+    <nz-result *ngSwitchCase="false" class="forbidden" nzStatus="403" nzTitle="Unauthorized"
+      nzSubTitle="Sorry, you must be logged in to see this page">
+    </nz-result>
+  </nz-content>
+</nz-layout>
