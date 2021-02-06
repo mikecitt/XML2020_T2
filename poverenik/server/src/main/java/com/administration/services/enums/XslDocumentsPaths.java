@@ -1,11 +1,10 @@
 package com.administration.services.enums;
 
 public enum XslDocumentsPaths {
-    ZAHTEV("src/main/resources/xsl-fo/zahtevcir.xsl"),
-    OBAVESTENJE("src/main/resources/xsl-fo/obavestenjecir.xsl"),
+    ZAHTEV("src/main/resources/xsl-fo/zahtevcir.xsl"), OBAVESTENJE("src/main/resources/xsl-fo/obavestenjecir.xsl"),
     ZALBACUTANJE("src/main/resources/xsl-fo/zalbacutanje.xsl"),
-    ZALBAODLUKA("src/main/resources/xsl-fo/zalbaodluka.xsl"),
-    RESENJE("src/main/resources/xsl-fo/resenje.xsl");
+    ZALBAODLUKA("src/main/resources/xsl-fo/zalbaodluka.xsl"), RESENJE("src/main/resources/xsl-fo/resenje.xsl"),
+    IZVESTAJ("src/main/resources/xsl-fo/izvestaj.xsl");
 
     private final String text;
 
