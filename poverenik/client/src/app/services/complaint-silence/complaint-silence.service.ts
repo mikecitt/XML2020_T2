@@ -13,4 +13,21 @@ export class ComplaintSilenceService {
       observe: 'response',
     });
   }
+
+  getPdf(id: string) {
+    return this.http.get<any>(`http://localhost:8080/zalbe/cutanje/pdf/${id}`, {
+      observe: 'response',
+      responseType: 'arraybuffer' as 'json',
+    });
+  }
+
+  getHtml(id: string) {
+    return this.http.get<any>(
+      `http://localhost:8080/zalbe/cutanje/html/${id}`,
+      {
+        observe: 'response',
+        responseType: 'text' as 'json',
+      }
+    );
+  }
 }
