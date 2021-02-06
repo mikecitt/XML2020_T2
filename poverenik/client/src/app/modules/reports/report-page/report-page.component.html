@@ -3,9 +3,9 @@
     <app-navigation-bar></app-navigation-bar>
   </nz-header>
   <nz-content class="content">
-    <nz-space nzDirection="vertical" class="homeTasks" *ngSwitchCase="true">
+    <nz-space nzDirection="vertical" class="homeTasks">
       <nz-space-item>
-        <nz-space nzDirection="vertical">
+        <nz-space nzSize="middle" nzDirection="horizontal" class="title">
           <nz-space-item>
             <i nz-icon nzType="file-pdf"></i>
           </nz-space-item>
@@ -15,11 +15,19 @@
         </nz-space>
       </nz-space-item>
       <nz-space-item>
-
+        <div class="spin" *ngIf="loading">
+          <nz-spin nzSimple [nzSize]="'large'">
+          </nz-spin>
+        </div>
+        <div *ngIf="!loading">
+          <nz-empty *ngIf="reports.length === 0" class="empty" nzNotFoundContent="Nema izvestaja"></nz-empty>
+          <nz-space *ngIf="reports.length !== 0" nzDirection="horizontal">
+            <nz-space-item *ngFor="let report of reports">
+              <app-report-overview [report]="report"></app-report-overview>
+            </nz-space-item>
+          </nz-space>
+        </div>
       </nz-space-item>
     </nz-space>
-    <nz-result *ngSwitchCase="false" class="forbidden" nzStatus="403" nzTitle="Unauthorized"
-      nzSubTitle="Sorry, you must be logged in to see this page">
-    </nz-result>
   </nz-content>
 </nz-layout>

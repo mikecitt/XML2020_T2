@@ -1,0 +1,18 @@
+<nz-card style="width: 250px;margin-top: 16px" [nzActions]="[actionsTemplate]">
+  <nz-card-meta [nzAvatar]="avatarTemplate" [nzTitle]="report.podnosilac.ime + ' ' + report.podnosilac.prezime"
+    [nzDescription]="descriptionTemplate">
+  </nz-card-meta>
+</nz-card>
+<ng-template #avatarTemplate>
+  <i nz-icon nzType="container" nzTheme="outline"></i>
+</ng-template>
+<ng-template #descriptionTemplate>
+  <span nz-typography nzType="secondary" nzEllipsis nzExpandable [nzEllipsisRows]="7">
+    {{ time }}
+  </span>
+</ng-template>
+<ng-template #actionsTemplate>
+  <nz-spin nz-tooltip nzTooltipTitle="Otvori pdf" [nzSpinning]="pdfLoading" [nzSize]="'small'" (click)="openPdf()">
+    <i nz-icon nzType="file-pdf"></i>
+  </nz-spin>
+</ng-template>
