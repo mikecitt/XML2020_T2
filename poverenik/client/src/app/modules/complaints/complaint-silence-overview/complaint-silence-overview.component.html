@@ -1,4 +1,4 @@
-<nz-card style="width: 250px;margin-top: 16px"
+<nz-card style="width: 250px"
   [nzActions]="complaint.status?.value === 'GOTOV' ? [actionsComplaint, actionsDecision] : [actionsComplaint]">
   <nz-card-meta [nzAvatar]="avatarTemplate" [nzTitle]="complaint.nazivOrgana.value"
     [nzDescription]="descriptionTemplate">
