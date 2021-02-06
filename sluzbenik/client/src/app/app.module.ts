@@ -14,6 +14,10 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
 import { ObavestenjeDodajComponent } from './components/obavestenje-dodaj/obavestenje-dodaj.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { ResenjaListComponent } from './components/resenja-list/resenja-list.component';
+import { ZalbaListComponent } from './components/zalba-list/zalba-list.component';
+import { ObrazloziZalbuComponent } from './components/obrazlozi-zalbu/obrazlozi-zalbu.component';
+import { XhtmlPrikazComponent } from './components/xhtml-prikaz/xhtml-prikaz.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +28,11 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     PostRegistrationComponent,
     ZahteviListComponent,
     ObavestenjeDodajComponent,
-    DashboardComponent
+    DashboardComponent,
+    ResenjaListComponent,
+    ZalbaListComponent,
+    ObrazloziZalbuComponent,
+    XhtmlPrikazComponent
   ],
   imports: [
     BrowserModule,

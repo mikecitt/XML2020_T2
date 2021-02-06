@@ -71,7 +71,12 @@
             <div *ngIf="submitValidate" class="alert alert-danger">
                 <div *ngIf="submitValidate">Sva polja su neophodna.</div>
             </div>
-            
+            <div *ngIf="losSat" class="alert alert-danger">
+                <div *ngIf="losSat">Vreme uvida mora biti izmedju 9 i 17 casova</div>
+            </div>
+            <div *ngIf="losaCena" class="alert alert-danger">
+                <div *ngIf="losaCena">Cena mora biti broj</div>
+            </div>
             <button class="btn btn-primary">Dodaj obavestenje</button>
         </form>
     </div>

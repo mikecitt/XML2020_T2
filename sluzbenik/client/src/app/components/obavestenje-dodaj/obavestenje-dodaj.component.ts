@@ -14,6 +14,8 @@ import { ZahtevService } from 'src/app/services/zahtev.service';
 export class ObavestenjeDodajComponent implements OnInit {
 
   public submitValidate: boolean = false;
+  public losSat: boolean = false;
+  public losaCena: boolean = false;
   @Input()
   public zahtev!: Zahtev;
   @Output() added = new EventEmitter<any>();
@@ -57,10 +59,18 @@ export class ObavestenjeDodajComponent implements OnInit {
  dodajObavestenje(){
   const val = this.myForm.value;
   this.submitValidate = false;
-  console.log(val.sat);
+  this.losaCena = false;
+  this.losSat = false;
+  var pomDate: Date = new Date();
    if(!val.brojpredmeta || !val.datumuvida || !val.sat || !val.mesto || !val.ulica || !val.broj || !val.brojkancelarije
       || !val.cena)
     this.submitValidate = true;
+   else if(val.sat.hour > 17 || val.sat.hour < 9){
+      this.losSat = true;
+   }
+   else if(isNaN(val.cena)){
+     this.losaCena = true;
+   }
    else{
       var obavestenje : Obavestenje = {
         nazivOrgana: this.zahtev.nazivOrgana,

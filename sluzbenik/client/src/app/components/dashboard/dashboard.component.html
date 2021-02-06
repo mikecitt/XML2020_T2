@@ -13,9 +13,19 @@
         Zahtevi
     </button>
     <hr>
-    <button class="btn btn-primary block" routerLink="/register" routerLinkActive="active" 
+    <button class="btn btn-primary block" (click)="podnesiIzvestaj()"
         *ngIf="userType == 'ROLE_SLUZBENIK'">
         Podnesi godisnji izvestaj
+    </button>
+    <hr>
+    <button class="btn btn-primary block" routerLink="/svaresenja" routerLinkActive="active"
+        *ngIf="userType == 'ROLE_SLUZBENIK'">
+        Resenja
+    </button>
+    <hr>
+    <button class="btn btn-primary block" routerLink="/svezalbe" routerLinkActive="active"
+        *ngIf="userType == 'ROLE_SLUZBENIK'">
+        Zalbe
     </button>
     <hr>
     <button class="btn btn-primary block" routerLink="/podnesizahtev" routerLinkActive="active"

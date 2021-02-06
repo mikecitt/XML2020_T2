@@ -6,7 +6,10 @@ import { ObavestenjeDodajComponent } from './components/obavestenje-dodaj/obaves
 import { PodnosenjeZahtevaComponent } from './components/podnosenje-zahteva/podnosenje-zahteva.component';
 import { PostRegistrationComponent } from './components/post-registration/post-registration.component';
 import { RegisterComponent } from './components/register/register.component';
+import { ResenjaListComponent } from './components/resenja-list/resenja-list.component';
+import { XhtmlPrikazComponent } from './components/xhtml-prikaz/xhtml-prikaz.component';
 import { ZahteviListComponent } from './components/zahtevi-list/zahtevi-list.component';
+import { ZalbaListComponent } from './components/zalba-list/zalba-list.component';
 import { LoginGuard } from './guards/login.guard';
 import { RolesGuard } from './guards/roles.guard';
 
@@ -38,6 +41,14 @@ const routes: Routes = [
     path: 'dashboard',
     component: DashboardComponent,
     canActivate: [LoginGuard]
+  },
+  {
+    path: 'svaresenja',
+    component:ResenjaListComponent
+  },
+  {
+    path: 'svezalbe',
+    component:ZalbaListComponent
   }
 ];
 

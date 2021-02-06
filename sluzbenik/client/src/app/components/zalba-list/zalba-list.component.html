@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <button class="btn btn-primary" routerLink="/dashboard" routerLinkActive="active">
+            Pocetna stranica
+        </button>
+        <button class="btn btn-primary" (click)="logOut()">
+            Odjava
+        </button>
+    </div>
+  </nav>
+  <div class="aux">
+      <span><h4><b>Zalbe</b></h4></span><br><br>
+        <div class="card" style="width: 32rem;" *ngFor = 'let z of zalbeCutanje'>
+            <div class="card-body">
+              <h5 class="card-title">ID: {{z.id}}</h5>
+              <p class="card-text">Podneto: {{z.datum}}</p>
+              <br>
+              <hr>
+              <button type="button" class="btn btn-sm btn-primary" (click) = "getZalbaCutanjePDF(z.id)"
+                >Pregledaj</button> &nbsp;&nbsp;&nbsp;            
+              <app-obrazlozi-zalbu [zalba] = "z" [status]="'cutanje'" (added) = "onAdded($event)"></app-obrazlozi-zalbu>
+            </div>
+        </div>
+        <div class="card" style="width: 32rem;" *ngFor = 'let z of zalbeOdluka'>
+          <div class="card-body">
+            <h5 class="card-title">ID: {{z.id}}</h5>
+            <p class="card-text">Podneto: {{z.datum}}</p>
+            <br>
+            <hr>
+            <button type="button" class="btn btn-sm btn-primary" (click) = "getZalbaOdlukaPDF(z.id)"
+              >Pregledaj</button> &nbsp;&nbsp;&nbsp;            
+            <app-obrazlozi-zalbu [zalba] = "z" [status]="'odluka'" (added) = "onAdded($event)"></app-obrazlozi-zalbu>
+          </div>
+      </div>
+        <br>
+  </div>

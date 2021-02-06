@@ -1,0 +1,28 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Obrazlozi odbijanje</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="myForm" (ngSubmit)="dodajObrazlozenje()">
+            <div class="form-group">
+                <label for="obrazlozenje">Obrazlozenje</label>
+                <input 
+                    id = "obrazlozenje"
+                    formControlName="obrazlozenje"
+                    type="text" 
+                    class="form-control">
+            </div>
+            <div *ngIf="submitValidate" class="alert alert-danger">
+                <div *ngIf="submitValidate">Sva polja su neophodna.</div>
+            </div>
+            
+            <button class="btn btn-primary">obrazlozi odbijanje</button>
+        </form>
+    </div>
+</ng-template>
+
+<button class="btn btn-sm btn-success" (click)="open(content)" id="add-comment"
+    >Obrazlozi odbijanje</button>

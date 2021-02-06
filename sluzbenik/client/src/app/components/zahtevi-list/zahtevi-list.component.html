@@ -14,7 +14,7 @@
 </nav>
 <div class="aux">
     <span><h4><b>Zahtevi</b></h4></span><br><br>
-      <div class="card" style="width: 32rem;" *ngFor = 'let z of zahtevi'>
+      <div class="card" style="width: 52rem;" *ngFor = 'let z of zahtevi'>
           <div class="card-body">
             <h5 class="card-title">ID: {{z.id}}</h5>
             <p class="card-text">Podneto: {{z.datum}}</p>
@@ -27,13 +27,18 @@
             <br>
             <hr>
             <button type="button" class="btn btn-sm btn-primary" (click) = "getZahtevPDF(z.id)"
-              >Pregledaj</button> &nbsp;&nbsp;&nbsp;
+              >Pregledaj PDF</button> &nbsp;&nbsp;
+            <button type="button" class="btn btn-sm btn-primary"
+              (click) = "getZahtevXHTML(z.id)">Pogledaj zahtev XHTML</button> &nbsp;&nbsp;
             <app-obavestenje-dodaj (added) = "onAdded($event)" [zahtev] = "z" *ngIf = "z.status == 'OBRADA' && userType == 'ROLE_SLUZBENIK'"></app-obavestenje-dodaj>
-              &nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;
             <button type="button" class="btn btn-sm btn-danger" *ngIf = "z.status == 'OBRADA' && userType == 'ROLE_SLUZBENIK'"
-              (click)="declineZahtev(z.id)">Odbij</button>&nbsp;&nbsp;&nbsp;
+              (click)="declineZahtev(z.id)">Odbij</button>&nbsp;&nbsp;
             <button type="button" class="btn btn-sm btn-primary" *ngIf = "z.status == 'PRIHVACEN'"
-              >Pogledaj obavestenje</button>&nbsp;&nbsp;&nbsp;
+              (click) = "getObavestenjPDF(z.id)">Pogledaj obavestenje PDF</button>&nbsp;&nbsp;
+              
+            <button type="button" class="btn btn-sm btn-primary" *ngIf = "z.status == 'PRIHVACEN'"
+            (click) = "getObavestenjXHTML(z.id)">Pogledaj obavestenje XHTML</button>&nbsp;&nbsp;
           </div>
       </div>
       <br>
