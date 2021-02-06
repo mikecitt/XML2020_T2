@@ -1,0 +1,24 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <button class="btn btn-primary" routerLink="/dashboard" routerLinkActive="active">
+            Pocetna stranica
+        </button>
+        <button class="btn btn-primary" (click)="logOut()">
+            Odjava
+        </button>
+    </div>
+  </nav>
+  <div class="aux">
+      <span><h4><b>Resenja</b></h4></span><br><br>
+        <div class="card" style="width: 32rem;" *ngFor = 'let r of resenja'>
+            <div class="card-body">
+              <h5 class="card-title">ID: {{r.id}}</h5>
+              <p class="card-text">Podneto: {{r.datum}}</p>
+              <br>
+              <hr>
+              <button type="button" class="btn btn-sm btn-primary" (click) = "getResenjePDF(r.id)"
+                >Pregledaj PDF</button> &nbsp;&nbsp;&nbsp;  
+            </div>
+        </div>
+        <br>
+  </div>

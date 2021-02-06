@@ -205,6 +205,52 @@ export class ZahtevService {
     , httpOptions);
   }
 
+  vratiZahtevXHTML(zahtevId: string): Observable<any>{
+    
+    return this.http.get('http://localhost:8082/zahtev/html?zahtevId='+zahtevId
+    , {headers: this.headers, responseType: 'text'}).pipe(
+      map((res: any) => {
+        console.log(res);
+        return res;
+      }),
+      catchError(error => {
+        if (error.status === 400) {
+          return throwError('Error');
+        }
+        else {
+          return throwError ('Server error');
+        }
+      }));;;
+  }
+
+  vratiObavestenjePDF(zahtevId: string): Observable<any>{
+    const httpOptions = {
+      'responseType'  : 'arraybuffer' as 'json'
+       //'responseType'  : 'blob' as 'json'        //This also worked
+    };
+
+    return this.http.get<any>('http://localhost:8082/obavestenje/byZahtev/pdf?zahtevId='+zahtevId
+    , httpOptions);
+  }
+
+  vratiObavestenjeXHTML(zahtevId: string): Observable<any>{
+    
+    return this.http.get('http://localhost:8082/obavestenje/byZahtev/html?zahtevId='+zahtevId
+    , {headers: this.headers, responseType: 'text'}).pipe(
+      map((res: any) => {
+        console.log(res);
+        return res;
+      }),
+      catchError(error => {
+        if (error.status === 400) {
+          return throwError('Error');
+        }
+        else {
+          return throwError ('Server error');
+        }
+      }));;;
+  }
+
   odbijZahtev(zahtevId: string): Observable<any>{
     return this.http.put('http://localhost:8082/zahtev/decline?zahtevId='+zahtevId
     , {headers: this.headers}).pipe(
@@ -220,6 +266,23 @@ export class ZahtevService {
           return throwError ('Server error');
         }
       }));;
+  }
+
+  podnesiGodisnjiIzvestaj(): Observable<any>{
+    return this.http.get("http://localhost:8082/izvestaj", 
+      {headers: this.headers, responseType: 'text'}).pipe(
+      map((res: any) => {
+        //console.log(res);
+        return true;
+      }),
+      catchError(error => {
+        if (error.status === 400) {
+          return throwError('Username or email already in use');
+        }
+        else {
+          return throwError ('Server error');
+        }
+      }));
   }
 
 }

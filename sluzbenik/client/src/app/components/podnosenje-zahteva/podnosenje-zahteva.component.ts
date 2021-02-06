@@ -69,9 +69,25 @@ export class PodnosenjeZahtevaComponent implements OnInit {
       };
       console.dir(zahtev);
       this.zahtevService.dodajZahtev(zahtev).subscribe(res => {
-        console.log("dodao");
+        alert("Zahtev uspesno dodat");
+        this.clearForm();
       });
     }
+  }
+
+  clearForm(){
+    this.form.setValue({
+      nazivorgana: '',
+      sedisteorgana: '',
+      svrhazahteva: '',
+      nacindostave: '',
+      detaljanopis: '',
+      mestopredaje: '',
+      ime: '',
+      prezime: '',
+      adresa: '',
+      brojtelefona: ''
+    });
   }
 
   logOut(){

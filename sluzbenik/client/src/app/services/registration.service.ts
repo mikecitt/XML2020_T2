@@ -36,8 +36,8 @@ export class RegistrationService {
         return true;
       }),
       catchError(error => {
-        if (error.status === 400) {
-          return throwError('Username or email already in use');
+        if (error.status === 409) {
+          return throwError('Email already in use');
         }
         else {
           return throwError ('Server error');

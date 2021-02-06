@@ -39,7 +39,7 @@ export class ZahteviListComponent implements OnInit {
 
   logOut(){
     this.authService.logout();
-    this.router.navigateByUrl('/dashboard');
+    this.router.navigateByUrl('');
   }
 
   getZahtevPDF(id:string){
@@ -47,6 +47,34 @@ export class ZahteviListComponent implements OnInit {
       let file = new Blob([response], { type: 'application/pdf' });            
       var fileURL = URL.createObjectURL(file);
       window.open(fileURL);
+    })
+  }
+
+  getZahtevXHTML(id:string){
+    this.registrationService.vratiZahtevXHTML(id).subscribe((response)=>{
+      var win = window.open('', '_blank');
+      if (win !== null) {
+        win.document.write(response);
+        win.focus();
+      }
+    })
+  }
+
+  getObavestenjPDF(id:string){
+    this.registrationService.vratiObavestenjePDF(id).subscribe((response)=>{
+      let file = new Blob([response], { type: 'application/pdf' });            
+      var fileURL = URL.createObjectURL(file);
+      window.open(fileURL);
+    })
+  }
+
+  getObavestenjXHTML(id:string){
+    this.registrationService.vratiObavestenjeXHTML(id).subscribe((response)=>{
+      var win = window.open('', '_blank');
+      if (win !== null) {
+        win.document.write(response);
+        win.focus();
+      }
     })
   }
 
