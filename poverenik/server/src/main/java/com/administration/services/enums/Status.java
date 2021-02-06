@@ -2,7 +2,8 @@ package com.administration.services.enums;
 
 public enum Status {
     OBRADA("OBRADA"),
-    GOTOV("GOTOV");
+    GOTOV("GOTOV"),
+    ZAHTEVANJE("ZAHTEVANJE");
 
     private final String text;
 

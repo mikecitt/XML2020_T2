@@ -54,6 +54,105 @@ public class ZalbaService {
         return getOneZalba(zalbaId) != null;
     }
 
+    public boolean odgovoriNaZalbuCutanje(String zalbaId, Status status) throws Exception {
+        Zalbecutanje zalbecutanje = getAllZalbeCutanje();
+        for(Zalbacutanje zal : zalbecutanje.getZalbacutanje()) {
+            if(zal.getAbout().equals("http://localhost:8080/zalba/" + zalbaId)) {
+                zal.getStatus().setValue(status.toString());
+            }
+        }
+        saveAllZalbeCutanje(zalbecutanje);
+        return true;
+    }
+
+    public boolean odgovoriNaZalbuOdluku(String zalbaId, Status status) throws Exception {
+        Zalbenaodluku zalbenaodluku = getAllZalbeOdluka();
+        for(Zalbanaodluku zal : zalbenaodluku.getZalbanaodluku()) {
+            if(zal.getAbout().equals("http://localhost:8080/zalbanaodluku/" + zalbaId)) {
+                zal.getStatus().setValue(status.toString());
+                break;
+            }
+        }
+        saveAllZalbeOdluke(zalbenaodluku);
+        return true;
+    }
+
+    public void saveAllZalbeOdluke(Zalbenaodluku zalbenaodluku) throws Exception {
+        Collection col = null;
+        XMLResource res = null;
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+
+        try {
+            col = existConfiguration.getOrCreateCollection(collectionId, 0);
+            res = (XMLResource) col.createResource(zalbaCutanjeId, XMLResource.RESOURCE_TYPE);
+            JAXBContext context = JAXBContext.newInstance("com.administration.services.model");
+            Marshaller marshaller = context.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+            marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new DefaultNamespacePrefixMapper());
+
+            existConfiguration.prepareForWriting(marshaller, os, zalbenaodluku);
+
+            res.setContent(os);
+            col.storeResource(res);
+            jenaConfiguration.updateRDF(new String(os.toByteArray(), StandardCharsets.UTF_8));
+
+        } finally {
+            if (res != null) {
+                try {
+                    ((EXistResource) res).freeResources();
+                } catch (XMLDBException xe) {
+                    xe.printStackTrace();
+                }
+            }
+
+            if (col != null) {
+                try {
+                    col.close();
+                } catch (XMLDBException xe) {
+                    xe.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void saveAllZalbeCutanje(Zalbecutanje zalbecutanje) throws Exception {
+        Collection col = null;
+        XMLResource res = null;
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+
+        try {
+            col = existConfiguration.getOrCreateCollection(collectionId, 0);
+            res = (XMLResource) col.createResource(zalbaCutanjeId, XMLResource.RESOURCE_TYPE);
+            JAXBContext context = JAXBContext.newInstance("com.administration.services.model");
+            Marshaller marshaller = context.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+            marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new DefaultNamespacePrefixMapper());
+
+            existConfiguration.prepareForWriting(marshaller, os, zalbecutanje);
+
+            res.setContent(os);
+            col.storeResource(res);
+            jenaConfiguration.updateRDF(new String(os.toByteArray(), StandardCharsets.UTF_8));
+
+        } finally {
+            if (res != null) {
+                try {
+                    ((EXistResource) res).freeResources();
+                } catch (XMLDBException xe) {
+                    xe.printStackTrace();
+                }
+            }
+
+            if (col != null) {
+                try {
+                    col.close();
+                } catch (XMLDBException xe) {
+                    xe.printStackTrace();
+                }
+            }
+        }
+    }
+
     public Zalbacutanje getZalbaCutanje(String zalbaId, String korisnikId) throws Exception {
         if (korisnikId != null && !doesZalbaBelongToKorisnik(zalbaId, korisnikId)) {
             throw new Exception("Zalba not belong to Korisnik");
@@ -449,7 +548,7 @@ public class ZalbaService {
         Zalbanaodluku.Status status = new Zalbanaodluku.Status();
         status.setDatatype("xs:string");
         status.setProperty("pred:status");
-        status.setValue(Status.OBRADA.toString());
+        status.setValue("");
         zalbanaodluku.setStatus(status);
         zalbanaodluku.setAbout("http://localhost:8080/zalbanaodluku/" + UUID.randomUUID().toString().replace("-", ""));
         zalbanaodluku.setVocab("http://localhost:8080/rdf/predicate/");
@@ -471,7 +570,7 @@ public class ZalbaService {
         Zalbacutanje.Status status = new Zalbacutanje.Status();
         status.setDatatype("xs:string");
         status.setProperty("pred:status");
-        status.setValue(Status.OBRADA.toString());
+        status.setValue("");
         zalbacutanje.setStatus(status);
         zalbacutanje.setAbout("http://localhost:8080/zalba/" + UUID.randomUUID().toString().replace("-", ""));
         zalbacutanje.setVocab("http://localhost:8080/rdf/predicate/");

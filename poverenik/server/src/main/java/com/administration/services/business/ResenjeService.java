@@ -12,6 +12,7 @@ import javax.xml.bind.Unmarshaller;
 
 import com.administration.services.configs.ExistConfiguration;
 import com.administration.services.configs.JenaConfiguration;
+import com.administration.services.enums.Status;
 import com.administration.services.enums.XslDocumentsPaths;
 import com.administration.services.enums.XsltDocumentsPaths;
 import com.administration.services.helpers.DefaultNamespacePrefixMapper;
@@ -205,8 +206,10 @@ public class ResenjeService {
             resenje.getRazlogZalbe().setRel("pred:refTo");
             if (zalba instanceof Zalbanaodluku) {
                 resenje.getRazlogZalbe().setHref(((Zalbanaodluku) zalba).getAbout());
+                zalbaService.odgovoriNaZalbuOdluku(zalbaId, Status.GOTOV);
             } else {
                 resenje.getRazlogZalbe().setHref(((Zalbacutanje) zalba).getAbout());
+                zalbaService.odgovoriNaZalbuCutanje(zalbaId, Status.GOTOV);
             }
             resenja.getResenje().add(resenje);
 

@@ -4,7 +4,9 @@ import com.administration.services.configs.ExistConfiguration;
 import com.administration.services.configs.JenaConfiguration;
 import com.administration.services.dto.odgovor.OdgovorSluzbenika;
 import com.administration.services.dto.odgovor.Odgovori;
+import com.administration.services.enums.Status;
 import com.administration.services.helpers.DefaultNamespacePrefixMapper;
+import com.administration.services.model.Zalbacutanje;
 import org.exist.xmldb.EXistResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,7 +28,7 @@ import java.util.UUID;
 @Service
 public class OdgovorService {
 
-    private static final int WAIT_DURATION_IN_MILLIES = 30000000; // 5 minuta
+    private static final int WAIT_DURATION_IN_MILLIES = 300000; // 5 minuta
 
     @Autowired
     private ExistConfiguration existConfiguration;
@@ -70,6 +72,11 @@ public class OdgovorService {
                     Date d = new Date();
                     if(!odg.isOdgovorio() && odg.getDatumZahtevanja().getTime() + WAIT_DURATION_IN_MILLIES >= d.getTime()) {
                         return true;
+                    }
+                    if(zalbaService.getOneZalba(zalbaId) instanceof Zalbacutanje) {
+                        zalbaService.odgovoriNaZalbuCutanje(zalbaId, Status.OBRADA);
+                    } else {
+                        zalbaService.odgovoriNaZalbuOdluku(zalbaId, Status.OBRADA);
                     }
                 } finally {
                     try {

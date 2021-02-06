@@ -6,6 +6,7 @@ import com.administration.services.business.KorisnikService;
 import com.administration.services.business.OdgovorService;
 import com.administration.services.business.ZalbaService;
 import com.administration.services.dto.ProveraDTO;
+import com.administration.services.enums.Status;
 import com.administration.services.enums.TipKorisnika;
 import com.administration.services.model.Korisnik;
 import com.administration.services.model.Zalbacutanje;
@@ -251,6 +252,7 @@ public class ZalbaController {
             zalbaodluku = zalbaService.getZalbaOdluku(id, null);
             zalbaClient.sendZalbaOdluku(zalbaodluku);
             odgovorService.addZahtevOdgovora(id, "zalbanaodluku");
+            zalbaService.odgovoriNaZalbuOdluku(id, Status.ZAHTEVANJE);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -264,6 +266,7 @@ public class ZalbaController {
         Zalbacutanje zalbacutanje = null;
         try {
             zalbacutanje = zalbaService.getZalbaCutanje(id, null);
+            zalbaService.odgovoriNaZalbuCutanje(id, Status.ZAHTEVANJE);
             zalbaClient.sendZalbaCutanje(zalbacutanje);
             odgovorService.addZahtevOdgovora(id, "zalba");
         } catch (Exception e) {
