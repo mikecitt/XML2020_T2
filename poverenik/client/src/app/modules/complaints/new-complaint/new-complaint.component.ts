@@ -73,6 +73,24 @@ export class NewComplaintComponent implements OnInit {
     }
 
     if (this.silenceForm.valid) {
+      this.silenceService
+        .insert(this.silenceForm.value)
+        .subscribe(
+          (response) => {
+            console.log(response);
+            this.message.create('success', `Uspesno ste dodali zalbu`);
+          },
+          (error) => {
+            this.notification.create(
+              'error',
+              'Error',
+              'There was an error in the server'
+            );
+          }
+        )
+        .add(() => {
+          this.isDialogVisible = false;
+        });
     }
   }
 
@@ -95,6 +113,17 @@ export class NewComplaintComponent implements OnInit {
       informacijeadresa: [null, [Validators.required]],
       informacijedrugikontakt: [null, [Validators.required]],
     });
-    this.silenceForm = this.fb.group({});
+    this.silenceForm = this.fb.group({
+      nazivorgana: [null, [Validators.required]],
+      razlogzalbe: [null, [Validators.required]],
+      datumzahteva: [null, [Validators.required]],
+      podacizahteva: [null, [Validators.required]],
+      mesto: [null, [Validators.required]],
+      datum: [null, [Validators.required]],
+      ime: [null, [Validators.required]],
+      prezime: [null, [Validators.required]],
+      adresa: [null, [Validators.required]],
+      drugikontakt: [null, [Validators.required]]
+    });
   }
 }
