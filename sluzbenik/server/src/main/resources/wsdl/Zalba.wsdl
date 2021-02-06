@@ -317,17 +317,19 @@
   </xs:complexType>
 
 </xs:schema>
-<xs:schema xmlns:ns1="http://localhost:8080/zalba" xmlns:ns2="http://localhost:8080/zalbanaodluku" xmlns:ns3="http://localhost:8080/obavestenje" xmlns:ns4="http://localhost:8080/zahtevcir" xmlns:ns5="http://localhost:8080/tipovi" xmlns:tns="http://localhost:8080/resenje" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://localhost:8080/resenje" version="1.0">
+<xs:schema xmlns:ns1="http://localhost:8080/zalba" xmlns:ns2="http://localhost:8080/zalbanaodluku" xmlns:ns3="http://localhost:8080/zahtevcir" xmlns:ns4="http://localhost:8080/izvestaj" xmlns:ns5="http://localhost:8080/tipovi" xmlns:ns6="http://localhost:8080/obavestenje" xmlns:tns="http://localhost:8080/resenje" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://localhost:8080/resenje" version="1.0">
 
   <xs:import namespace="http://localhost:8080/zalba"/>
 
   <xs:import namespace="http://localhost:8080/zalbanaodluku"/>
 
-  <xs:import namespace="http://localhost:8080/obavestenje"/>
-
   <xs:import namespace="http://localhost:8080/zahtevcir"/>
 
+  <xs:import namespace="http://localhost:8080/izvestaj"/>
+
   <xs:import namespace="http://localhost:8080/tipovi"/>
+
+  <xs:import namespace="http://localhost:8080/obavestenje"/>
 
   <xs:element name="resenja">
     <xs:complexType>
@@ -372,10 +374,13 @@
     <xs:attribute name="vocab" type="xs:anySimpleType"/>
   </xs:complexType>
 
-  <xs:complexType name="tipObavestenje">
+  <xs:complexType name="tipZahtev">
     <xs:sequence>
-      <xs:element ref="ns3:zaglavlje"/>
-      <xs:element ref="ns3:telo"/>
+      <xs:element ref="ns3:status"/>
+      <xs:element ref="ns3:organ"/>
+      <xs:element ref="ns3:listaZahteva"/>
+      <xs:element ref="ns3:detalji_predaje"/>
+      <xs:element ref="ns3:informacije_o_traziocu"/>
     </xs:sequence>
     <xs:attribute name="about" type="xs:anySimpleType"/>
     <xs:attribute name="rel" type="xs:anySimpleType"/>
@@ -383,13 +388,12 @@
     <xs:attribute name="vocab" type="xs:anySimpleType"/>
   </xs:complexType>
 
-  <xs:complexType name="tipZahtev">
+  <xs:complexType name="tipIzvestaj">
     <xs:sequence>
-      <xs:element ref="ns4:status"/>
-      <xs:element ref="ns4:organ"/>
-      <xs:element ref="ns4:listaZahteva"/>
-      <xs:element ref="ns4:detalji_predaje"/>
-      <xs:element ref="ns4:informacije_o_traziocu"/>
+      <xs:element ref="ns4:podnosilac"/>
+      <xs:element ref="ns4:datum_podnosenja"/>
+      <xs:element ref="ns4:zalbe"/>
+      <xs:element ref="ns4:zahtevi"/>
     </xs:sequence>
     <xs:attribute name="about" type="xs:anySimpleType"/>
     <xs:attribute name="rel" type="xs:anySimpleType"/>
@@ -494,6 +498,17 @@
           </xs:complexContent>
         </xs:complexType>
       </xs:element>
+    </xs:sequence>
+    <xs:attribute name="about" type="xs:anySimpleType"/>
+    <xs:attribute name="rel" type="xs:anySimpleType"/>
+    <xs:attribute name="href" type="xs:anySimpleType"/>
+    <xs:attribute name="vocab" type="xs:anySimpleType"/>
+  </xs:complexType>
+
+  <xs:complexType name="tipObavestenje">
+    <xs:sequence>
+      <xs:element ref="ns6:zaglavlje"/>
+      <xs:element ref="ns6:telo"/>
     </xs:sequence>
     <xs:attribute name="about" type="xs:anySimpleType"/>
     <xs:attribute name="rel" type="xs:anySimpleType"/>
@@ -659,6 +674,88 @@
       <xs:attribute name="vocab" type="xs:anySimpleType"/>
     </xs:complexType>
   </xs:element>
+
+</xs:schema>
+<xs:schema xmlns:ns1="http://localhost:8080/resenje" xmlns:tns="http://localhost:8080/izvestaj" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://localhost:8080/izvestaj" version="1.0">
+
+  <xs:import namespace="http://localhost:8080/resenje"/>
+
+  <xs:element name="datum_podnosenja">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="property" type="xs:anySimpleType"/>
+          <xs:attribute name="datatype" type="xs:anySimpleType"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="izvestaj" type="ns1:tipIzvestaj"/>
+
+  <xs:element name="izvestaji">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:izvestaj"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="podnosilac">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" name="ime" type="xs:string"/>
+        <xs:element form="qualified" name="prezime" type="xs:string"/>
+      </xs:sequence>
+      <xs:attribute name="about" type="xs:anySimpleType"/>
+      <xs:attribute name="rel" type="xs:anySimpleType"/>
+      <xs:attribute name="href" type="xs:anySimpleType"/>
+      <xs:attribute name="vocab" type="xs:anySimpleType"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="zahtevi">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" name="broj_prihvacenih" type="xs:int"/>
+        <xs:element form="qualified" name="broj_podnetih" type="xs:int"/>
+        <xs:element form="qualified" name="broj_odbijenih" type="xs:int"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="zalbe">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" name="na_odluku">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element form="qualified" name="broj_prihvacenih" type="xs:int"/>
+              <xs:element form="qualified" name="broj_podnetih" type="xs:int"/>
+              <xs:element form="qualified" name="broj_odbijenih" type="xs:int"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element form="qualified" name="cutanje">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element form="qualified" name="broj_prihvacenih" type="xs:int"/>
+              <xs:element form="qualified" name="broj_podnetih" type="xs:int"/>
+              <xs:element form="qualified" name="broj_odbijenih" type="xs:int"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element form="qualified" name="spisak">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element form="qualified" name="zalba" type="xs:string"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
 
 </xs:schema>
   </wsdl:types>

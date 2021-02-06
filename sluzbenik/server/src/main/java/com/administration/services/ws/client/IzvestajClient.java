@@ -1,5 +1,6 @@
 package com.administration.services.ws.client;
 
+import com.administration.services.model.Izvestaj;
 import com.administration.services.ws.izvestaj.IzvestajInterface;
 import com.administration.services.ws.zalbe.ZalbaInterface;
 
@@ -11,7 +12,7 @@ import java.net.URL;
 @org.springframework.stereotype.Service
 public class IzvestajClient {
 
-    public void sendIzvestaj(String izvestaj) {
+    public void sendIzvestaj(Izvestaj izvestaj) {
         try {
             URL wsdlLocation = new URL("http://localhost:8080/ws/izvestaj?wsdl");
             QName serviceName = new QName("http://administracija/ws/izvestaj", "IzvestajService");

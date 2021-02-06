@@ -1,5 +1,6 @@
 package com.administration.services.ws.izvestaj;
 
+import com.administration.services.model.Izvestaj;
 import com.administration.services.model.ObjectFactory;
 
 import javax.jws.WebMethod;
@@ -16,6 +17,6 @@ public interface IzvestajInterface {
     @WebMethod
     public void sendIzvestaj(
             @WebParam(partName = "izvestaj", name = "izvestaj")
-                    String izvestaj
+                    Izvestaj izvestaj
     );
 }

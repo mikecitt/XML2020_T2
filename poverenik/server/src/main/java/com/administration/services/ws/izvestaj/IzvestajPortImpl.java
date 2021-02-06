@@ -1,5 +1,6 @@
 package com.administration.services.ws.izvestaj;
 
+import com.administration.services.model.Izvestaj;
 import com.administration.services.model.Resenje;
 
 import javax.jws.WebService;
@@ -16,7 +17,7 @@ public class IzvestajPortImpl implements IzvestajInterface {
     private static final Logger LOG = Logger.getLogger(IzvestajPortImpl.class.getName());
 
     @Override
-    public void sendIzvestaj(String izvestaj) {
+    public void sendIzvestaj(Izvestaj izvestaj) {
 
     }
 }
