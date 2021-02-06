@@ -90,7 +90,7 @@ public class ZalbaService {
                 zal.getStatus().setValue(Status.GOTOV.toString());
             }
         }
-
+        saveAllZalbeCutanje(zalbecutanje);
         return true;
     }
 
@@ -99,10 +99,87 @@ public class ZalbaService {
         for(Zalbanaodluku zal : zalbenaodluku.getZalbanaodluku()) {
             if(zal.getAbout().equals("http://localhost:8080/zalbanaodluku/" + zalbaId)) {
                 zal.getStatus().setValue(Status.GOTOV.toString());
+                break;
             }
         }
-
+        saveAllZalbeOdluke(zalbenaodluku);
         return true;
+    }
+
+    public void saveAllZalbeOdluke(Zalbenaodluku zalbenaodluku) throws Exception {
+        Collection col = null;
+        XMLResource res = null;
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+
+        try {
+            col = existConfiguration.getOrCreateCollection(collectionId, 0);
+            res = (XMLResource) col.createResource(zalbaCutanjeId, XMLResource.RESOURCE_TYPE);
+            JAXBContext context = JAXBContext.newInstance("com.administration.services.model");
+            Marshaller marshaller = context.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+            marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new DefaultNamespacePrefixMapper());
+
+            existConfiguration.prepareForWriting(marshaller, os, zalbenaodluku);
+
+            res.setContent(os);
+            col.storeResource(res);
+            jenaConfiguration.updateRDF(new String(os.toByteArray(), StandardCharsets.UTF_8));
+
+        } finally {
+            if (res != null) {
+                try {
+                    ((EXistResource) res).freeResources();
+                } catch (XMLDBException xe) {
+                    xe.printStackTrace();
+                }
+            }
+
+            if (col != null) {
+                try {
+                    col.close();
+                } catch (XMLDBException xe) {
+                    xe.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void saveAllZalbeCutanje(Zalbecutanje zalbecutanje) throws Exception {
+        Collection col = null;
+        XMLResource res = null;
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+
+        try {
+            col = existConfiguration.getOrCreateCollection(collectionId, 0);
+            res = (XMLResource) col.createResource(zalbaCutanjeId, XMLResource.RESOURCE_TYPE);
+            JAXBContext context = JAXBContext.newInstance("com.administration.services.model");
+            Marshaller marshaller = context.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+            marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new DefaultNamespacePrefixMapper());
+
+            existConfiguration.prepareForWriting(marshaller, os, zalbecutanje);
+
+            res.setContent(os);
+            col.storeResource(res);
+            jenaConfiguration.updateRDF(new String(os.toByteArray(), StandardCharsets.UTF_8));
+
+        } finally {
+            if (res != null) {
+                try {
+                    ((EXistResource) res).freeResources();
+                } catch (XMLDBException xe) {
+                    xe.printStackTrace();
+                }
+            }
+
+            if (col != null) {
+                try {
+                    col.close();
+                } catch (XMLDBException xe) {
+                    xe.printStackTrace();
+                }
+            }
+        }
     }
 
     public Object getOneZalba(String zalbaId) {
