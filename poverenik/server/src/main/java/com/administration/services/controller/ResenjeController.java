@@ -4,11 +4,11 @@ import java.security.Principal;
 
 import com.administration.services.business.KorisnikService;
 import com.administration.services.business.ResenjeService;
+import com.administration.services.business.ZalbaService;
 import com.administration.services.enums.TipKorisnika;
-import com.administration.services.model.Korisnik;
-import com.administration.services.model.Resenja;
-import com.administration.services.model.Resenje;
+import com.administration.services.model.*;
 
+import com.administration.services.ws.client.EPostaClient;
 import com.administration.services.ws.client.ResenjeClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -37,7 +37,13 @@ public class ResenjeController {
     private KorisnikService korisnikService;
 
     @Autowired
+    private ZalbaService zalbaService;
+
+    @Autowired
     private ResenjeClient resenjeClient;
+
+    @Autowired
+    private EPostaClient ePostaClient;
 
     @GetMapping("/{resenjeId}")
     @PreAuthorize("hasAnyRole('ROLE_POVERENIK')")
@@ -122,7 +128,22 @@ public class ResenjeController {
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             resenjeService.addNewResenje(resenje, korisnik, zalbaId);
             resenjeClient.sendResenje(resenje);
+            Object temp = zalbaService.getOneZalba(zalbaId);
+            String adresa = "";
+            if(temp instanceof Zalbanaodluku) {
+                String[] splitovano = ((Zalbanaodluku)temp)
+                        .getInformacijeOPodnosiocuZalbe().getHref().split("/");
+                adresa = splitovano[splitovano.length - 1];
+            } else {
+                String[] splitovano = ((Zalbacutanje)temp)
+                        .getInformacijeOPodnosiocuZalbe().getHref().split("/");
+                adresa = splitovano[splitovano.length - 1];
+            }
+            ePostaClient.sendMail("REŠENJE",
+                    "Vaše REŠENJE je gotovo i se nalazi u prilogu", adresa,
+                    resenjeService.getOneResenjePDF(resenje));
         } catch (Exception e) {
+            e.printStackTrace();
             if (e.getMessage().equals("Zalba already has Resenje"))
                 return new ResponseEntity<>(HttpStatus.CONFLICT);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

@@ -1,6 +1,7 @@
 package com.administration.mailservice.ws.eposta;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
@@ -40,24 +41,17 @@ public class EPostaPortImpl implements EPosta {
 
     @Override
     public void sendMailMultipart(String subjekt, String tekst, String primalac, byte[] prilog) {
-        MimeMessagePreparator preparator = new MimeMessagePreparator() {
-            public void prepare(MimeMessage mimeMessage) throws Exception {
-                mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(primalac));
-                mimeMessage.setFrom(new InternetAddress("cultoffer@gmail.com"));
-                mimeMessage.setSubject(subjekt);
-                mimeMessage.setText(tekst);
-
-                MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
-                helper.addAttachment("prilog.pdf",
-                        new InputStreamResource(new ByteArrayInputStream(prilog)));
-            }
-        };
-
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
         try {
-            mailSender.send(preparator);
-        } catch (MailException ex) {
-            // simply log it and go on...
-            System.err.println(ex.getMessage());
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+            helper.setFrom("cultoffer@gmail.com");
+            helper.setTo(primalac);
+            helper.setSubject(subjekt);
+            helper.setText(tekst);
+            helper.addAttachment("prilog.pdf", new ByteArrayResource(prilog));
+            mailSender.send(mimeMessage);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 }

@@ -12,7 +12,7 @@ public class EPostaClient {
 
     public void sendMail(String subjekt, String tekst, String primalac) {
         try {
-            URL wsdlLocation = new URL("http://localhost:8082/ws/eposta?wsdl");
+            URL wsdlLocation = new URL("http://localhost:8081/ws/eposta?wsdl");
             QName serviceName = new QName("http://administracija/ws/eposta", "EPostaService");
             QName portName = new QName("http://administracija/ws/eposta", "EPostaPort");
 

@@ -9,6 +9,7 @@ import com.administration.services.model.Obavestenja;
 import com.administration.services.model.Obavestenje;
 import com.administration.services.model.Zahtev;
 
+import com.administration.services.ws.client.EPostaClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -38,6 +39,9 @@ public class ObavestenjeController {
 
     @Autowired
     private ZahtevService zahtevService;
+
+    @Autowired
+    private EPostaClient ePostaClient;
 
     @PreAuthorize("hasRole('ROLE_SLUZBENIK')")
     @GetMapping("/all")
@@ -152,7 +156,11 @@ public class ObavestenjeController {
             if (obavestenjeService.getZahtevObavestenje(zahtevId) != null)
                 return new ResponseEntity<>(HttpStatus.CONFLICT);
             obavestenjeService.addNewObavestenje(zahtevId, obavestenje);
-            zahtevService.resolveZahtev(zahtevId, StatusZahteva.PRIHVACEN);
+            Zahtev z = zahtevService.resolveZahtev(zahtevId, StatusZahteva.PRIHVACEN);
+            String[] splitovano = z.getInformacijeOTraziocu().getHref().split("/");
+            ePostaClient.sendMail("Odobren zahtev",
+                    "Vaš zahtev je odobren, obaveštenje se nalazi u prilogu", splitovano[splitovano.length - 1],
+                    obavestenjeService.getObavestenjePDF(obavestenje));
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
