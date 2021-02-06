@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/auth/authentication.service';
 
+export type complaintType = 'odluka' | 'cutanje';
+
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css'],
 })
 export class HomePageComponent implements OnInit {
-  selectedTab: string = 'odluka';
+  selectedTab: complaintType = 'odluka';
 
   constructor(private authService: AuthenticationService) {}
 

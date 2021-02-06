@@ -23,6 +23,7 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
 import { ComplaintDecisionOverviewComponent } from './modules/complaints/complaint-decision-overview/complaint-decision-overview.component';
 import { HomeComplaintsSilenceComponent } from './modules/home/complaints-silence/complaints-silence.component';
 import { ComplaintSilenceOverviewComponent } from './modules/complaints/complaint-silence-overview/complaint-silence-overview.component';
+import { NewComplaintComponent } from './modules/complaints/new-complaint/new-complaint.component';
 
 registerLocaleData(en);
 
@@ -40,6 +41,7 @@ registerLocaleData(en);
     ComplaintDecisionOverviewComponent,
     HomeComplaintsSilenceComponent,
     ComplaintSilenceOverviewComponent,
+    NewComplaintComponent,
   ],
   imports: [
     BrowserModule,

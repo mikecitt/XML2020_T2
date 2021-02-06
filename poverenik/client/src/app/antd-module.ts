@@ -19,6 +19,7 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 @NgModule({
   exports: [
@@ -41,6 +42,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
     NzRadioModule,
     NzSpinModule,
     NzToolTipModule,
+    NzModalModule,
   ],
 })
 export class AntdModule {}
