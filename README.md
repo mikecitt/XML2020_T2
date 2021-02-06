@@ -12,6 +12,24 @@ Frontend je rađen u Angular-u.
 Za čuvanje XML baza korišćena je Exist baza,  
 dok je za RDF grafove korišćena Jena Fuseki.  
 
+#### Requirements
+- Najpre preuzeti sa sledećih linkova:  
+- https://github.com/eXist-db/exist/archive/eXist-5.2.0.zip
+- https://downloads.apache.org/jena/binaries/apache-jena-fuseki-3.17.0.zip
+- Oba fajla otpakovati na sledeće putanje: (pored fajla extract-here)
+```sh
+/servers/poverenik
+/servers/sluzbenik
+```
+- tako da imate sledeće putanje:
+```sh
+/servers/poverenik/apache-jena-fuseki-3.17.0
+/servers/sluzbenik/apache-jena-fuseki-3.17.0
+/servers/poverenik/eXist-5.2.0
+/servers/sluzbenik/eXist-5.2.0
+```
+
+
 #### Pokretanje XML baza
 
 ```sh
