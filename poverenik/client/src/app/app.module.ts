@@ -24,6 +24,7 @@ import { ComplaintDecisionOverviewComponent } from './modules/complaints/complai
 import { HomeComplaintsSilenceComponent } from './modules/home/complaints-silence/complaints-silence.component';
 import { ComplaintSilenceOverviewComponent } from './modules/complaints/complaint-silence-overview/complaint-silence-overview.component';
 import { NewComplaintComponent } from './modules/complaints/new-complaint/new-complaint.component';
+import { ReportPageComponent } from './modules/reports/report-page/report-page.component';
 
 registerLocaleData(en);
 
@@ -42,6 +43,7 @@ registerLocaleData(en);
     HomeComplaintsSilenceComponent,
     ComplaintSilenceOverviewComponent,
     NewComplaintComponent,
+    ReportPageComponent,
   ],
   imports: [
     BrowserModule,

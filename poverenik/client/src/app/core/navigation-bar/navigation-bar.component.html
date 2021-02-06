@@ -13,6 +13,12 @@
   <div class="emptySpace"></div>
 
   <ul nz-menu nzMode="horizontal">
+    <li nz-menu-item *ngIf="isPoverenik">
+      <a routerLink="/reports">
+        <i nz-icon nzType="block"></i>
+        Izvestaji
+      </a>
+    </li>
     <li nz-menu-item *ngIf="!isLogged">
       <a routerLink="/register">
         <i nz-icon nzType="user-add"></i>

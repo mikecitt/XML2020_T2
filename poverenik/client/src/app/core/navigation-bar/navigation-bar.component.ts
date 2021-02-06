@@ -13,6 +13,10 @@ export class NavigationBarComponent implements OnInit {
     return this.authService.isLogged();
   }
 
+  get isPoverenik() {
+    return this.authService.getRole() === 'ROLE_POVERENIK';
+  }
+
   logout() {
     this.authService.logout();
   }
