@@ -5,6 +5,7 @@ import java.security.Principal;
 import com.administration.services.business.KorisnikService;
 import com.administration.services.business.OdgovorService;
 import com.administration.services.business.ZalbaService;
+import com.administration.services.dto.ProveraDTO;
 import com.administration.services.enums.TipKorisnika;
 import com.administration.services.model.Korisnik;
 import com.administration.services.model.Zalbacutanje;
@@ -274,14 +275,14 @@ public class ZalbaController {
 
     @GetMapping("/proveriOdgovor")
     @PreAuthorize("hasRole('ROLE_POVERENIK')")
-    public ResponseEntity<Boolean> checkOdgovor(@RequestParam String id) {
-        boolean ind = false;
+    public ResponseEntity<ProveraDTO> checkOdgovor(@RequestParam String id) {
+        ProveraDTO proveraDTO = new ProveraDTO();
         try {
-            ind = odgovorService.checkOdgovorIsticanje(id);
+            proveraDTO.setDozvola(odgovorService.checkOdgovorIsticanje(id));
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(ind, HttpStatus.OK);
+        return new ResponseEntity<>(proveraDTO, HttpStatus.OK);
     }
 }

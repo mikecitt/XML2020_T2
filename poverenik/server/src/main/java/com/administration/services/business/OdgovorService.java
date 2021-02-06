@@ -26,7 +26,7 @@ import java.util.UUID;
 @Service
 public class OdgovorService {
 
-    private static final int WAIT_DURATION_IN_MILLIES = 300000; // 5 minuta
+    private static final int WAIT_DURATION_IN_MILLIES = 30000000; // 5 minuta
 
     @Autowired
     private ExistConfiguration existConfiguration;
@@ -68,7 +68,7 @@ public class OdgovorService {
                     res = (XMLResource) i.nextResource();
                     odg = (OdgovorSluzbenika) unmarshaller.unmarshal(res.getContentAsDOM());
                     Date d = new Date();
-                    if(!odg.isOdgovorio() && odg.getDatumZahtevanja().getTime() + WAIT_DURATION_IN_MILLIES <= d.getTime()) {
+                    if(!odg.isOdgovorio() && odg.getDatumZahtevanja().getTime() + WAIT_DURATION_IN_MILLIES >= d.getTime()) {
                         return true;
                     }
                 } finally {
