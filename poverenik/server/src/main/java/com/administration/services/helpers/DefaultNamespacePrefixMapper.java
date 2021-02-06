@@ -28,14 +28,18 @@ public class DefaultNamespacePrefixMapper extends NamespacePrefixMapper {
         namespaceMap.put("http://localhost:8080/zahtevcir", "zah");
         namespaceMap.put("http://localhost:8080/zalba", "zal");
         namespaceMap.put("http://localhost:8080/zalbanaodluku", "zlbod");
+        namespaceMap.put("http://localhost:8080/izvestaj", "izv");
         namespaceMap.put("http://www.w3.org/2001/XMLSchema#", "xs");
         namespaceMap.put("http://www.w3.org/ns/rdfa#", "");
         namespaceMap.put("http://localhost:8080/rdf/predicate/", "pred");
     }
 
-    /* (non-Javadoc)
-     * Returning null when not found based on spec.
-     * @see com.sun.xml.bind.marshaller.NamespacePrefixMapper#getPreferredPrefix(java.lang.String, java.lang.String, boolean)
+    /*
+     * (non-Javadoc) Returning null when not found based on spec.
+     * 
+     * @see
+     * com.sun.xml.bind.marshaller.NamespacePrefixMapper#getPreferredPrefix(java.
+     * lang.String, java.lang.String, boolean)
      */
     @Override
     public String getPreferredPrefix(String namespaceUri, String suggestion, boolean requirePrefix) {
