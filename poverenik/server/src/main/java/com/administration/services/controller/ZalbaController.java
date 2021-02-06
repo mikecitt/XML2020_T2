@@ -3,6 +3,7 @@ package com.administration.services.controller;
 import java.security.Principal;
 
 import com.administration.services.business.KorisnikService;
+import com.administration.services.business.OdgovorService;
 import com.administration.services.business.ZalbaService;
 import com.administration.services.enums.TipKorisnika;
 import com.administration.services.model.Korisnik;
@@ -37,6 +38,9 @@ public class ZalbaController {
 
     @Autowired
     private KorisnikService korisnikService;
+
+    @Autowired
+    private OdgovorService odgovorService;
 
     @Autowired
     private ZalbaClient zalbaClient;
@@ -192,17 +196,46 @@ public class ZalbaController {
         return new ResponseEntity<>(zalbanaodluku, HttpStatus.OK);
     }
 
-    @GetMapping("/testwdsl")
+    @GetMapping("/odluka/odgovor")
     @PreAuthorize("hasRole('ROLE_POVERENIK')")
-    public ResponseEntity<Zalbanaodluku> checkZalbaRazlog(@RequestParam String id) {
+    public ResponseEntity<Void> requestZalbaOdlukaOdgovor(@RequestParam String id) {
         Zalbanaodluku zalbaodluku = null;
         try {
             zalbaodluku = zalbaService.getZalbaOdluku(id, null);
             zalbaClient.sendZalbaOdluku(zalbaodluku);
+            odgovorService.addZahtevOdgovora(id, "zalbanaodluku");
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(zalbaodluku, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/cutanje/odgovor")
+    @PreAuthorize("hasRole('ROLE_POVERENIK')")
+    public ResponseEntity<Void> requestZalbaCutanjeOdgovor(@RequestParam String id) {
+        Zalbacutanje zalbacutanje = null;
+        try {
+            zalbacutanje = zalbaService.getZalbaCutanje(id, null);
+            zalbaClient.sendZalbaCutanje(zalbacutanje);
+            odgovorService.addZahtevOdgovora(id, "zalba");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/proveriOdgovor")
+    @PreAuthorize("hasRole('ROLE_POVERENIK')")
+    public ResponseEntity<Boolean> checkOdgovor(@RequestParam String id) {
+        boolean ind = false;
+        try {
+            ind = odgovorService.checkOdgovorIsticanje(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(ind, HttpStatus.OK);
     }
 }

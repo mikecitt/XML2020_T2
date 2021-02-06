@@ -3,10 +3,10 @@ package com.administration.services.dto;
 import javax.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = { "odgovor"})
+@XmlType(name = "tipOdgovor", propOrder = { "tekst"})
 @XmlRootElement(name = "odgovor")
 public class OdgovorDTO {
-    @XmlElement(name = "odgovor", required = true)
+    @XmlElement(name = "tekst", required = true)
     private String odgovor;
 
     public OdgovorDTO() {
