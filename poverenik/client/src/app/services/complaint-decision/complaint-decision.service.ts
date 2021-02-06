@@ -21,25 +21,31 @@ export class ComplaintDecisionService {
     });
   }
 
-  getDecisionPdf(id: string) {
-    return this.http.get<any>(`http://localhost:8080/resenja/pdf/${id}`, {
-      observe: 'response',
-      responseType: 'arraybuffer' as 'json',
-    });
-  }
-
-  gettDecisionHtml(id: string) {
-    return this.http.get<any>(`http://localhost:8080/resenja/html/${id}`, {
-      observe: 'response',
-      responseType: 'text' as 'json',
-    });
-  }
-
   getHtml(id: string) {
     return this.http.get<any>(`http://localhost:8080/zalbe/odluka/html/${id}`, {
       observe: 'response',
       responseType: 'text' as 'json',
     });
+  }
+
+  getDecisionPdf(id: string) {
+    return this.http.get<any>(
+      `http://localhost:8080/resenja/zalba/pdf?id=${id}`,
+      {
+        observe: 'response',
+        responseType: 'arraybuffer' as 'json',
+      }
+    );
+  }
+
+  gettDecisionHtml(id: string) {
+    return this.http.get<any>(
+      `http://localhost:8080/resenja/zalba/html?id=${id}`,
+      {
+        observe: 'response',
+        responseType: 'text' as 'json',
+      }
+    );
   }
 
   insert(complaint: any) {
