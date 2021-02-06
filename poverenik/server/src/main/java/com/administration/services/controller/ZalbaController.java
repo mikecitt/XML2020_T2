@@ -101,6 +101,29 @@ public class ZalbaController {
         }
     }
 
+    @GetMapping("/cutanje/html/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_POVERENIK')")
+    public ResponseEntity<byte[]> getOneZalbaCutanjeHTML(@PathVariable String id, Principal user) {
+        Zalbacutanje zalbacutanje = null;
+        try {
+            String korisnikId = null;
+            Korisnik korisnik = korisnikService.getKorisnikByEmail(user.getName());
+            if (korisnik.getTipKorisnika().equals(TipKorisnika.GRADJANIN.toString())) {
+                korisnikId = user.getName();
+            }
+            zalbacutanje = zalbaService.getZalbaCutanje(id, korisnikId);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.TEXT_HTML);
+            headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+            return new ResponseEntity<>(zalbaService.getZalbaCutanjeHTML(zalbacutanje), headers, HttpStatus.OK);
+        } catch (Exception e) {
+            if (e.getMessage().equals("Zalba not belong to Korisnik"))
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @PostMapping("/cutanje")
     @PreAuthorize("hasRole('ROLE_GRADJANIN')")
     public ResponseEntity<?> addNewZalbaCutanje(@RequestBody Zalbacutanje zalbacutanje, Principal user) {
@@ -169,6 +192,29 @@ public class ZalbaController {
             headers.setContentType(MediaType.APPLICATION_PDF);
             headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
             return new ResponseEntity<>(zalbaService.getZalbaOdlukuPDF(zalbaodluku), headers, HttpStatus.OK);
+        } catch (Exception e) {
+            if (e.getMessage().equals("Zalba not belong to Korisnik"))
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/odluka/html/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_POVERENIK')")
+    public ResponseEntity<byte[]> getOneZalbaOdlukaHTML(@PathVariable String id, Principal user) {
+        Zalbanaodluku zalbaodluku = null;
+        try {
+            String korisnikId = null;
+            Korisnik korisnik = korisnikService.getKorisnikByEmail(user.getName());
+            if (korisnik.getTipKorisnika().equals(TipKorisnika.GRADJANIN.toString())) {
+                korisnikId = user.getName();
+            }
+            zalbaodluku = zalbaService.getZalbaOdluku(id, korisnikId);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.TEXT_HTML);
+            headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+            return new ResponseEntity<>(zalbaService.getZalbaOdlukuHTML(zalbaodluku), headers, HttpStatus.OK);
         } catch (Exception e) {
             if (e.getMessage().equals("Zalba not belong to Korisnik"))
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
