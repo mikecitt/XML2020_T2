@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions name="ZalbaService" targetNamespace="http://poverenik/ws/zalba" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://poverenik/ws/zalba" xmlns:ns1="http://localhost:8080/resenje" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+<wsdl:definitions name="ZalbaService" targetNamespace="http://administracija/ws/zalba" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://administracija/ws/zalba" xmlns:ns1="http://localhost:8080/resenje" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
   <wsdl:types>
 <xs:schema xmlns:ns1="http://localhost:8080/resenje" xmlns:tns="http://localhost:8080/zalbanaodluku" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://localhost:8080/zalbanaodluku" version="1.0">
 
@@ -317,17 +317,17 @@
   </xs:complexType>
 
 </xs:schema>
-<xs:schema xmlns:ns1="http://localhost:8080/zalbanaodluku" xmlns:ns2="http://localhost:8080/zalba" xmlns:ns3="http://localhost:8080/tipovi" xmlns:ns4="http://localhost:8080/zahtevcir" xmlns:ns5="http://localhost:8080/obavestenje" xmlns:tns="http://localhost:8080/resenje" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://localhost:8080/resenje" version="1.0">
+<xs:schema xmlns:ns1="http://localhost:8080/zalba" xmlns:ns2="http://localhost:8080/zalbanaodluku" xmlns:ns3="http://localhost:8080/obavestenje" xmlns:ns4="http://localhost:8080/tipovi" xmlns:ns5="http://localhost:8080/zahtevcir" xmlns:tns="http://localhost:8080/resenje" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://localhost:8080/resenje" version="1.0">
+
+  <xs:import namespace="http://localhost:8080/zalba"/>
 
   <xs:import namespace="http://localhost:8080/zalbanaodluku"/>
 
-  <xs:import namespace="http://localhost:8080/zalba"/>
+  <xs:import namespace="http://localhost:8080/obavestenje"/>
 
   <xs:import namespace="http://localhost:8080/tipovi"/>
 
   <xs:import namespace="http://localhost:8080/zahtevcir"/>
-
-  <xs:import namespace="http://localhost:8080/obavestenje"/>
 
   <xs:element name="resenja">
     <xs:complexType>
@@ -339,14 +339,13 @@
 
   <xs:element name="resenje" type="tns:tipResenje"/>
 
-  <xs:complexType name="tipZalOdluka">
+  <xs:complexType name="tipZalCutanje">
     <xs:sequence>
       <xs:element ref="ns1:status"/>
-      <xs:element ref="ns1:podnosilac_zalbe"/>
       <xs:element ref="ns1:naziv_organa"/>
-      <xs:element ref="ns1:resenje"/>
-      <xs:element ref="ns1:datum_podnosenja_zahteva"/>
-      <xs:element ref="ns1:opis_zalbe"/>
+      <xs:element ref="ns1:razlog_zalbe"/>
+      <xs:element ref="ns1:datum_zahteva"/>
+      <xs:element ref="ns1:podaci_zahteva"/>
       <xs:element ref="ns1:detalji_predaje"/>
       <xs:element ref="ns1:informacije_o_podnosiocu_zalbe"/>
     </xs:sequence>
@@ -356,15 +355,27 @@
     <xs:attribute name="vocab" type="xs:anySimpleType"/>
   </xs:complexType>
 
-  <xs:complexType name="tipZalCutanje">
+  <xs:complexType name="tipZalOdluka">
     <xs:sequence>
       <xs:element ref="ns2:status"/>
+      <xs:element ref="ns2:podnosilac_zalbe"/>
       <xs:element ref="ns2:naziv_organa"/>
-      <xs:element ref="ns2:razlog_zalbe"/>
-      <xs:element ref="ns2:datum_zahteva"/>
-      <xs:element ref="ns2:podaci_zahteva"/>
+      <xs:element ref="ns2:resenje"/>
+      <xs:element ref="ns2:datum_podnosenja_zahteva"/>
+      <xs:element ref="ns2:opis_zalbe"/>
       <xs:element ref="ns2:detalji_predaje"/>
       <xs:element ref="ns2:informacije_o_podnosiocu_zalbe"/>
+    </xs:sequence>
+    <xs:attribute name="about" type="xs:anySimpleType"/>
+    <xs:attribute name="rel" type="xs:anySimpleType"/>
+    <xs:attribute name="href" type="xs:anySimpleType"/>
+    <xs:attribute name="vocab" type="xs:anySimpleType"/>
+  </xs:complexType>
+
+  <xs:complexType name="tipObavestenje">
+    <xs:sequence>
+      <xs:element ref="ns3:zaglavlje"/>
+      <xs:element ref="ns3:telo"/>
     </xs:sequence>
     <xs:attribute name="about" type="xs:anySimpleType"/>
     <xs:attribute name="rel" type="xs:anySimpleType"/>
@@ -411,7 +422,7 @@
       <xs:element name="razlog_zalbe">
         <xs:complexType>
           <xs:sequence>
-            <xs:element name="podnositelj_zalbe" type="ns3:Tosoba"/>
+            <xs:element name="podnositelj_zalbe" type="ns4:Tosoba"/>
             <xs:element name="razlog" type="xs:string"/>
           </xs:sequence>
           <xs:attribute name="about" type="xs:anySimpleType"/>
@@ -459,7 +470,7 @@
       <xs:element name="poverenik">
         <xs:complexType>
           <xs:complexContent>
-            <xs:extension base="ns3:Tosoba">
+            <xs:extension base="ns4:Tosoba">
               <xs:sequence/>
               <xs:attribute name="about" type="xs:anySimpleType"/>
               <xs:attribute name="rel" type="xs:anySimpleType"/>
@@ -478,22 +489,11 @@
 
   <xs:complexType name="tipZahtev">
     <xs:sequence>
-      <xs:element ref="ns4:status"/>
-      <xs:element ref="ns4:organ"/>
-      <xs:element ref="ns4:listaZahteva"/>
-      <xs:element ref="ns4:detalji_predaje"/>
-      <xs:element ref="ns4:informacije_o_traziocu"/>
-    </xs:sequence>
-    <xs:attribute name="about" type="xs:anySimpleType"/>
-    <xs:attribute name="rel" type="xs:anySimpleType"/>
-    <xs:attribute name="href" type="xs:anySimpleType"/>
-    <xs:attribute name="vocab" type="xs:anySimpleType"/>
-  </xs:complexType>
-
-  <xs:complexType name="tipObavestenje">
-    <xs:sequence>
-      <xs:element ref="ns5:zaglavlje"/>
-      <xs:element ref="ns5:telo"/>
+      <xs:element ref="ns5:status"/>
+      <xs:element ref="ns5:organ"/>
+      <xs:element ref="ns5:listaZahteva"/>
+      <xs:element ref="ns5:detalji_predaje"/>
+      <xs:element ref="ns5:informacije_o_traziocu"/>
     </xs:sequence>
     <xs:attribute name="about" type="xs:anySimpleType"/>
     <xs:attribute name="rel" type="xs:anySimpleType"/>
@@ -662,6 +662,10 @@
 
 </xs:schema>
   </wsdl:types>
+  <wsdl:message name="sendZalbaCutanjeResponse">
+  </wsdl:message>
+  <wsdl:message name="sendOdgovorResponse">
+  </wsdl:message>
   <wsdl:message name="sendZalbaOdlukaResponse">
   </wsdl:message>
   <wsdl:message name="sendOdgovor">
@@ -670,19 +674,21 @@
     <wsdl:part name="zalbaId" type="xsd:string">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="sendOdgovorResponse">
-  </wsdl:message>
-  <wsdl:message name="sendZalbaCutanjeResponse">
+  <wsdl:message name="sendZalbaCutanje">
+    <wsdl:part name="zalbacutanje" type="ns1:tipZalCutanje">
+    </wsdl:part>
   </wsdl:message>
   <wsdl:message name="sendZalbaOdluka">
     <wsdl:part name="zalbanaodluku" type="ns1:tipZalOdluka">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="sendZalbaCutanje">
-    <wsdl:part name="zalbacutanje" type="ns1:tipZalCutanje">
-    </wsdl:part>
-  </wsdl:message>
   <wsdl:portType name="Zalba">
+    <wsdl:operation name="sendZalbaCutanje">
+      <wsdl:input name="sendZalbaCutanje" message="tns:sendZalbaCutanje">
+    </wsdl:input>
+      <wsdl:output name="sendZalbaCutanjeResponse" message="tns:sendZalbaCutanjeResponse">
+    </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="sendZalbaOdluka">
       <wsdl:input name="sendZalbaOdluka" message="tns:sendZalbaOdluka">
     </wsdl:input>
@@ -695,40 +701,34 @@
       <wsdl:output name="sendOdgovorResponse" message="tns:sendOdgovorResponse">
     </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="sendZalbaCutanje">
-      <wsdl:input name="sendZalbaCutanje" message="tns:sendZalbaCutanje">
-    </wsdl:input>
-      <wsdl:output name="sendZalbaCutanjeResponse" message="tns:sendZalbaCutanjeResponse">
-    </wsdl:output>
-    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="ZalbaServiceSoapBinding" type="tns:Zalba">
     <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="sendZalbaCutanje">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="sendZalbaCutanje">
+        <soap:body use="literal" namespace="http://administracija/ws/zalba"/>
+      </wsdl:input>
+      <wsdl:output name="sendZalbaCutanjeResponse">
+        <soap:body use="literal" namespace="http://administracija/ws/zalba"/>
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="sendZalbaOdluka">
       <soap:operation soapAction="" style="rpc"/>
       <wsdl:input name="sendZalbaOdluka">
-        <soap:body use="literal" namespace="http://poverenik/ws/zalba"/>
+        <soap:body use="literal" namespace="http://administracija/ws/zalba"/>
       </wsdl:input>
       <wsdl:output name="sendZalbaOdlukaResponse">
-        <soap:body use="literal" namespace="http://poverenik/ws/zalba"/>
+        <soap:body use="literal" namespace="http://administracija/ws/zalba"/>
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="sendOdgovor">
       <soap:operation soapAction="" style="rpc"/>
       <wsdl:input name="sendOdgovor">
-        <soap:body use="literal" namespace="http://poverenik/ws/zalba"/>
+        <soap:body use="literal" namespace="http://administracija/ws/zalba"/>
       </wsdl:input>
       <wsdl:output name="sendOdgovorResponse">
-        <soap:body use="literal" namespace="http://poverenik/ws/zalba"/>
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="sendZalbaCutanje">
-      <soap:operation soapAction="" style="rpc"/>
-      <wsdl:input name="sendZalbaCutanje">
-        <soap:body use="literal" namespace="http://poverenik/ws/zalba"/>
-      </wsdl:input>
-      <wsdl:output name="sendZalbaCutanjeResponse">
-        <soap:body use="literal" namespace="http://poverenik/ws/zalba"/>
+        <soap:body use="literal" namespace="http://administracija/ws/zalba"/>
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
