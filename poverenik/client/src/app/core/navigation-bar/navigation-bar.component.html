@@ -22,18 +22,18 @@
     <li nz-menu-item *ngIf="!isLogged">
       <a routerLink="/register">
         <i nz-icon nzType="user-add"></i>
-        Register
+        Registruj se
       </a>
     </li>
     <li nz-menu-item *ngIf="!isLogged">
       <a routerLink="/login">
         <i nz-icon nzType="login"></i>
-        Login
+        Uloguj se
       </a>
     </li>
     <li nz-menu-item *ngIf="isLogged" (click)="logout()">
       <i nz-icon nzType="logout"></i>
-      Logout
+      Izloguj se
     </li>
   </ul>
 </div>

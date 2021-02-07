@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { AuthenticationService } from 'src/app/services/auth/authentication.service';
 import { ComplaintDecisionService } from 'src/app/services/complaint-decision/complaint-decision.service';
 
 @Component({
@@ -17,7 +18,12 @@ export class ComplaintDecisionOverviewComponent implements OnInit {
   decisionPdfLoading: boolean = false;
   decisionHtmlLoading: boolean = false;
 
+  get isPoverenik() {
+    return this.authService.getRole() === 'ROLE_POVERENIK';
+  }
+
   constructor(
+    private authService: AuthenticationService,
     private service: ComplaintDecisionService,
     private notification: NzNotificationService
   ) {}

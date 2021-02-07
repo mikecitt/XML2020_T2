@@ -1,0 +1,31 @@
+<nz-steps>
+  <nz-step nzTitle="Cekanje" [nzStatus]="tabIndex === 'CEKANJE' ? 'process' : 'finish'" nzIcon="user"></nz-step>
+  <nz-step nzTitle="Zahtevanje"
+    [nzStatus]="tabIndex === 'ZAHTEVANJE' ? 'process' : tabIndex === 'CEKANJE' ? 'wait' : 'finish'" nzIcon="loading">
+  </nz-step>
+  <nz-step nzTitle="Obrada" [nzStatus]="tabIndex === 'OBRADA' ? 'process' : 'wait'" nzIcon="solution">
+  </nz-step>
+</nz-steps>
+<div *ngIf="tabIndex === 'CEKANJE'" class="body">
+  <nz-space nzDirection="vertical" nzSize="middle" class="content" nzAlign="center">
+    <nz-space-item>
+      <h5 nz-typography>Posaljite zahtev sluzbeniku</h5>
+    </nz-space-item>
+    <nz-space-item>
+      <button nz-button nzType="primary" (click)="sendRequest()" [nzLoading]="requestLoading">Posalji</button>
+    </nz-space-item>
+  </nz-space>
+</div>
+<div *ngIf="tabIndex === 'ZAHTEVANJE'" class="body">
+  <h5 nz-typography class="space">Cekanje odgovora sluzbenika</h5>
+</div>
+<div *ngIf="tabIndex === 'OBRADA'" class="body">
+  <nz-space nzDirection="vertical" nzSize="middle" class="content" nzAlign="center">
+    <nz-space-item>
+      <h5 nz-typography>Sluzenik nije odgovorio</h5>
+    </nz-space-item>
+    <nz-space-item>
+      <button nz-button nzType="primary" [nzLoading]="requestLoading">Obradi</button>
+    </nz-space-item>
+  </nz-space>
+</div>

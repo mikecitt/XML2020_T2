@@ -81,4 +81,13 @@ export class ComplaintDecisionService {
       responseType: 'text' as 'json',
     });
   }
+
+  sendRequest(id: number) {
+    return this.http.get<any>(
+      `http://localhost:8080/zalbe/odluka/odgovor?id=${id}`,
+      {
+        observe: 'response',
+      }
+    );
+  }
 }

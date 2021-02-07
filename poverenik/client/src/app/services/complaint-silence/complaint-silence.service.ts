@@ -74,4 +74,13 @@ export class ComplaintSilenceService {
       }
     );
   }
+
+  sendRequest(id: number) {
+    return this.http.get<any>(
+      `http://localhost:8080/zalbe/cutanje/odgovor?id=${id}`,
+      {
+        observe: 'response',
+      }
+    );
+  }
 }

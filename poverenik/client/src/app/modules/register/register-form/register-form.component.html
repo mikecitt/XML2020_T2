@@ -2,10 +2,10 @@
   <nz-form-item>
     <nz-form-control [nzErrorTip]="firstNameErrorTpl">
       <nz-input-group nzPrefixIcon="align-left">
-        <input type="text" nz-input formControlName="firstName" placeholder="First name" />
+        <input type="text" nz-input formControlName="firstName" placeholder="Ime" />
         <ng-template #firstNameErrorTpl let-control>
           <ng-container *ngIf="control.hasError('required')">
-            First name is required
+            Ime je obavezno
           </ng-container>
         </ng-template>
       </nz-input-group>
@@ -14,10 +14,10 @@
   <nz-form-item>
     <nz-form-control [nzErrorTip]="lastNameErrorTpl">
       <nz-input-group nzPrefixIcon="align-left">
-        <input type="text" nz-input formControlName="lastName" placeholder="Last name" />
+        <input type="text" nz-input formControlName="lastName" placeholder="Prezime" />
         <ng-template #lastNameErrorTpl let-control>
           <ng-container *ngIf="control.hasError('required')">
-            Last name is required
+            Prezime je obavezno
           </ng-container>
         </ng-template>
       </nz-input-group>
@@ -29,10 +29,10 @@
         <input type="email" nz-input formControlName="email" placeholder="Email" />
         <ng-template #emailErrorTpl let-control>
           <ng-container *ngIf="control.hasError('email')">
-            Email is not valid
+            Email je neispravan
           </ng-container>
           <ng-container *ngIf="control.hasError('required')">
-            Email is required
+            Email je obavezan
           </ng-container>
         </ng-template>
       </nz-input-group>
@@ -41,14 +41,14 @@
   <nz-form-item>
     <nz-form-control [nzErrorTip]="passwordErrorTpl">
       <nz-input-group nzPrefixIcon="lock">
-        <input type="password" nz-input formControlName="password" placeholder="Password" />
+        <input type="password" nz-input formControlName="password" placeholder="Lozinka" />
         <ng-template #passwordErrorTpl let-control>
           <ng-container *ngIf="control.hasError('required')">
-            Password is required
+            Lozinka je obavezna
           </ng-container>
         </ng-template>
       </nz-input-group>
     </nz-form-control>
   </nz-form-item>
-  <button nz-button [nzBlock]="true" [nzLoading]="loading" [nzType]="'primary'">Register</button>
+  <button nz-button [nzBlock]="true" [nzLoading]="loading" [nzType]="'primary'">Registruj se</button>
 </form>

@@ -1,5 +1,5 @@
 <nz-card style="width: 250px"
-  [nzActions]="complaint.status?.value === 'GOTOV' ? [actionsComplaint, actionsDecision] : [actionsComplaint]">
+  [nzActions]="complaint.status?.value === 'GOTOV' ? [actionsComplaint, actionsDecision] : isPoverenik ? [actionsComplaint, actionApplyDecision] : [actionsComplaint]">
   <nz-card-meta [nzAvatar]=" avatarTemplate" [nzTitle]="complaint.nazivOrgana.value"
     [nzDescription]="descriptionTemplate">
   </nz-card-meta>
@@ -43,4 +43,11 @@
       </nz-spin>
     </nz-space-item>
   </nz-space>
+</ng-template>
+<ng-template #actionApplyDecision>
+  <i nz-icon nzType="file-search" nz-popover [nzPopoverContent]="contentTemplate" nzPopoverPlacement="bottom"
+    nzPopoverTrigger="click"></i>
+</ng-template>
+<ng-template #contentTemplate>
+  <app-new-decision [complaint]="complaint" complaintType="odluka"></app-new-decision>
 </ng-template>
